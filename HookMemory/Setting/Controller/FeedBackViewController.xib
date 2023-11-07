@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FeedBackViewController" customModule="HookMemory" customModuleProvider="target">
+            <connections>
+                <outlet property="contentV" destination="u5t-dz-Aq2" id="FGN-9h-jd4"/>
+                <outlet property="emailV" destination="cEe-M0-kru" id="Yz5-MS-Ars"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feedback content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iYI-Zp-SuV">
+                    <rect key="frame" x="16" y="99" width="134" height="19.333333333333329"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="u5t-dz-Aq2" customClass="IQTextView" customModule="IQKeyboardManagerSwift">
+                    <rect key="frame" x="16" y="130.33333333333334" width="361" height="100"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="100" id="ZlU-Xp-qAj"/>
+                    </constraints>
+                    <color key="textColor" systemColor="labelColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AUB-BS-4WX">
+                    <rect key="frame" x="16" y="270.33333333333331" width="40" height="19.333333333333314"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="cEe-M0-kru" customClass="IQTextView" customModule="IQKeyboardManagerSwift">
+                    <rect key="frame" x="16" y="301.66666666666669" width="361" height="100"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="100" id="n8J-at-COS"/>
+                    </constraints>
+                    <color key="textColor" systemColor="labelColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="u5t-dz-Aq2" firstAttribute="top" secondItem="iYI-Zp-SuV" secondAttribute="bottom" constant="12" id="5Qh-es-Njt"/>
+                <constraint firstItem="cEe-M0-kru" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="OyL-fV-DN2"/>
+                <constraint firstItem="iYI-Zp-SuV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="QXB-hR-jaF"/>
+                <constraint firstItem="AUB-BS-4WX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="TWT-ro-IIc"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="cEe-M0-kru" secondAttribute="trailing" constant="16" id="cZC-h5-gtW"/>
+                <constraint firstItem="iYI-Zp-SuV" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="40" id="gBt-CY-3Qy"/>
+                <constraint firstItem="AUB-BS-4WX" firstAttribute="top" secondItem="u5t-dz-Aq2" secondAttribute="bottom" constant="40" id="hXC-68-r0N"/>
+                <constraint firstItem="u5t-dz-Aq2" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="iVR-S2-6rw"/>
+                <constraint firstItem="cEe-M0-kru" firstAttribute="top" secondItem="AUB-BS-4WX" secondAttribute="bottom" constant="12" id="il8-nL-Pqq"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="u5t-dz-Aq2" secondAttribute="trailing" constant="16" id="qNW-jf-Vgy"/>
+            </constraints>
+            <point key="canvasLocation" x="85" y="20"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

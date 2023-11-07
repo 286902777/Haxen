@@ -1,0 +1,20 @@
+PODS:
+  - IQKeyboardManagerSwift (6.5.16)
+  - SnapKit (5.6.0)
+
+DEPENDENCIES:
+  - IQKeyboardManagerSwift
+  - SnapKit
+
+SPEC REPOS:
+  trunk:
+    - IQKeyboardManagerSwift
+    - SnapKit
+
+SPEC CHECKSUMS:
+  IQKeyboardManagerSwift: 12d89768845bb77b55cc092ecc2b1f9370f06b76
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+
+PODFILE CHECKSUM: 931ecf077eaf30df3145193ae98047083293f8c5
+
+COCOAPODS: 1.14.2
