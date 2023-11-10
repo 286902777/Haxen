@@ -45,19 +45,29 @@ class MovieHomeViewController: UIViewController {
     }
     
     func addRefresh() {
-        let header = RefreshNormalHeader(refreshingBlock: { [weak self] in
+        let header = RefreshGifHeader { [weak self] in
             guard let self = self else { return }
             self.requestData()
-        })
+        }
         tableView.mj_header = header
+        
+        let footer = RefreshAutoNormalFooter {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self.tableView.mj_footer?.endRefreshing()
+                self.tableView.mj_footer?.endRefreshingWithNoMoreData()
+            }
+        }
+        tableView.mj_footer = footer
     }
     
     func requestData() {
-        tableView.mj_header?.endRefreshing()
-        tableView.showTableEmpty(with: UIImage(named: "LOGO"), title: "title", btnTitle: "OK", offsetY: 10) {
-            print("_________")
-        } btnClickAction: {
-            print("+++++++++++")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.tableView.mj_header?.endRefreshing()
+            self.tableView.showTableEmpty(with: UIImage(named: "LOGO"), title: "title", btnTitle: "OK", offsetY: 10) {
+                print("_________")
+            } btnClickAction: {
+                print("+++++++++++")
+            }
         }
     }
     
@@ -88,8 +98,6 @@ extension MovieHomeViewController: UITableViewDelegate, UITableViewDataSource {
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
-
-
         return cell
     }
     
@@ -102,6 +110,6 @@ extension MovieHomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        20
+        0
     }
 }
