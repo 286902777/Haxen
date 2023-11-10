@@ -339,15 +339,17 @@ extension HomeViewController:
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let mod = self.dataArray[indexPath.item]
-        if mod.array.count > 0 {
-            let vc = ListDetailViewController()
-            vc.dataModel = mod
-            vc.refreshBlock = {
-                self.getAllDay()
-            }
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+        let vc = HKTabBarViewController()
+        self.present(vc, animated: true)
+//        let mod = self.dataArray[indexPath.item]
+//        if mod.array.count > 0 {
+//            let vc = ListDetailViewController()
+//            vc.dataModel = mod
+//            vc.refreshBlock = {
+//                self.getAllDay()
+//            }
+//            self.navigationController?.pushViewController(vc, animated: true)
+//        }
     }
 }
 

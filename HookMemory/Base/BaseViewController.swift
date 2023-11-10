@@ -19,6 +19,7 @@ class BaseViewController: UIViewController {
         view.backgroundColor = UIColor.hex("#141414")
         addBackImage()
         addNavBar()
+        hidesBottomBarWhenPushed = true
     }
     
     func addBackImage() {
@@ -63,5 +64,4 @@ class BaseViewController: UIViewController {
     func middleAction() {
         
     }
-
 }

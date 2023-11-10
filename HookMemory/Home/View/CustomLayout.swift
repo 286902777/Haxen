@@ -12,7 +12,7 @@ class CustomLayout: UICollectionViewFlowLayout {
 //MARK:--- 布局之前的准备工作 初始化  这个方法只会调用一次
     override func prepare() {
         scrollDirection = UICollectionView.ScrollDirection.horizontal
-         minimumLineSpacing = 24
+        minimumLineSpacing = 24
         sectionInset = UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40)
         super.prepare()
     }

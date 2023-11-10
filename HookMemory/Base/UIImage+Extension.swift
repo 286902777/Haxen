@@ -27,6 +27,11 @@ extension UIImage {
         }
     }
 }
+
+func IMG(_ name: String) -> UIImage? {
+    return UIImage.init(named: name)
+}
+
 extension String {
 
     func getPhotoImage(complete: @escaping (UIImage?)->()) {
