@@ -42,6 +42,7 @@ extension MovieListCell: UICollectionViewDelegateFlowLayout, UICollectionViewDel
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! MovieCell
         cell.backgroundColor = .red
+        cell.setModel()
         return cell
     }
     
