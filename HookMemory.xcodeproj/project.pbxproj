@@ -923,6 +923,7 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "\"Haxen\" would like to access your camera\nHaxen needs to access your camera to take pictures and videos";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "\"Haxen\" would like to access your microphone\nOnce the microphone is enabled, you can record sound";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"Haxen\" would like to access your photo gallery\nTo read or save photos and videos, gallery permission needs to be enabled";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This identifier will be used to deliver personalized ads to you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -960,6 +961,7 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "\"Haxen\" would like to access your camera\nHaxen needs to access your camera to take pictures and videos";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "\"Haxen\" would like to access your microphone\nOnce the microphone is enabled, you can record sound";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"Haxen\" would like to access your photo gallery\nTo read or save photos and videos, gallery permission needs to be enabled";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This identifier will be used to deliver personalized ads to you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
