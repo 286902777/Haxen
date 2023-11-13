@@ -9,6 +9,7 @@ import UIKit
 import Photos
 import AVFoundation
 import MobileCoreServices
+import AppTrackingTransparency
 
 class HomeViewController: BaseViewController {
     private var collectionView: UICollectionView?
@@ -46,6 +47,7 @@ class HomeViewController: BaseViewController {
         cusBar.middleBtn.setImage(UIImage(named: "schedule"), for: .normal)
         cusBar.NaviBarBlock = { [weak self] index in
             guard let self = self else { return }
+            self.addTracking()
             switch index {
             case 1:
                 let vc = SettingViewController()
@@ -294,6 +296,14 @@ class HomeViewController: BaseViewController {
             alert.addAction(cancel)
             alert.addAction(ok)
             self.present(alert, animated: true)
+        }
+    }
+    
+    func addTracking() {
+        if #available(iOS 14, *) {
+            ATTrackingManager.requestTrackingAuthorization { status in
+                
+            }
         }
     }
 }
