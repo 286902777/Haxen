@@ -8,23 +8,30 @@
 import UIKit
 import CoreData
 import IQKeyboardManagerSwift
+import AppTrackingTransparency
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {   
         initIQKeyBoard()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            if #available(iOS 14, *) {
+                ATTrackingManager.requestTrackingAuthorization { status in
+                    
+                }
+            }
+        }
         return true
     }
     /// 配置IQKeyboardManager
     func initIQKeyBoard() {
-        
         // 配置键盘
         IQKeyboardManager.shared.enable = true
         // 点击背景收起键盘
-//        IQKeyboardManager.shared.shouldResignOnTouchOutside = true
-//        IQKeyboardManager.shared.previousNextDisplayMode = .alwaysHide
-//        IQKeyboardManager.shared.enableAutoToolbar = true
+        IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+        IQKeyboardManager.shared.previousNextDisplayMode = .alwaysHide
+        IQKeyboardManager.shared.enableAutoToolbar = true
     }
     // MARK: UISceneSession Lifecycle
 

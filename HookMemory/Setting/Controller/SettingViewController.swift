@@ -62,11 +62,11 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             vc.titleName = dataArr[indexPath.row]
             self.navigationController?.pushViewController(vc, animated: true)
         case 2:
-            let url: String = "https://www.baidu.com"
+            let url: String = "https://apps.apple.com/us/app/id6471642830"
             let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
             present(activityController, animated: true, completion: nil)
         default:
-            if let url = URL(string: "itms-apps://itunes.apple.com/app/id123456789?action=write-review") {
+            if let url = URL(string: "itms-apps://itunes.apple.com/app/id6471642830?action=write-review") {
                 UIApplication.shared.open(url)
             }
         }

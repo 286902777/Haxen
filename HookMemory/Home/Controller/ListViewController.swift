@@ -29,9 +29,7 @@ class ListViewController: BaseViewController {
     
     let calendar = Calendar.current
     let date = Date() // 当前日期
-    
-    
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         setepUI()
