@@ -27,7 +27,6 @@
 		A79066332AF32CE4006A3982 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A79066312AF32CE4006A3982 /* Main.storyboard */; };
 		A79066362AF32CE4006A3982 /* HookMemory.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A79066342AF32CE4006A3982 /* HookMemory.xcdatamodeld */; };
 		A79066382AF32CE6006A3982 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A79066372AF32CE6006A3982 /* Assets.xcassets */; };
-		A790663B2AF32CE6006A3982 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A79066392AF32CE6006A3982 /* LaunchScreen.storyboard */; };
 		A79066462AF32CE6006A3982 /* HookMemoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79066452AF32CE6006A3982 /* HookMemoryTests.swift */; };
 		A79066502AF32CE6006A3982 /* HookMemoryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A790664F2AF32CE6006A3982 /* HookMemoryUITests.swift */; };
 		A79066522AF32CE6006A3982 /* HookMemoryUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79066512AF32CE6006A3982 /* HookMemoryUITestsLaunchTests.swift */; };
@@ -62,6 +61,10 @@
 		A79D65FC2AFB83EF0094E411 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79D65FB2AFB83EF0094E411 /* SearchView.swift */; };
 		A79D65FE2AFB83FB0094E411 /* SearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79D65FD2AFB83FB0094E411 /* SearchView.xib */; };
 		A79D66002AFB8D1D0094E411 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79D65FF2AFB8D1D0094E411 /* FilterView.swift */; };
+		A7A0AE942AFE1FDD00646494 /* MovieSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A0AE932AFE1FDD00646494 /* MovieSettingViewController.swift */; };
+		A7A0AE962AFE21E800646494 /* MovieBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A0AE952AFE21E800646494 /* MovieBaseViewController.swift */; };
+		A7A0AE9D2AFE27F000646494 /* FjallaOne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7A0AE9B2AFE27F000646494 /* FjallaOne-Regular.ttf */; };
+		A7A0AE9E2AFE27F000646494 /* Hind-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7A0AE9C2AFE27F000646494 /* Hind-SemiBold.ttf */; };
 		A7C3F9CF2AFC7F520094A15B /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C3F9CD2AFC7F520094A15B /* FilterCell.swift */; };
 		A7C3F9D02AFC7F520094A15B /* FilterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7C3F9CE2AFC7F520094A15B /* FilterCell.xib */; };
 		A7C3F9D22AFC823F0094A15B /* MovieFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C3F9D12AFC823F0094A15B /* MovieFilterViewController.swift */; };
@@ -121,7 +124,6 @@
 		A79066322AF32CE4006A3982 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A79066352AF32CE4006A3982 /* HookMemory.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HookMemory.xcdatamodel; sourceTree = "<group>"; };
 		A79066372AF32CE6006A3982 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A790663A2AF32CE6006A3982 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A790663C2AF32CE6006A3982 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A79066412AF32CE6006A3982 /* HookMemoryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HookMemoryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A79066452AF32CE6006A3982 /* HookMemoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HookMemoryTests.swift; sourceTree = "<group>"; };
@@ -158,6 +160,10 @@
 		A79D65FB2AFB83EF0094E411 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		A79D65FD2AFB83FB0094E411 /* SearchView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchView.xib; sourceTree = "<group>"; };
 		A79D65FF2AFB8D1D0094E411 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
+		A7A0AE932AFE1FDD00646494 /* MovieSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSettingViewController.swift; sourceTree = "<group>"; };
+		A7A0AE952AFE21E800646494 /* MovieBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieBaseViewController.swift; sourceTree = "<group>"; };
+		A7A0AE9B2AFE27F000646494 /* FjallaOne-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FjallaOne-Regular.ttf"; sourceTree = "<group>"; };
+		A7A0AE9C2AFE27F000646494 /* Hind-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hind-SemiBold.ttf"; sourceTree = "<group>"; };
 		A7C3F9CD2AFC7F520094A15B /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
 		A7C3F9CE2AFC7F520094A15B /* FilterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterCell.xib; sourceTree = "<group>"; };
 		A7C3F9D12AFC823F0094A15B /* MovieFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieFilterViewController.swift; sourceTree = "<group>"; };
@@ -257,8 +263,9 @@
 				A790668D2AF37462006A3982 /* Setting */,
 				A79D65E52AFB5D6E0094E411 /* Movie */,
 				A79066312AF32CE4006A3982 /* Main.storyboard */,
+				A7A0AE9B2AFE27F000646494 /* FjallaOne-Regular.ttf */,
+				A7A0AE9C2AFE27F000646494 /* Hind-SemiBold.ttf */,
 				A79066372AF32CE6006A3982 /* Assets.xcassets */,
-				A79066392AF32CE6006A3982 /* LaunchScreen.storyboard */,
 				A790663C2AF32CE6006A3982 /* Info.plist */,
 			);
 			path = HookMemory;
@@ -343,6 +350,7 @@
 				A79D65ED2AFB6F150094E411 /* NetManager.swift */,
 				A79D65EF2AFB70B30094E411 /* BaseModel.swift */,
 				A79D65F12AFB77350094E411 /* HKTabBarViewController.swift */,
+				A7A0AE952AFE21E800646494 /* MovieBaseViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -432,6 +440,7 @@
 				A79D65E92AFB5DD00094E411 /* MovieHomeViewController.swift */,
 				A7C3F9D12AFC823F0094A15B /* MovieFilterViewController.swift */,
 				A7C3F9DB2AFCAD480094A15B /* MovieSearchViewController.swift */,
+				A7A0AE932AFE1FDD00646494 /* MovieSettingViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -548,12 +557,13 @@
 				A79066972AF37B00006A3982 /* AboutUsViewController.xib in Resources */,
 				A7C3F9DA2AFCA9F20094A15B /* FilterListCell.xib in Resources */,
 				A790666C2AF32E16006A3982 /* HookNavigationBar.xib in Resources */,
-				A790663B2AF32CE6006A3982 /* LaunchScreen.storyboard in Resources */,
 				A72EB1612AF482A800AF20C3 /* HKSheetCell.xib in Resources */,
 				A79066382AF32CE6006A3982 /* Assets.xcassets in Resources */,
 				A79D65FE2AFB83FB0094E411 /* SearchView.xib in Resources */,
 				A7C3F9D62AFC83D20094A15B /* MovieCell.xib in Resources */,
 				A79066332AF32CE4006A3982 /* Main.storyboard in Resources */,
+				A7A0AE9E2AFE27F000646494 /* Hind-SemiBold.ttf in Resources */,
+				A7A0AE9D2AFE27F000646494 /* FjallaOne-Regular.ttf in Resources */,
 				A79D65FA2AFB81810094E411 /* MovieListCell.xib in Resources */,
 				A790669B2AF37CF3006A3982 /* FeedBackViewController.xib in Resources */,
 				A7C3F9D02AFC7F520094A15B /* FilterCell.xib in Resources */,
@@ -685,6 +695,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A79D65EC2AFB66580094E411 /* HKRefresh.swift in Sources */,
+				A7A0AE962AFE21E800646494 /* MovieBaseViewController.swift in Sources */,
 				A790666A2AF32E07006A3982 /* HookNavigationBar.swift in Sources */,
 				A790669A2AF37CF3006A3982 /* FeedBackViewController.swift in Sources */,
 				A77F8CD72AF4E85B0031FA77 /* VideoViewController.swift in Sources */,
@@ -726,6 +737,7 @@
 				A79066702AF331D6006A3982 /* HKCommon.swift in Sources */,
 				A790662C2AF32CE4006A3982 /* AppDelegate.swift in Sources */,
 				A7C3F9D52AFC83D20094A15B /* MovieCell.swift in Sources */,
+				A7A0AE942AFE1FDD00646494 /* MovieSettingViewController.swift in Sources */,
 				A7C3F9D92AFCA9F20094A15B /* FilterListCell.swift in Sources */,
 				A77F8CDF2AF4F82F0031FA77 /* DBManager.swift in Sources */,
 				A77425FC2AF3A6A8000B458B /* ListDetailViewController.swift in Sources */,
@@ -775,14 +787,6 @@
 				A79066322AF32CE4006A3982 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		A79066392AF32CE6006A3982 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A790663A2AF32CE6006A3982 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -925,7 +929,7 @@
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"Haxen\" would like to access your photo gallery\nTo read or save photos and videos, gallery permission needs to be enabled";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This identifier will be used to deliver personalized ads to you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = Main.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -963,7 +967,7 @@
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"Haxen\" would like to access your photo gallery\nTo read or save photos and videos, gallery permission needs to be enabled";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This identifier will be used to deliver personalized ads to you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = Main.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

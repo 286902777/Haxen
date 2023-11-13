@@ -16,6 +16,7 @@ class SearchView: UIView {
     
     class func view() -> SearchView {
         let view = Bundle.main.loadNibNamed(String(describing: SearchView.self), owner: nil)?.first as! SearchView
+        view.backgroundColor = .clear
         view.bgView.layer.cornerRadius = 8
         view.bgView.layer.masksToBounds = true
         view.frame = CGRect(x: 0, y: 0, width: kScreenWidth, height: kNavBarHeight)

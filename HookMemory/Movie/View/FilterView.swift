@@ -9,6 +9,7 @@ import UIKit
 
 class FilterView: UIView {
     let cellIdentifier = "FilterListCellIdentifier"
+    private var dataArr: [[MovieFiterModel]] = []
     lazy var tableView: UITableView = {
         let table = UITableView.init(frame: .zero, style: .plain)
         table.delegate = self
@@ -46,15 +47,29 @@ class FilterView: UIView {
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        initData()
+    }
+     
+    func initData() {
+        var arr: [MovieFiterModel] = []
+        for i in 0...8 {
+            let model = MovieFiterModel()
+            model.name = "text-\(i)"
+            arr.append(model)
+        }
+        for _ in 0...4 {
+            dataArr.append(arr)
+        }
+        self.tableView.reloadData()
     }
 }
 
 extension FilterView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:FilterListCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as! FilterListCell
-        cell.setModel("1") { type in
+        cell.setModel(self.dataArr[indexPath.row], clickBlock: { type in
             print(type)
-        }
+        })
         return cell
     }
     

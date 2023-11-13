@@ -16,12 +16,15 @@ class MovieCell: UICollectionViewCell {
     @IBOutlet weak var scoreL: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        imageV.layer.cornerRadius = 8
+        imageV.layer.masksToBounds = true
+        scoreL.font = UIFont(name: "Fjalla One Regular", size: 20)
     }
 
     func setModel() {
-        setupScore("8.0")
+        self.scoreL.text = "8.0"
     }
+    /*
     private func setupScore(_ text: String) {
 
         let arr: Array = text.components(separatedBy: ".")
@@ -45,5 +48,5 @@ class MovieCell: UICollectionViewCell {
         integerAttr.append(pointAttr)
         
         scoreL.attributedText = integerAttr
-    }
+    }*/
 }

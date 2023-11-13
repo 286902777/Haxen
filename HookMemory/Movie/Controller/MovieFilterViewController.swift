@@ -25,6 +25,7 @@ class MovieFilterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor.hex("#141414")
         let search = SearchView.view()
         view.addSubview(search)
         view.addSubview(collectionView)
@@ -49,6 +50,7 @@ extension MovieFilterViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! MovieCell
         cell.backgroundColor = .red
+        cell.setModel()
         return cell
     }
     

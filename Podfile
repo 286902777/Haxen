@@ -7,6 +7,7 @@ target 'HookMemory' do
 
   # Pods for HookMemory
   pod 'SnapKit'
+  pod 'lottie-ios'
   pod 'MJRefresh'
   pod 'Alamofire'
   pod 'HandyJSON'

@@ -56,10 +56,26 @@ class RefreshGifHeader: MJRefreshGifHeader{
                 imageArr.append(UIImage(named: "video") ?? UIImage())
             }
         }
+        self.gifView?.isHidden = true
+        if let gifV = self.gifView {
+            let view = UIView(frame: gifV.frame)
+//            let animation = 
+        }
+    
         self.setImages(imageArr, for: .refreshing)
         self.mj_h = 80
         self.stateLabel?.isHidden = true
         self.lastUpdatedTimeLabel?.isHidden = true
+        switch self.state {
+        case .idle:
+            break
+        case .pulling:
+            break
+        case .refreshing:
+            break
+        default:
+            break
+        }
     }
 }
 
@@ -69,9 +85,9 @@ class RefreshAutoNormalFooter: MJRefreshAutoNormalFooter {
         super.prepare()
         self.mj_h = 65
         self.stateLabel?.font = UIFont.systemFont(ofSize: 12)
-        self.stateLabel?.textColor = #colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1)
+        self.stateLabel?.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         self.setTitle("", for: .idle)
-        self.setTitle("上拉加载更多", for: .refreshing)
+        self.setTitle("", for: .refreshing)
         self.setTitle("No more content", for: .noMoreData)
     }
 

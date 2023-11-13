@@ -11,13 +11,12 @@ import MJRefresh
 class MovieHomeViewController: UIViewController {
     let cellIdentifier = "MovieListCell"
     lazy var tableView: UITableView = {
-        let table = UITableView.init(frame: .zero, style: .plain)
+        let table = UITableView.init(frame: .zero, style: .grouped)
         table.delegate = self
         table.dataSource = self
         table.separatorStyle = .none
         table.backgroundColor = .clear
         table.register(UINib(nibName: String(describing: MovieListCell.self), bundle: nil), forCellReuseIdentifier: cellIdentifier)
-        table.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         if #available(iOS 15.0, *) {
             table.sectionHeaderTopPadding = 0
         }
@@ -27,7 +26,8 @@ class MovieHomeViewController: UIViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        self.navigationController?.navigationBar.isHidden = true
+        view.backgroundColor = UIColor.hex("#141414")
         setUpUI()
         addRefresh()
     }
@@ -102,7 +102,18 @@ extension MovieHomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        200
+        let H = ceil((kScreenWidth - 40 - 23) / 3 * 138 / 104) + 76 + 42
+        return H
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: kScreenWidth, height: 22))
+        view.backgroundColor = .clear
+        return view
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        22
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -110,6 +121,6 @@ extension MovieHomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        0
+        20
     }
 }

@@ -8,6 +8,7 @@
 import UIKit
 
 class MovieListCell: UITableViewCell {
+    let cellW = floor((kScreenWidth - 40 - 23) / 3)
     let cellIdentifier = "MovieCell"
     typealias clickMoreBlock = (_ index: Int) -> Void
     var clickMoreHandle : clickMoreBlock?
@@ -15,9 +16,11 @@ class MovieListCell: UITableViewCell {
     typealias clickBlock = (_ movieId: String) -> Void
     var clickHandle : clickBlock?
     
+    @IBOutlet weak var titleL: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     override func awakeFromNib() {
         super.awakeFromNib()
+        titleL.font = UIFont(name: "Hind SemiBold", size: 22)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: String(describing: MovieCell.self), bundle: nil), forCellWithReuseIdentifier: cellIdentifier)
@@ -29,6 +32,7 @@ class MovieListCell: UITableViewCell {
     }
     
     func setModel(clickMoreBlock: clickMoreBlock?, clickBlock: clickBlock?) {
+        self.titleL.text = "Trending"
         self.clickMoreHandle = clickMoreBlock
         self.clickHandle = clickBlock
     }
@@ -41,7 +45,6 @@ extension MovieListCell: UICollectionViewDelegateFlowLayout, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! MovieCell
-        cell.backgroundColor = .red
         cell.setModel()
         return cell
     }
@@ -55,14 +58,14 @@ extension MovieListCell: UICollectionViewDelegateFlowLayout, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        16
+        8
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        16
+        0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 100, height: 100)
+        CGSize(width: cellW, height: cellW * 138 / 104 + 44)
     }
 }

@@ -25,20 +25,12 @@ class FilterListCell: UITableViewCell {
 
         // Configure the view for the selected state
     }  
-    func setModel(_ text: String, clickBlock: clickBlock?) {
+    func setModel(_ arr: [MovieFiterModel], clickBlock: clickBlock?) {
         self.clickHandle = clickBlock
-        let model = MovieFiterModel()
-        model.name = "text"
-        let model1 = MovieFiterModel()
-        model1.name = "2024-01"
-        let model2 = MovieFiterModel()
-        model2.name = "china"
-        for _ in 0...4 {
-            self.dataArr.append(model)
-            self.dataArr.append(model1)
-            self.dataArr.append(model2)
+        if let m = arr.first {
+            m.isSelect = true
         }
-        
+        self.dataArr = arr
         self.collectionView.reloadData()
     }
 }
@@ -59,6 +51,9 @@ extension FilterListCell: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let _ = dataArr.map{$0.isSelect = false}
+        dataArr[indexPath.item].isSelect = true
+        self.collectionView.reloadData()
         self.clickHandle?(indexPath.item)
     }
     

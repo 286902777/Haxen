@@ -11,11 +11,9 @@ import UIKit
 class MovieFiterModel: BaseModel {
     var width: CGFloat {
         get {
-            let label = UILabel()
-            label.text = name
-            label.sizeToFit()
-            return label.frame.width + 20
+            return name.getStrW(strFont: .systemFont(ofSize: 17), h: 20) + 20
         }
     }
+    var isSelect: Bool = false
     var name: String = ""
 }
