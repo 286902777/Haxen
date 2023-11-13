@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import AppTrackingTransparency
 
 class BaseViewController: UIViewController {
 
@@ -22,10 +21,6 @@ class BaseViewController: UIViewController {
         addNavBar()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        appTrackingAuth()
-    }
     func addBackImage() {
         let imageV = UIImageView()
         view.addSubview(imageV)
@@ -67,14 +62,6 @@ class BaseViewController: UIViewController {
     
     func middleAction() {
         
-    }
-
-    func appTrackingAuth() {
-        if #available(iOS 14, *) {
-            ATTrackingManager.requestTrackingAuthorization { status in
-                
-            }
-        }
     }
 }
 

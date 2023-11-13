@@ -32,6 +32,7 @@ class HomeViewController: BaseViewController {
         setepUI()
         getAllDay()
     }
+    
     func setNavbar() {
         cusBar.setBackHidden(true)
         cusBar.leftL.isHidden = false
