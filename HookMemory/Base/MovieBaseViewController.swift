@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import AppTrackingTransparency
 
 class MovieBaseViewController: UIViewController {
     lazy var cusBar: HookNavigationBar = {
@@ -18,13 +17,8 @@ class MovieBaseViewController: UIViewController {
         view.backgroundColor = UIColor.hex("#141414")
         addBackImage()
         addNavBar()
-        hidesBottomBarWhenPushed = true
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        appTrackingAuth()
-    }
+
     func addBackImage() {
         let imageV = UIImageView()
         view.addSubview(imageV)
@@ -56,7 +50,7 @@ class MovieBaseViewController: UIViewController {
         }
     }
     
-    func backAction() {
+    @objc func backAction() {
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -67,11 +61,38 @@ class MovieBaseViewController: UIViewController {
     func middleAction() {
         
     }
-    func appTrackingAuth() {
-        if #available(iOS 14, *) {
-            ATTrackingManager.requestTrackingAuthorization { status in
-                
-            }
+    
+    // MARK: - Empty
+    func showEmpty(_ type: HKEmptyView.emptyType = .noNet, _ view: UITableView) {
+        let image = IMG(type == .noNet ? "movie_no_network" : "movie_no_concent")
+        let titleText = type == .noNet ? "No network, please retry" : "No results found. Try different keywords."
+        view.showTableEmpty(with: image, title: titleText, btnTitle: type == .noNet ? "Retry" : "", offsetY: kNavBarHeight) {
+            
+        } btnClickAction: { [weak self] in
+            self?.reloadNetWorkData()
         }
+    }
+    
+    func dismissEmpty(_ view: UITableView) {
+        view.dismissEmpty()
+    }
+    
+    func showEmpty(_ type: HKEmptyView.emptyType = .noNet, view: UICollectionView) {
+        let image = IMG(type == .noNet ? "movie_no_network" : "movie_no_concent")
+        let titleText = type == .noNet ? "No network, please retry" : "No results found. Try different keywords."
+        view.showTableEmpty(with: image, title: titleText, btnTitle: type == .noNet ? "" : "Retry") {
+            
+        } btnClickAction: { [weak self] in
+            self?.reloadNetWorkData()
+        }
+    }
+    
+    func dismissEmpty(_ view: UICollectionView) {
+        view.dismissEmpty()
+    }
+    
+    
+    func reloadNetWorkData() {
+        
     }
 }

@@ -9,10 +9,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FeedBackViewController" customModule="HookMemory" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FeedBackViewController" customModule="Haxen" customModuleProvider="target">
             <connections>
                 <outlet property="contentV" destination="u5t-dz-Aq2" id="FGN-9h-jd4"/>
                 <outlet property="emailV" destination="cEe-M0-kru" id="Yz5-MS-Ars"/>
+                <outlet property="feedBackL" destination="iYI-Zp-SuV" id="dOv-Te-nJf"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

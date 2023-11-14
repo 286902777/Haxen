@@ -18,19 +18,21 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dyc-F1-srN">
-                        <rect key="frame" x="0.0" y="0.0" width="146" height="49"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
+                        <rect key="frame" x="0.0" y="9" width="146" height="31"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Dyc-F1-srN" secondAttribute="trailing" id="08U-gU-agG"/>
-                <constraint firstItem="Dyc-F1-srN" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="2Iv-Qc-pG9"/>
                 <constraint firstItem="Dyc-F1-srN" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="3S0-xw-BLh"/>
-                <constraint firstAttribute="bottom" secondItem="Dyc-F1-srN" secondAttribute="bottom" id="V8Z-vm-xbv"/>
+                <constraint firstAttribute="bottom" secondItem="Dyc-F1-srN" secondAttribute="bottom" constant="9" id="YAf-2G-XUc"/>
+                <constraint firstItem="Dyc-F1-srN" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="9" id="chm-M2-q7o"/>
             </constraints>
             <size key="customSize" width="146" height="49"/>
             <connections>

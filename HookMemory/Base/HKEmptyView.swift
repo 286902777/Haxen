@@ -124,23 +124,27 @@ extension UICollectionView: EmptyProtocol {
 }
 
 class HKEmptyView: UIView {
-    
+    enum emptyType: Int {
+        case noNet = 0
+        case noContent
+    }
     typealias EmptyViewBottomViewConfig = (BottomView)->()
     
     var bottomViewConfig: EmptyViewBottomViewConfig?
     
     private var kContentSpace: CGFloat = 16
     
-    private var kTitleFont = UIFont.systemFont(ofSize: 14)
-    private var kTitleColor = #colorLiteral(red: 0.4156862745, green: 0.4392156863, blue: 0.4862745098, alpha: 1)
-    private var kBtnFont = UIFont.systemFont(ofSize: 16, weight: .bold)
-    private var kBtnBgColor = #colorLiteral(red: 1, green: 0.8431372549, blue: 0, alpha: 1)
-    private var kBtnTextColor = UIColor.hex("#141414")
-    private var kBtnHeight: CGFloat = 48
-    private var kMinBtnWidth: CGFloat = kScreenWidth - 120
+    private var kTitleFont = UIFont.systemFont(ofSize: 16, weight: .medium)
+    private var kTitleColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    private var kBtnFont = UIFont.systemFont(ofSize: 14, weight: .medium)
+    private var kBtnBgColor = #colorLiteral(red: 0.9607843137, green: 0.1294117647, blue: 0.06666666667, alpha: 1)
+    private var kBtnTextColor = UIColor.white
+    private var kBtnHeight: CGFloat = 36
+    private var kMinBtnWidth: CGFloat = 82
     
     private var offsetY: CGFloat = 0
     
+    private var type: emptyType = .noNet
     private var image: UIImage? {
         didSet {
             addImageView()
@@ -162,9 +166,10 @@ class HKEmptyView: UIView {
     private var emptyTapAction: (()->())?
     private var btnClickAction: (()->())?
     
-    fileprivate init(image: UIImage?, title: String?, btnTitle: String?, offsetY: CGFloat = 0, emptyTapAction: (()->())?, btnClickAction: (()->())?, bottomViewConfig: EmptyViewBottomViewConfig? = nil) {
+    fileprivate init(type: emptyType = .noNet, image: UIImage?, title: String?, btnTitle: String?, offsetY: CGFloat = 0, emptyTapAction: (()->())?, btnClickAction: (()->())?, bottomViewConfig: EmptyViewBottomViewConfig? = nil) {
         
         super.init(frame: .zero)
+        self.type = type
         self.image = image
         self.title = title
         self.btnTitle = btnTitle
@@ -196,7 +201,7 @@ class HKEmptyView: UIView {
         btn.titleLabel?.font = kBtnFont
         btn.setTitleColor(kBtnTextColor, for: .normal)
         btn.backgroundColor = kBtnBgColor
-        btn.layer.cornerRadius = kBtnHeight * 0.5
+        btn.layer.cornerRadius = 12
         btn.layer.masksToBounds = true
         btn.addTarget(self, action: #selector(clickAct), for: .touchUpInside)
         return view
@@ -224,8 +229,9 @@ class HKEmptyView: UIView {
         addSubview(contentStack)
         contentStack.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(offsetY)
-            make.left.equalToSuperview().offset(20)
+            make.centerY.equalToSuperview().offset(-offsetY)
+            make.left.equalToSuperview().offset(40)
+            make.right.equalToSuperview().offset(-40)
         }
         
         addImageView()

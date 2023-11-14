@@ -21,8 +21,10 @@ class MovieCell: UICollectionViewCell {
         scoreL.font = UIFont(name: "Fjalla One Regular", size: 20)
     }
 
-    func setModel() {
-        self.scoreL.text = "8.0"
+    func setModel(model: MovieDataInfoModel) {
+        self.scoreL.text = model.rate
+        self.contentL.text = model.title
+        self.imageV.setImage(with: model.cover)
     }
     /*
     private func setupScore(_ text: String) {

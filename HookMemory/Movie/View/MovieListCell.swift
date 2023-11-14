@@ -10,20 +10,24 @@ import UIKit
 class MovieListCell: UITableViewCell {
     let cellW = floor((kScreenWidth - 40 - 23) / 3)
     let cellIdentifier = "MovieCell"
-    typealias clickMoreBlock = (_ index: Int) -> Void
+    typealias clickMoreBlock = () -> Void
     var clickMoreHandle : clickMoreBlock?
-    
+    var list: [MovieDataInfoModel] = []
     typealias clickBlock = (_ movieId: String) -> Void
     var clickHandle : clickBlock?
     
     @IBOutlet weak var titleL: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    @IBOutlet weak var moreBtn: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         titleL.font = UIFont(name: "Hind SemiBold", size: 22)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: String(describing: MovieCell.self), bundle: nil), forCellWithReuseIdentifier: cellIdentifier)
+        moreBtn.addTarget(self, action: #selector(moreAction), for: .touchUpInside)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -31,21 +35,29 @@ class MovieListCell: UITableViewCell {
 
     }
     
-    func setModel(clickMoreBlock: clickMoreBlock?, clickBlock: clickBlock?) {
-        self.titleL.text = "Trending"
+    @objc func moreAction() {
+        self.clickMoreHandle?()
+    }
+    
+    func setModel(model: MovieHomeModel, clickMoreBlock: clickMoreBlock?, clickBlock: clickBlock?) {
         self.clickMoreHandle = clickMoreBlock
         self.clickHandle = clickBlock
+        if let mod = model.data.first {
+            self.titleL.text = mod.name
+            self.list = mod.m20
+            self.collectionView.reloadData()
+        }
     }
 }
 
 extension MovieListCell: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        4
+        self.list.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! MovieCell
-        cell.setModel()
+        cell.setModel(model: self.list[indexPath.item])
         return cell
     }
     

@@ -10,7 +10,7 @@ import UIKit
 
 class MovieSettingViewController: MovieBaseViewController {
     let cellIdentifier = "SettingCell"
-    let dataArr: [String] = ["About us","Feedback", "Share", "Evaluate"]
+    let dataArr: [String] = ["Privacy Policy","Terms of Service", "Feedback", "About"]
     lazy var tableView: UITableView = {
         let table = UITableView.init(frame: .zero, style: .plain)
         table.delegate = self
@@ -30,6 +30,8 @@ class MovieSettingViewController: MovieBaseViewController {
         setepUI()
     }
     
+
+    
     func setepUI() {
         view.addSubview(tableView)
         self.cusBar.backBtn.isHidden = true
@@ -47,32 +49,44 @@ class MovieSettingViewController: MovieBaseViewController {
 extension MovieSettingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         dataArr.count
-
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:SettingCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as! SettingCell
         cell.titleL.text = dataArr[indexPath.row]
+        if indexPath.row == dataArr.count - 1 {
+            cell.arrowV.isHidden = true
+            cell.subTitleL.isHidden = false
+            if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+                cell.subTitleL.text = "v\(version)"
+            }
+        } else {
+            cell.arrowV.isHidden = false
+            cell.subTitleL.isHidden = true
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            let vc = AboutUsViewController()
-            vc.titleName = dataArr[indexPath.row]
+            let vc = WebViewController()
+            vc.titleName = self.dataArr[indexPath.row]
+            vc.url = "https://haxen24.com/privacy/"
+            vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         case 1:
-            let vc = FeedBackViewController()
-            vc.titleName = dataArr[indexPath.row]
+            let vc = WebViewController()
+            vc.titleName = self.dataArr[indexPath.row]
+            vc.url = "https://haxen24.com/terms/"
+            vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         case 2:
-            let url: String = "https://www.baidu.com"
-            let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-            present(activityController, animated: true, completion: nil)
+            let vc = FeedBackViewController()
+            vc.titleName = dataArr[indexPath.row]
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
         default:
-            if let url = URL(string: "itms-apps://itunes.apple.com/app/id123456789?action=write-review") {
-                UIApplication.shared.open(url)
-            }
+            break
         }
     }
     

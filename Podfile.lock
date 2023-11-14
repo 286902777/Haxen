@@ -2,6 +2,8 @@ PODS:
   - Alamofire (5.8.1)
   - HandyJSON (5.0.2)
   - IQKeyboardManagerSwift (6.5.16)
+  - Kingfisher (7.10.0)
+  - lottie-ios (4.3.3)
   - MJRefresh (3.7.6)
   - SnapKit (5.6.0)
 
@@ -9,6 +11,8 @@ DEPENDENCIES:
   - Alamofire
   - HandyJSON
   - IQKeyboardManagerSwift
+  - Kingfisher
+  - lottie-ios
   - MJRefresh
   - SnapKit
 
@@ -17,6 +21,8 @@ SPEC REPOS:
     - Alamofire
     - HandyJSON
     - IQKeyboardManagerSwift
+    - Kingfisher
+    - lottie-ios
     - MJRefresh
     - SnapKit
 
@@ -24,9 +30,11 @@ SPEC CHECKSUMS:
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   IQKeyboardManagerSwift: 12d89768845bb77b55cc092ecc2b1f9370f06b76
+  Kingfisher: a18f05d3b6d37d8650ee4a3e61d57a28fc6207f6
+  lottie-ios: 25e7b2675dad5c3ddad369ac9baab03560c5bfdd
   MJRefresh: 2fe7fb43a5167ceda20bb7e63f130c04fd1814a5
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: a7601569c81ffe5831fef7d0fd5528e62f4d23ea
+PODFILE CHECKSUM: 0bb9b33e0a60388699ddd6e9b451b6867b375fbd
 
 COCOAPODS: 1.14.2

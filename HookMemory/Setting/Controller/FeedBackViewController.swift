@@ -8,9 +8,10 @@
 import UIKit
 import IQKeyboardManagerSwift
 
-class FeedBackViewController: BaseViewController {
+class FeedBackViewController: MovieBaseViewController {
     var titleName: String = ""
     
+    @IBOutlet weak var feedBackL: UILabel!
     @IBOutlet weak var contentV: IQTextView!
     @IBOutlet weak var emailV: IQTextView!
     private lazy var doneBtn:UIButton = {
@@ -40,7 +41,10 @@ class FeedBackViewController: BaseViewController {
             make.centerY.equalTo(cusBar.backBtn)
             make.size.equalTo(CGSize(width: 64, height: 32))
         }
-        
+        feedBackL.snp.remakeConstraints { make in
+            make.left.equalTo(16)
+            make.top.equalTo(cusBar.snp.bottom).offset(20)
+        }
         contentV.layer.cornerRadius = 22
         contentV.layer.masksToBounds = true
         contentV.textContainerInset = UIEdgeInsets.init(top: 16, left: 16, bottom: 16, right: 16)

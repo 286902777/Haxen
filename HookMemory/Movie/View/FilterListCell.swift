@@ -7,9 +7,9 @@
 
 import UIKit
 
-class FilterListCell: UITableViewCell {
-    var dataArr: [MovieFiterModel] = []
-    typealias clickBlock = (_ type: Int) -> Void
+class FilterListCell: UITableViewCell {  
+    var dataArr: [MovieFilterCategoryInfoModel] = []
+    typealias clickBlock = (_ id: String) -> Void
     var clickHandle : clickBlock?
     let cellIdentifier = "FilterCellIdentifier"
     @IBOutlet weak var collectionView: UICollectionView!
@@ -25,7 +25,7 @@ class FilterListCell: UITableViewCell {
 
         // Configure the view for the selected state
     }  
-    func setModel(_ arr: [MovieFiterModel], clickBlock: clickBlock?) {
+    func setModel(_ arr: [MovieFilterCategoryInfoModel], clickBlock: clickBlock?) {
         self.clickHandle = clickBlock
         if let m = arr.first {
             m.isSelect = true
@@ -54,19 +54,19 @@ extension FilterListCell: UICollectionViewDelegate, UICollectionViewDataSource, 
         let _ = dataArr.map{$0.isSelect = false}
         dataArr[indexPath.item].isSelect = true
         self.collectionView.reloadData()
-        self.clickHandle?(indexPath.item)
+        self.clickHandle?(dataArr[indexPath.item].id)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        10
+        0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        10
+        16
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let model = self.dataArr[indexPath.item]
-        return CGSize(width: model.width, height: 50)
+        return CGSize(width: model.isSelect ? (model.width + 16) : model.width, height: 50)
     }
 }

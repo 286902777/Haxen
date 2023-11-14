@@ -9,11 +9,18 @@ import UIKit
 import CoreData
 import IQKeyboardManagerSwift
 import AppTrackingTransparency
+import Alamofire
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {   
+    private lazy var reachabilityManager: NetworkReachabilityManager? = {
+        let reachbility = NetworkReachabilityManager.default
+        return reachbility
+    }()
+    var netStatus: NetworkReachabilityManager.NetworkReachabilityStatus = .unknown
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         initIQKeyBoard()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             if #available(iOS 14, *) {
@@ -22,6 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         }
+        self.reachabilityManager?.startListening(onQueue: DispatchQueue.main, onUpdatePerforming: { [weak self] (status) in
+            self?.netStatus = status
+        })
         return true
     }
     /// 配置IQKeyboardManager

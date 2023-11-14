@@ -15,6 +15,14 @@ class SettingCell: UITableViewCell {
         return label
     }()
     
+    lazy var subTitleL: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.hex("#FFFFFF", alpha: 0.7)
+        label.font = UIFont.font(size: 14)
+        label.isHidden = true
+        return label
+    }()
+    
     lazy var arrowV: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "arrow")
@@ -36,11 +44,19 @@ class SettingCell: UITableViewCell {
     func addUI() {
         self.addSubview(titleL)
         self.addSubview(arrowV)
+        self.addSubview(subTitleL)
+        
         titleL.snp.makeConstraints { make in
             make.left.equalTo(16)
             make.top.bottom.equalToSuperview()
         }
+        
         arrowV.snp.makeConstraints { make in
+            make.right.equalTo(-16)
+            make.centerY.equalToSuperview()
+        }
+        
+        subTitleL.snp.makeConstraints { make in
             make.right.equalTo(-16)
             make.centerY.equalToSuperview()
         }

@@ -7,75 +7,22 @@
 
 import Foundation
 import MJRefresh
+import Lottie
 
 class RefreshGifHeader: MJRefreshGifHeader{
-    private var images: [UIImage] = []
-    func getImages() -> [UIImage] {
-        if images.count == 0 {
-            if let arr = self.getGifToImages("sss.gif") {
-                images = arr
-            }
-        }
-        return images
-    }
-    
-    func getGifToImages(_ name: String) -> [UIImage]? {
-        guard let path = Bundle.main.path(forResource: name, ofType: nil) else {
-            return nil
-        }
-        guard let data = NSData(contentsOfFile: path) else {
-            return nil
-        }
-        
-        guard let imgSource: CGImageSource = CGImageSourceCreateWithData(data as CFData, nil) else {
-            return nil
-        }
-        // 获取组成gif的图片总数量（gif都是由很多张图片组成）
-        let imageCount = CGImageSourceGetCount(imgSource)
-        
-        var images = [UIImage]()
-        for i in 0...imageCount {
-            guard let cgImage = CGImageSourceCreateImageAtIndex(imgSource, i, nil) else {
-                continue
-            }
-            // 获取到所有的image
-            let image = UIImage(cgImage: cgImage)
-            images.append(image)
-        }
-        return images
-    }
-    
     override func prepare() {
         super.prepare()
-        self.setImages([UIImage(named: "play") as Any], for: .idle)
-        var imageArr: [UIImage] = []
-        for i in 0...10 {
-            if i % 2 == 0 {
-                imageArr.append(UIImage(named: "play") ?? UIImage())
-            } else {
-                imageArr.append(UIImage(named: "video") ?? UIImage())
-            }
-        }
         self.gifView?.isHidden = true
-        if let gifV = self.gifView {
-            let view = UIView(frame: gifV.frame)
-//            let animation = 
-        }
-    
-        self.setImages(imageArr, for: .refreshing)
+        let animation = LottieAnimationView(name: "loading")
+        let view = UIView(frame: CGRect(x: (kScreenWidth - 60) * 0.5, y: 10, width: 60, height: 60))
+        animation.frame = view.bounds
+        animation.loopMode = .loop
+        animation.play()
+        view.addSubview(animation)
+        self.addSubview(view)
         self.mj_h = 80
         self.stateLabel?.isHidden = true
         self.lastUpdatedTimeLabel?.isHidden = true
-        switch self.state {
-        case .idle:
-            break
-        case .pulling:
-            break
-        case .refreshing:
-            break
-        default:
-            break
-        }
     }
 }
 

@@ -8,8 +8,18 @@
 import UIKit
 
 class FilterView: UIView {
+    enum filterType: Int {
+        case type = 0
+        case genre
+        case pub
+        case country
+    }
+    
     let cellIdentifier = "FilterListCellIdentifier"
-    private var dataArr: [[MovieFiterModel]] = []
+    typealias clickBlock = (_ index: filterType, _ id: String) -> Void
+    var clickHandle : clickBlock?
+
+    private var dataArr: [[MovieFilterCategoryInfoModel]] = []
     lazy var tableView: UITableView = {
         let table = UITableView.init(frame: .zero, style: .plain)
         table.delegate = self
@@ -17,7 +27,7 @@ class FilterView: UIView {
         table.separatorStyle = .none
         table.backgroundColor = .clear
         table.register(UINib(nibName: String(describing: FilterListCell.self), bundle: nil), forCellReuseIdentifier: cellIdentifier)
-        table.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        table.contentInset = UIEdgeInsets(top: 16, left: 0, bottom: 16, right: 0)
         if #available(iOS 15.0, *) {
             table.sectionHeaderTopPadding = 0
         }
@@ -27,10 +37,6 @@ class FilterView: UIView {
         return table
     }()
     
-    init(title: String) {
-        super.init(frame: CGRect(x: 0, y: 0, width: kScreenWidth, height: 200))
-        setupSubViews()
-    }
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupSubViews()
@@ -42,34 +48,31 @@ class FilterView: UIView {
     }
     
     func setupSubViews() {
-        self.backgroundColor = .white
+        self.backgroundColor = .clear
         self.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        initData()
     }
      
-    func initData() {
-        var arr: [MovieFiterModel] = []
-        for i in 0...8 {
-            let model = MovieFiterModel()
-            model.name = "text-\(i)"
-            arr.append(model)
+    func setModel(_ arr: [[MovieFilterCategoryInfoModel]], clickBlock: clickBlock?) {
+        self.clickHandle = clickBlock
+        self.dataArr = arr
+        if dataArr.count > 0 {
+            self.tableView.reloadData()
         }
-        for _ in 0...4 {
-            dataArr.append(arr)
-        }
-        self.tableView.reloadData()
     }
 }
 
 extension FilterView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:FilterListCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as! FilterListCell
-        cell.setModel(self.dataArr[indexPath.row], clickBlock: { type in
-            print(type)
-        })
+        if self.dataArr.count > 0 {
+            cell.setModel(self.dataArr[indexPath.row], clickBlock: { [weak self] id in
+                guard let self = self else { return }
+                self.clickHandle?(filterType(rawValue: indexPath.row) ?? .type, id)
+            })
+        }
         return cell
     }
     

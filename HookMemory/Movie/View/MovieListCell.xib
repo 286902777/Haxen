@@ -46,13 +46,20 @@
                         <color key="textColor" white="1" alpha="0.75" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Khj-RM-McJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="42"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
+                    <constraint firstItem="Khj-RM-McJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="0Yo-Ol-aTV"/>
                     <constraint firstItem="4vG-2e-o3E" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="0tf-7j-qKO"/>
                     <constraint firstItem="qGc-Lb-XNN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="5Ks-Iu-e3w"/>
+                    <constraint firstItem="Khj-RM-McJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="A1K-uJ-I4c"/>
                     <constraint firstItem="EFf-6N-sU0" firstAttribute="centerY" secondItem="qGc-Lb-XNN" secondAttribute="centerY" id="UMk-4H-kYm"/>
                     <constraint firstItem="PTa-wK-l60" firstAttribute="centerY" secondItem="qGc-Lb-XNN" secondAttribute="centerY" id="V9G-rd-0Gx"/>
+                    <constraint firstItem="4vG-2e-o3E" firstAttribute="top" secondItem="Khj-RM-McJ" secondAttribute="bottom" id="WET-7K-ALW"/>
                     <constraint firstAttribute="trailing" secondItem="4vG-2e-o3E" secondAttribute="trailing" id="fIQ-F9-ln3"/>
                     <constraint firstAttribute="bottom" secondItem="4vG-2e-o3E" secondAttribute="bottom" constant="32" id="g8J-Cw-1rU"/>
                     <constraint firstItem="qGc-Lb-XNN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="jut-TN-gY4"/>
@@ -60,12 +67,14 @@
                     <constraint firstItem="4vG-2e-o3E" firstAttribute="top" secondItem="qGc-Lb-XNN" secondAttribute="bottom" constant="13" id="mjH-Uz-tEi"/>
                     <constraint firstItem="EFf-6N-sU0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qGc-Lb-XNN" secondAttribute="trailing" constant="16" id="rUI-ad-Ass"/>
                     <constraint firstItem="PTa-wK-l60" firstAttribute="leading" secondItem="EFf-6N-sU0" secondAttribute="trailing" constant="4" id="zCn-MZ-TRZ"/>
+                    <constraint firstAttribute="trailing" secondItem="Khj-RM-McJ" secondAttribute="trailing" id="zjn-gv-vIl"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="collectionView" destination="4vG-2e-o3E" id="uaF-Fd-y8S"/>
+                <outlet property="moreBtn" destination="Khj-RM-McJ" id="awF-Ug-vBH"/>
                 <outlet property="titleL" destination="qGc-Lb-XNN" id="MR9-iU-zy7"/>
             </connections>
             <point key="canvasLocation" x="85.496183206106863" y="76.056338028169023"/>

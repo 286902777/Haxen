@@ -9,6 +9,12 @@ import Foundation
 import Alamofire
 import HandyJSON
 
+enum NetworkResponse<T> {
+    case success(_ object: T?)
+    case failure(_ error: Swift.Error)
+}
+typealias OptionResponseBlock<T> = (NetworkResponse<T>) -> ()
+
 enum ResponseError: Int {
     case    unkown      =    0
     case    success     =   200
@@ -30,22 +36,21 @@ protocol ResponseBaseParam: BaseModel{
     var last_page   :   Int?{ get }
 }
 
-struct RequestHeaders: HandyJSON{
-    var timestamp       :   String?
-    var token           :   String?
-    var sign            :   String?
-}
+//struct RequestHeaders: String {
+//    var Content-Type :   String?
+//    
+//}
 
 struct ResponseDefault: HandyJSON {}
 
 struct ResponseData: HandyJSON{
-    var code    :   Int?
+    var status    :   Int?
     var msg     :   String?
     var data    :   Any?
 }
 
 struct ResponseModel<T:HandyJSON>{
-    var errorCode       :   ResponseError = .unkown
+    var status          :   ResponseError = .unkown
     var errorMessage    :   String = "未知错误"
     var model           :   T?
     var models          :   [T?]?
@@ -54,23 +59,28 @@ struct ResponseModel<T:HandyJSON>{
 
 class NetManager {
     static let defualt: NetManager = NetManager()
-
     /// 请求头
-    var HKHeaders: HTTPHeaders{
-        get{
-            var headers = RequestHeaders()
-            headers.sign = ""
-            headers.token = ""
-            headers.timestamp = ""
-            guard let jsonHeader = headers.toJSON() ,let jsonHeader = jsonHeader as? [String:String] else {
-                return []
-            }
-            return HTTPHeaders.init(jsonHeader)
-        }
-    }
-    
+//    var HKHeaders: HTTPHeaders{
+//        get{
+//            var
+//            var headers = RequestHeaders()
+//            headers.sign = ""
+//            headers.token = ""
+//            headers.timestamp = "application/x-www-form-urlencode"
+////            headers["Content-Type"] = "application/x-www-form-urlencoded"
+//            guard let jsonHeader = headers.toJSON() ,let jsonHeader = jsonHeader as? [String:String] else {
+//                return []
+//            }
+//            return HTTPHeaders.init(jsonHeader)
+//        }
+//    }
     /// 接口地址
-    let RequestUrlHost : String = ""
+
+#if DEBUG
+    let RequestUrlHost: String = "https://movie.powerfulclean.net/v1/downloader/routing/"
+#else
+    let RequestUrlHost: String = "https://www.movieson.net/v1/downloader/routing/"
+#endif
     
     /// 参数编码方式
     let HKParameterEncoder : ParameterEncoder = URLEncodedFormParameterEncoder.default
@@ -82,8 +92,9 @@ extension NetManager{
                                                                   method:HTTPMethod = .post,
                                                                   parameters:Parameters? = nil
     ) -> DataRequest{
-        AF.sessionConfiguration.timeoutIntervalForRequest = 10
-        let headers : HTTPHeaders = NetManager.defualt.HKHeaders
+        AF.sessionConfiguration.timeoutIntervalForRequest = 15
+        var headers : HTTPHeaders = HTTPHeaders()
+        headers.add(name: "Content-Type", value: "application/x-www-form-urlencoded")
         let encoder : ParameterEncoder = NetManager.defualt.HKParameterEncoder
         let requestUrl = url.jointHost()
         
@@ -136,7 +147,7 @@ extension NetManager{
             }
     }
     
-    class func requestXML(url: String, method:HTTPMethod = .post,
+    class func requestSearch(url: String, method:HTTPMethod = .get,
                           parameters: [String:String]? = [:], resultBlock: @escaping (String) ->()) {
         NetManager.InitDataRequest(url: url, method: .get ,parameters: parameters)
             .responseString { string in
@@ -167,7 +178,7 @@ extension NetManager{
         guard let baseModel = baseModel else {
             return resultBlock(responseModel)
         }
-        responseModel.errorCode = ResponseError(rawValue: baseModel.code ?? 0) ?? .unkown
+        responseModel.status = ResponseError(rawValue: baseModel.status ?? 0) ?? .unkown
         if let _ = baseModel.msg{
             responseModel.errorMessage = baseModel.msg!
         }

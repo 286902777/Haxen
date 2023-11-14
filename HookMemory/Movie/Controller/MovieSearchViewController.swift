@@ -7,11 +7,15 @@
 
 import UIKit
 
-class MovieSearchViewController: BaseViewController {
-    let hostUrl = "http://google.com/complete/search?output=toolbar&q="
+class MovieSearchViewController: MovieBaseViewController {
+    let hostUrl = "https://suggestqueries.google.com/complete/search?client=youtube&q="
     let movieSearchCellIdentifier = "MovieSearchCellIdentifier"
     let movieCellIdentifier = "MovieCellIdentifier"
     var searchKeys: [String] = []
+    var dataArr: [MovieDataInfoModel] = []
+    private var page: Int = 1
+    private var key: String = ""
+    let cellW = floor((kScreenWidth - 48) / 3)
     lazy var tableView: UITableView = {
         let table = UITableView.init(frame: .zero, style: .plain)
         table.delegate = self
@@ -19,7 +23,7 @@ class MovieSearchViewController: BaseViewController {
         table.separatorStyle = .none
         table.backgroundColor = .clear
         table.register(MovieSearchCell.self, forCellReuseIdentifier: movieSearchCellIdentifier)
-        table.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        table.contentInset = UIEdgeInsets(top: 14, left: 0, bottom: 0, right: 0)
         if #available(iOS 15.0, *) {
             table.sectionHeaderTopPadding = 0
         }
@@ -35,37 +39,75 @@ class MovieSearchViewController: BaseViewController {
         collectionView.delegate = self
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        collectionView.contentInset = UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)
         collectionView.register(UINib(nibName: String(describing: MovieCell.self), bundle: nil), forCellWithReuseIdentifier: movieCellIdentifier)
         return collectionView
     }()
-    lazy var textField: UITextField = {
-        let view = UITextField()
+    lazy var searchView: UIView = {
+        let view = UIView()
         view.backgroundColor = .white
-        view.placeholder = "search"
         view.layer.cornerRadius = 8
         view.layer.masksToBounds = true
+        return view
+    }()
+    lazy var textField: UITextField = {
+        let view = UITextField()
+        view.backgroundColor = .clear
         view.returnKeyType = .search
-        view.clearButtonMode = .whileEditing
+        view.clearButtonMode = .never
         view.delegate = self
         return view
     }()
     
+    lazy var clearBtn: UIButton = {
+        let btn = UIButton()
+        btn.isHidden = true
+        btn.addTarget(self, action: #selector(clearAction), for: .touchUpInside)
+        btn.setImage(IMG("movie_search_close"), for: .normal)
+        return btn
+    }()
+    lazy var cancelBtn: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("Cancel", for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        btn.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
+        btn.titleLabel?.font = .font(weigth: .medium, size: 12)
+        return btn
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         setSearchBar()
         setUI()
+        addRefresh()
     }
     
     func setSearchBar() {
         cusBar.titleL.isHidden = true
         cusBar.rightBtn.isHidden = true
-        cusBar.addSubview(textField)
-        textField.snp.makeConstraints { make in
-            make.left.equalTo(cusBar.backBtn.snp.right).offset(10)
-            make.right.equalToSuperview().offset(-16)
+        cusBar.backBtn.isHidden = true
+        cusBar.addSubview(searchView)
+        cusBar.addSubview(cancelBtn)
+        cancelBtn.snp.makeConstraints { make in
+            make.bottom.right.equalToSuperview()
+            make.size.equalTo(CGSize(width: 72, height: 44))
+        }
+        searchView.snp.makeConstraints { make in
+            make.left.equalTo(16)
+            make.right.equalTo(cancelBtn.snp.left)
             make.height.equalTo(40)
-            make.centerY.equalTo(cusBar.backBtn)
+            make.centerY.equalTo(cancelBtn)
+        }
+        searchView.addSubview(textField)
+        searchView.addSubview(clearBtn)
+        clearBtn.snp.makeConstraints { make in
+            make.top.bottom.right.equalToSuperview()
+            make.width.equalTo(0)
+        }
+        
+        textField.snp.makeConstraints { make in
+            make.left.equalTo(16)
+            make.right.equalTo(clearBtn.snp.left).offset(-16)
+            make.top.bottom.equalToSuperview()
         }
     }
     
@@ -82,26 +124,97 @@ class MovieSearchViewController: BaseViewController {
         }
     }
     
-    func searchText(_ text: String) {
-        NetManager.requestXML(url: hostUrl + text) { [weak self] xml in
+    func addRefresh() {
+        let footer = RefreshAutoNormalFooter { [weak self] in
             guard let self = self else { return }
-            self.getDataXML(xml)
+            self.page += 1
+            self.loadMoreData()
+        }
+        collectionView.mj_footer = footer
+    }
+    
+    private func requestData() {
+        self.page = 1
+        self.dataArr.removeAll()
+        self.tableView.isHidden = true
+        self.collectionView.isHidden = true
+        self.loadMoreData()
+    }
+    private func loadMoreData() {
+        MovieAPI.share.movieSearch(keyword: self.key, page: self.page) { [weak self] success, model in
+            guard let self = self else { return }
+            if !success {
+                self.showEmpty(.noNet, view: self.collectionView)
+            } else {
+                if model.movie_tv_list.count > 0 {
+                    self.dismissEmpty(self.collectionView)
+                    self.dataArr.append(contentsOf: model.movie_tv_list)
+                } else {
+                    self.showEmpty(.noContent, view: self.collectionView)
+                }
+            }
+            self.collectionView.mj_header?.endRefreshing()
+            self.collectionView.mj_footer?.endRefreshing()
+            if model.movie_tv_list.count < MovieAPI.share.pageSize {
+                self.collectionView.mj_footer?.endRefreshingWithNoMoreData()
+            }
+            DispatchQueue.main.async {
+                self.collectionView.isHidden = false
+                self.collectionView.reloadData()
+            }
         }
     }
     
-    func getDataXML(_ xmlText: String) {
-        if let data = xmlText.data(using: .utf8) {
-            let xml = XMLParser(data: data)
+    func searchText(_ text: String) {
+        NetManager.requestSearch(url: hostUrl + text) { [weak self] data in
+            guard let self = self else { return }
             self.searchKeys.removeAll()
-            xml.delegate = self
-            xml.parse()
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
+            if let arr = self.getSearchData(data) {
+                for i in arr {
+                    if let sub = i as? Array<Any> {
+                        for s in sub {
+                            if let keys = s as? Array<Any> {
+                                self.searchKeys.append(keys.first as? String ?? "")
+                            }
+                        }
+                    } else if i is String {
+                        self.searchKeys.append(i as? String ?? "")
+                    }
+                }
+            }
+            DispatchQueue.main.async {
                 self.tableView.isHidden = false
                 self.collectionView.isHidden = true
                 self.tableView.reloadData()
             }
         }
+    }
+    
+    func getSearchData(_ data: String) -> Array<Any>? {
+        guard let start = data.range(of: "(") else {
+            return nil
+        }
+
+        let stratRange = NSRange(start, in: data)
+        let str = data.substring(withRange: NSRange(location: stratRange.location + 1, length: data.count - stratRange.location - 2))
+        print(str)
+        do {
+            if let d = str.data(using: .utf8) {
+                let arr = try JSONSerialization.jsonObject(with: d, options: .mutableContainers)
+                return arr as? Array<Any>
+            }
+        } catch {
+            print("error")
+        }
+        return nil
+    }
+    
+    @objc func clearAction() {
+        self.textField.text = ""
+    }
+    
+    @objc func cancelAction() {
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
@@ -113,11 +226,11 @@ extension MovieSearchViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.tableView.isHidden = true
-        self.collectionView.isHidden = false
+        self.key = self.searchKeys[indexPath.row]
+        self.requestData()
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        40
+        48
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -131,7 +244,7 @@ extension MovieSearchViewController: UITableViewDelegate, UITableViewDataSource 
 
 extension MovieSearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        20
+        self.dataArr.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -140,7 +253,8 @@ extension MovieSearchViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: movieCellIdentifier, for: indexPath) as! MovieCell
-        cell.backgroundColor = .red
+        let model = self.dataArr[indexPath.item]
+        cell.setModel(model: model)
         return cell
     }
     
@@ -149,15 +263,15 @@ extension MovieSearchViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        10
+        16
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        10
+        8
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 200)
+        CGSize(width: cellW, height: cellW * 140 / 109 + 44)
     }
 }
 
@@ -172,6 +286,14 @@ extension MovieSearchViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let text = textField.text {
             searchText(text)
+        }
+    }
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if let text = textField.text {
+            clearBtn.isHidden = text.count == 0
+            clearBtn.snp.updateConstraints { make in
+                make.width.equalTo(text.count > 0 ? 44 : 0)
+            }
         }
     }
 }

@@ -8,10 +8,11 @@
 import UIKit
 import MJRefresh
 
-class MovieHomeViewController: UIViewController {
+class MovieHomeViewController: MovieBaseViewController {
     let cellIdentifier = "MovieListCell"
+    private var dataArr: [MovieHomeModel?] = []
     lazy var tableView: UITableView = {
-        let table = UITableView.init(frame: .zero, style: .grouped)
+        let table = UITableView.init(frame: .zero, style: .plain)
         table.delegate = self
         table.dataSource = self
         table.separatorStyle = .none
@@ -20,20 +21,21 @@ class MovieHomeViewController: UIViewController {
         if #available(iOS 15.0, *) {
             table.sectionHeaderTopPadding = 0
         }
+        table.contentInset = UIEdgeInsets(top: 22, left: 0, bottom: 0, right: 0)
         table.contentInsetAdjustmentBehavior = .never
         return table
     }()
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.isHidden = true
-        view.backgroundColor = UIColor.hex("#141414")
         setUpUI()
         addRefresh()
     }
     
-    func setUpUI () {
+    func setUpUI() {
         let search = SearchView.view()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(pushSearch))
+        search.addGestureRecognizer(tap)
         view.addSubview(search)
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
@@ -50,53 +52,55 @@ class MovieHomeViewController: UIViewController {
             self.requestData()
         }
         tableView.mj_header = header
-        
-        let footer = RefreshAutoNormalFooter {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                self.tableView.mj_footer?.endRefreshing()
-                self.tableView.mj_footer?.endRefreshingWithNoMoreData()
-            }
-        }
-        tableView.mj_footer = footer
+        tableView.mj_header?.beginRefreshing()
     }
     
     func requestData() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        MovieAPI.share.movieHomeList { [weak self] success, list in
+            guard let self = self else { return }
+            if !success {
+                self.showEmpty(.noNet, self.tableView)
+            } else {
+                self.dismissEmpty(self.tableView)
+                self.dataArr = list ?? []
+                self.dataArr.removeFirst()
+            }
             self.tableView.mj_header?.endRefreshing()
-            self.tableView.showTableEmpty(with: UIImage(named: "LOGO"), title: "title", btnTitle: "OK", offsetY: 10) {
-                print("_________")
-            } btnClickAction: {
-                print("+++++++++++")
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         }
     }
     
-    // MARK: - Empty
-    func showEmpty() {
-        tableView.showTableEmpty(with: UIImage(named: "LOGO"), title: "title", btnTitle: "OK", offsetY: 10) {
-            print("_________")
-        } btnClickAction: {
-            print("+++++++++++")
-        }
+    override func reloadNetWorkData() {
+        tableView.mj_header?.beginRefreshing()
     }
     
-    func dismissEmpty() {
-        tableView.dismissEmpty()
+    @objc func pushSearch() {
+        let vc = MovieSearchViewController()
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
 extension MovieHomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:MovieListCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as! MovieListCell
-        cell.setModel { index in
-            
-        } clickBlock: { [weak self] movieId in
-            DispatchQueue.main.async {
+        if let model = self.dataArr[indexPath.row] {
+            cell.setModel(model: model, clickMoreBlock: { [weak self] in
                 guard let self = self else { return }
-                let vc = MovieFilterViewController()
-                vc.hidesBottomBarWhenPushed = true
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
+                DispatchQueue.main.async {
+                    let vc = MovieListViewController()
+                    if let mod = model.data.first {
+                        vc.titleName = mod.name
+                        vc.listId = mod.id
+                    }
+                    vc.hidesBottomBarWhenPushed = true
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+            }, clickBlock: { movieId in
+                
+            })
         }
         return cell
     }
@@ -106,21 +110,11 @@ extension MovieHomeViewController: UITableViewDelegate, UITableViewDataSource {
         return H
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: kScreenWidth, height: 22))
-        view.backgroundColor = .clear
-        return view
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        22
-    }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        20
+        self.dataArr.count
     }
 }

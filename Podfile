@@ -11,6 +11,7 @@ target 'HookMemory' do
   pod 'MJRefresh'
   pod 'Alamofire'
   pod 'HandyJSON'
+  pod 'Kingfisher'
   pod 'IQKeyboardManagerSwift'
   target 'HookMemoryTests' do
     inherit! :search_paths

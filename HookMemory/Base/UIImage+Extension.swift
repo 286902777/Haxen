@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import Photos
+import Kingfisher
 
 extension UIImage {
     func saveImage(complete: @escaping (String?)->()){
@@ -32,8 +33,36 @@ func IMG(_ name: String) -> UIImage? {
     return UIImage.init(named: name)
 }
 
-extension String {
+extension UIImageView {
+    typealias CompletionHandler = (_ image: UIImage?)->()
+    func setImage(with url: String?, placeholder: String = "icon_placeholder", complete: CompletionHandler? = nil) {
+        let placeImg = UIImage(named: placeholder)
 
+        var targetUrl: String? = url
+        
+        // 解决url已被后台urlEncode，先将url Decode后，再Encode
+        if let decodeUrl = url?.removingPercentEncoding {
+            targetUrl = decodeUrl
+        }
+        
+        guard let urlStr = targetUrl?.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else {
+            self.image = placeImg
+            return
+        }
+        
+        let imgUrl = URL(string: urlStr)
+        self.kf.setImage(with: imgUrl, placeholder: placeImg, options: [.cacheSerializer(DefaultCacheSerializer.default)], progressBlock: nil) { (result) in
+            switch result {
+            case let .success(imgResult):
+                complete?(imgResult.image.kf.normalized)
+            case let .failure(error):
+                print(error)
+                break
+            }
+        }
+    }
+}
+extension String {
     func getPhotoImage(complete: @escaping (UIImage?)->()) {
         if self.count == 0 {
             complete(nil)
