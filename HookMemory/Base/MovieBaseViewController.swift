@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AppTrackingTransparency
 
 class MovieBaseViewController: UIViewController {
     lazy var cusBar: HookNavigationBar = {
@@ -17,6 +18,17 @@ class MovieBaseViewController: UIViewController {
         view.backgroundColor = UIColor.hex("#141414")
         addBackImage()
         addNavBar()
+        addTracking()
+    }
+
+    func addTracking() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            if #available(iOS 14, *) {
+                ATTrackingManager.requestTrackingAuthorization { status in
+                    
+                }
+            }
+        }
     }
 
     func addBackImage() {
