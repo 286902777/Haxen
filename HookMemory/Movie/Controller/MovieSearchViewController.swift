@@ -122,6 +122,7 @@ class MovieSearchViewController: MovieBaseViewController {
             make.top.equalTo(cusBar.snp.bottom)
             make.left.bottom.right.equalToSuperview()
         }
+        textField.becomeFirstResponder()
     }
     
     func addRefresh() {

@@ -59,23 +59,8 @@ struct ResponseModel<T:HandyJSON>{
 
 class NetManager {
     static let defualt: NetManager = NetManager()
-    /// 请求头
-//    var HKHeaders: HTTPHeaders{
-//        get{
-//            var
-//            var headers = RequestHeaders()
-//            headers.sign = ""
-//            headers.token = ""
-//            headers.timestamp = "application/x-www-form-urlencode"
-////            headers["Content-Type"] = "application/x-www-form-urlencoded"
-//            guard let jsonHeader = headers.toJSON() ,let jsonHeader = jsonHeader as? [String:String] else {
-//                return []
-//            }
-//            return HTTPHeaders.init(jsonHeader)
-//        }
-//    }
-    /// 接口地址
 
+    /// 接口地址
 #if DEBUG
     let RequestUrlHost: String = "https://movie.powerfulclean.net/v1/downloader/routing/"
 #else

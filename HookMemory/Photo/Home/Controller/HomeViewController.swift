@@ -31,6 +31,7 @@ class HomeViewController: BaseViewController {
         setNavbar()
         setepUI()
         getAllDay()
+        requestData()
     }
     
     func setNavbar() {
@@ -169,6 +170,19 @@ class HomeViewController: BaseViewController {
         }
     }
 
+    func requestData() {
+        MovieAPI.share.movieHomeList { success, list in
+            if success {
+                if let arr = list, let mod = arr.last??.data.first {
+                    if mod.cover.isEmpty == false {
+                        let imageV: UIImageView = UIImageView()
+                        imageV.setImage(with: mod.cover)
+                    }
+                }
+            }
+        }
+    }
+    
     @objc func pushListVC() {
         let authStatus = PHPhotoLibrary.authorizationStatus()
         switch authStatus {

@@ -278,9 +278,8 @@
 			children = (
 				A790662B2AF32CE4006A3982 /* AppDelegate.swift */,
 				A790662D2AF32CE4006A3982 /* SceneDelegate.swift */,
-				A79066742AF346DD006A3982 /* DataDB */,
+				A7A938EB2B036C9900232981 /* Photo */,
 				A79066662AF32DBA006A3982 /* Base */,
-				A790665E2AF32D30006A3982 /* Home */,
 				A790668D2AF37462006A3982 /* Setting */,
 				A79D65E52AFB5D6E0094E411 /* Movie */,
 				A77E07852B021ABD005A813C /* NetWork */,
@@ -469,6 +468,15 @@
 				A77E07832B021009005A813C /* WebViewController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		A7A938EB2B036C9900232981 /* Photo */ = {
+			isa = PBXGroup;
+			children = (
+				A790665E2AF32D30006A3982 /* Home */,
+				A79066742AF346DD006A3982 /* DataDB */,
+			);
+			path = Photo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
