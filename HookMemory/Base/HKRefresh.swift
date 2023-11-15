@@ -26,6 +26,23 @@ class RefreshGifHeader: MJRefreshGifHeader{
     }
 }
 
+class RefreshFilterGifHeader: MJRefreshGifHeader{
+    override func prepare() {
+        super.prepare()
+        self.gifView?.isHidden = true
+        let animation = LottieAnimationView(name: "loading")
+        let view = UIView(frame: CGRect(x: (kScreenWidth - 60) * 0.5, y: -202, width: 60, height: 60))
+        animation.frame = view.bounds
+        animation.loopMode = .loop
+        animation.play()
+        view.addSubview(animation)
+        self.addSubview(view)
+        self.mj_h = 80
+        self.stateLabel?.isHidden = true
+        self.lastUpdatedTimeLabel?.isHidden = true
+    }
+}
+
 class RefreshAutoNormalFooter: MJRefreshAutoNormalFooter {
 
     override func prepare() {

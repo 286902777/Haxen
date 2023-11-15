@@ -29,6 +29,7 @@ class MovieFilterViewController: MovieBaseViewController {
         collectionView.contentInset = UIEdgeInsets(top: 232, left: 16, bottom: 16, right: 16)
         collectionView.register(UINib(nibName: String(describing: MovieCell.self), bundle: nil), forCellWithReuseIdentifier: cellIdentifier)
         collectionView.register(FilterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "FilterView")
+        collectionView.contentInsetAdjustmentBehavior = .never
         return collectionView
     }()
     
@@ -51,7 +52,6 @@ class MovieFilterViewController: MovieBaseViewController {
         super.viewDidLoad()
         setUpUI()
         addRefresh()
-        initData()
     }
     func setUpUI() {
         self.navigationController?.navigationBar.isHidden = true
@@ -81,13 +81,23 @@ class MovieFilterViewController: MovieBaseViewController {
         }
     }
     func addRefresh() {
+        let header = RefreshFilterGifHeader { [weak self] in
+            guard let self = self else { return }
+            self.page = 1
+            self.dataArr.removeAll()
+            self.initData()
+        }
+
+        collectionView.mj_header = header
         let footer = RefreshAutoNormalFooter { [weak self] in
             guard let self = self else { return }
             self.page += 1
             self.loadMoreData()
         }
         collectionView.mj_footer = footer
+        collectionView.mj_header?.beginRefreshing()
     }
+    
     func initData() {
         MovieAPI.share.movieFilterInfo { [weak self] success, model in
             guard let self = self else { return }
@@ -100,6 +110,7 @@ class MovieFilterViewController: MovieBaseViewController {
                 self.filterArr = [mod.type, mod.genre, mod.pub, mod.country]
                 self.setFilterHeaderData()
             }
+            self.collectionView.mj_header?.endRefreshing()
             self.collectionView.mj_footer?.endRefreshing()
             DispatchQueue.main.async {
                 self.collectionView.reloadData()

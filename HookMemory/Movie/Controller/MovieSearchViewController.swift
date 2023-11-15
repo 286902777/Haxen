@@ -41,6 +41,7 @@ class MovieSearchViewController: MovieBaseViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.contentInset = UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)
         collectionView.register(UINib(nibName: String(describing: MovieCell.self), bundle: nil), forCellWithReuseIdentifier: movieCellIdentifier)
+        collectionView.contentInsetAdjustmentBehavior = .never
         return collectionView
     }()
     lazy var searchView: UIView = {

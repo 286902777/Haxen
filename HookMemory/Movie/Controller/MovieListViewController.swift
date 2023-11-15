@@ -23,6 +23,7 @@ class MovieListViewController: MovieBaseViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.contentInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         collectionView.register(UINib(nibName: String(describing: MovieCell.self), bundle: nil), forCellWithReuseIdentifier: movieCellIdentifier)
+        collectionView.contentInsetAdjustmentBehavior = .never
         return collectionView
     }()    
  
@@ -30,16 +31,10 @@ class MovieListViewController: MovieBaseViewController {
         super.viewDidLoad()
         setUI()
         addRefresh()
+        requestData()
     }
     
     func addRefresh() {
-        let header = RefreshGifHeader { [weak self] in
-            guard let self = self else { return }
-            self.page = 1
-            self.dataArr.removeAll()
-            self.requestData()
-        }
-        collectionView.mj_header = header
         let footer = RefreshAutoNormalFooter { [weak self] in
             guard let self = self else { return }
             self.page += 1

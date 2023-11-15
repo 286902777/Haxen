@@ -22,6 +22,7 @@ class MovieSettingViewController: MovieBaseViewController {
         if #available(iOS 15.0, *) {
             table.sectionHeaderTopPadding = 0
         }
+        table.contentInsetAdjustmentBehavior = .never
         return table
     }()
     

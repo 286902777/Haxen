@@ -280,7 +280,6 @@
 				A790662D2AF32CE4006A3982 /* SceneDelegate.swift */,
 				A7A938EB2B036C9900232981 /* Photo */,
 				A79066662AF32DBA006A3982 /* Base */,
-				A790668D2AF37462006A3982 /* Setting */,
 				A79D65E52AFB5D6E0094E411 /* Movie */,
 				A77E07852B021ABD005A813C /* NetWork */,
 				A79066312AF32CE4006A3982 /* Main.storyboard */,
@@ -474,6 +473,7 @@
 			isa = PBXGroup;
 			children = (
 				A790665E2AF32D30006A3982 /* Home */,
+				A790668D2AF37462006A3982 /* Setting */,
 				A79066742AF346DD006A3982 /* DataDB */,
 			);
 			path = Photo;
