@@ -71,6 +71,10 @@
 		A7A0AE9E2AFE27F000646494 /* Hind-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7A0AE9C2AFE27F000646494 /* Hind-SemiBold.ttf */; };
 		A7A938E62B03060A00232981 /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A938E52B03060A00232981 /* MovieListViewController.swift */; };
 		A7A938E82B03096800232981 /* MovieMroeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A938E72B03096800232981 /* MovieMroeModel.swift */; };
+		A7BC83DE2B04615B000912F1 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BC83DC2B04615B000912F1 /* LoadingViewController.swift */; };
+		A7BC83DF2B04615B000912F1 /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7BC83DD2B04615B000912F1 /* LoadingViewController.xib */; };
+		A7BC83E12B0490E1000912F1 /* HKConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BC83E02B0490E1000912F1 /* HKConfig.swift */; };
+		A7BC83E32B04B5C4000912F1 /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BC83E22B04B5C4000912F1 /* ProgressHUD.swift */; };
 		A7C3F9CF2AFC7F520094A15B /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C3F9CD2AFC7F520094A15B /* FilterCell.swift */; };
 		A7C3F9D02AFC7F520094A15B /* FilterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7C3F9CE2AFC7F520094A15B /* FilterCell.xib */; };
 		A7C3F9D22AFC823F0094A15B /* MovieFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C3F9D12AFC823F0094A15B /* MovieFilterViewController.swift */; };
@@ -176,6 +180,10 @@
 		A7A0AE9C2AFE27F000646494 /* Hind-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hind-SemiBold.ttf"; sourceTree = "<group>"; };
 		A7A938E52B03060A00232981 /* MovieListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewController.swift; sourceTree = "<group>"; };
 		A7A938E72B03096800232981 /* MovieMroeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieMroeModel.swift; sourceTree = "<group>"; };
+		A7BC83DC2B04615B000912F1 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
+		A7BC83DD2B04615B000912F1 /* LoadingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingViewController.xib; sourceTree = "<group>"; };
+		A7BC83E02B0490E1000912F1 /* HKConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKConfig.swift; sourceTree = "<group>"; };
+		A7BC83E22B04B5C4000912F1 /* ProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
 		A7C3F9CD2AFC7F520094A15B /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
 		A7C3F9CE2AFC7F520094A15B /* FilterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterCell.xib; sourceTree = "<group>"; };
 		A7C3F9D12AFC823F0094A15B /* MovieFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieFilterViewController.swift; sourceTree = "<group>"; };
@@ -371,6 +379,10 @@
 				A79D65EF2AFB70B30094E411 /* BaseModel.swift */,
 				A79D65F12AFB77350094E411 /* HKTabBarViewController.swift */,
 				A7A0AE952AFE21E800646494 /* MovieBaseViewController.swift */,
+				A7BC83E02B0490E1000912F1 /* HKConfig.swift */,
+				A7BC83DC2B04615B000912F1 /* LoadingViewController.swift */,
+				A7BC83DD2B04615B000912F1 /* LoadingViewController.xib */,
+				A7BC83E22B04B5C4000912F1 /* ProgressHUD.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -591,6 +603,7 @@
 				A79066972AF37B00006A3982 /* AboutUsViewController.xib in Resources */,
 				A7C3F9DA2AFCA9F20094A15B /* FilterListCell.xib in Resources */,
 				A790666C2AF32E16006A3982 /* HookNavigationBar.xib in Resources */,
+				A7BC83DF2B04615B000912F1 /* LoadingViewController.xib in Resources */,
 				A72EB1612AF482A800AF20C3 /* HKSheetCell.xib in Resources */,
 				A79066382AF32CE6006A3982 /* Assets.xcassets in Resources */,
 				A79D65FE2AFB83FB0094E411 /* SearchView.xib in Resources */,
@@ -731,6 +744,7 @@
 			files = (
 				A79D65EC2AFB66580094E411 /* HKRefresh.swift in Sources */,
 				A7A0AE962AFE21E800646494 /* MovieBaseViewController.swift in Sources */,
+				A7BC83E12B0490E1000912F1 /* HKConfig.swift in Sources */,
 				A790666A2AF32E07006A3982 /* HookNavigationBar.swift in Sources */,
 				A790669A2AF37CF3006A3982 /* FeedBackViewController.swift in Sources */,
 				A77E07872B021B98005A813C /* MovieAPI.swift in Sources */,
@@ -740,9 +754,11 @@
 				A7C3F9DE2AFCADAB0094A15B /* MovieSearchCell.swift in Sources */,
 				A72EB15D2AF47E3C00AF20C3 /* HKSheetController.swift in Sources */,
 				A7C3F9DC2AFCAD480094A15B /* MovieSearchViewController.swift in Sources */,
+				A7BC83DE2B04615B000912F1 /* LoadingViewController.swift in Sources */,
 				A7A938E82B03096800232981 /* MovieMroeModel.swift in Sources */,
 				A799FE832AF8C49C00840196 /* HKToast.swift in Sources */,
 				A77E07842B021009005A813C /* WebViewController.swift in Sources */,
+				A7BC83E32B04B5C4000912F1 /* ProgressHUD.swift in Sources */,
 				A79D65F22AFB77350094E411 /* HKTabBarViewController.swift in Sources */,
 				A790668A2AF3699C006A3982 /* ListViewController.swift in Sources */,
 				A79D65FC2AFB83EF0094E411 /* SearchView.swift in Sources */,

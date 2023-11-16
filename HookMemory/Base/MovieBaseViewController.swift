@@ -19,8 +19,32 @@ class MovieBaseViewController: UIViewController {
         addBackImage()
         addNavBar()
         addTracking()
+        NotificationCenter.default.addObserver(self, selector: #selector(netWorkChange), name: Notification.Name("netStatus"), object: nil)
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func netWorkChange() {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            switch appDelegate.netStatus {
+            case .reachable(_):
+                initData()
+            default:
+                noNetAction()
+            }
+        }
+    }
+    
+    func initData() {
+        
+    }
+    
+    func noNetAction() {
+        
+    }
+    
     func addTracking() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             if #available(iOS 14, *) {
@@ -92,7 +116,7 @@ class MovieBaseViewController: UIViewController {
     func showEmpty(_ type: HKEmptyView.emptyType = .noNet, view: UICollectionView) {
         let image = IMG(type == .noNet ? "movie_no_network" : "movie_no_concent")
         let titleText = type == .noNet ? "No network, please retry" : "No results found. Try different keywords."
-        view.showTableEmpty(with: image, title: titleText, btnTitle: type == .noNet ? "" : "Retry") {
+        view.showTableEmpty(with: image, title: titleText, btnTitle: type == .noNet ? "" : "Retry", offsetY: kNavBarHeight) {
             
         } btnClickAction: { [weak self] in
             self?.reloadNetWorkData()

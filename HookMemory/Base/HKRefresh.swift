@@ -43,7 +43,7 @@ class RefreshFilterGifHeader: MJRefreshGifHeader{
     }
 }
 
-class RefreshAutoNormalFooter: MJRefreshAutoNormalFooter {
+class RefreshAutoNormalFooter: MJRefreshAutoStateFooter {
 
     override func prepare() {
         super.prepare()

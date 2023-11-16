@@ -98,9 +98,11 @@ class MovieFilterViewController: MovieBaseViewController {
         collectionView.mj_header?.beginRefreshing()
     }
     
-    func initData() {
+    override func initData() {
+        ProgressHUD.showLoading()
         MovieAPI.share.movieFilterInfo { [weak self] success, model in
             guard let self = self else { return }
+            ProgressHUD.dismiss()
             if !success {
                 self.showEmpty(.noNet, view: self.collectionView)
             } else {
@@ -108,11 +110,17 @@ class MovieFilterViewController: MovieBaseViewController {
                 self.dataArr.append(contentsOf: model.minfo)
                 let mod = model.filter
                 self.filterArr = [mod.type, mod.genre, mod.pub, mod.country]
+                self.type = "1"
+                self.genre = "100"
+                self.pubdate = "100"
+                self.cntyno = "100"
+                self.selectL.text = ""
                 self.setFilterHeaderData()
             }
             self.collectionView.mj_header?.endRefreshing()
             self.collectionView.mj_footer?.endRefreshing()
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 self.collectionView.reloadData()
             }
         }
@@ -154,19 +162,27 @@ class MovieFilterViewController: MovieBaseViewController {
     }
     
     private func loadMoreData() {
-        MovieAPI.share.movieFilterInfo(cntyno: self.cntyno, genre: self.genre, pubdate: self.pubdate, type: self.type) { [weak self] success, model in
+        ProgressHUD.showLoading()
+        MovieAPI.share.movieFilterInfo(cntyno: self.cntyno, genre: self.genre, pubdate: self.pubdate, type: self.type, page: self.page) { [weak self] success, model in
             guard let self = self else { return }
+            ProgressHUD.dismiss()
             if !success {
                 self.showEmpty(.noNet, view: self.collectionView)
             } else {
-                self.dismissEmpty(self.collectionView)
                 self.dataArr.append(contentsOf: model.minfo)
+                if self.dataArr.count == 0 {
+                    self.showEmpty(.noContent, view: self.collectionView)
+                } else {
+                    self.dismissEmpty(self.collectionView)
+                }
             }
             self.collectionView.mj_footer?.endRefreshing()
             if model.minfo.count < MovieAPI.share.pageSize {
                 self.collectionView.mj_footer?.endRefreshingWithNoMoreData()
+                self.collectionView.mj_footer?.isHidden = true
             }
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 self.collectionView.reloadSections(IndexSet(integer: 0))
             }
         }

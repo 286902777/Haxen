@@ -53,6 +53,8 @@ class MovieSearchViewController: MovieBaseViewController {
     }()
     lazy var textField: UITextField = {
         let view = UITextField()
+        view.textColor = UIColor.hex("#141414")
+        view.font = .font(weigth: .medium, size: 12)
         view.backgroundColor = .clear
         view.returnKeyType = .search
         view.clearButtonMode = .never
@@ -124,6 +126,7 @@ class MovieSearchViewController: MovieBaseViewController {
             make.left.bottom.right.equalToSuperview()
         }
         textField.becomeFirstResponder()
+        textField.addTarget(self, action: #selector(changeKey), for: .editingChanged)
     }
     
     func addRefresh() {
@@ -138,20 +141,29 @@ class MovieSearchViewController: MovieBaseViewController {
     private func requestData() {
         self.page = 1
         self.dataArr.removeAll()
-        self.tableView.isHidden = true
-        self.collectionView.isHidden = true
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.tableView.isHidden = true
+            self.collectionView.isHidden = false
+        }
         self.loadMoreData()
     }
     private func loadMoreData() {
+        self.textField.resignFirstResponder()
+        ProgressHUD.showLoading()
         MovieAPI.share.movieSearch(keyword: self.key, page: self.page) { [weak self] success, model in
             guard let self = self else { return }
+            ProgressHUD.dismiss()
             if !success {
+                self.collectionView.mj_footer?.isHidden = true
                 self.showEmpty(.noNet, view: self.collectionView)
             } else {
                 if model.movie_tv_list.count > 0 {
+                    self.collectionView.mj_footer?.isHidden = false
                     self.dismissEmpty(self.collectionView)
                     self.dataArr.append(contentsOf: model.movie_tv_list)
                 } else {
+                    self.collectionView.mj_footer?.isHidden = true
                     self.showEmpty(.noContent, view: self.collectionView)
                 }
             }
@@ -159,8 +171,11 @@ class MovieSearchViewController: MovieBaseViewController {
             self.collectionView.mj_footer?.endRefreshing()
             if model.movie_tv_list.count < MovieAPI.share.pageSize {
                 self.collectionView.mj_footer?.endRefreshingWithNoMoreData()
+                self.collectionView.mj_footer?.isHidden = true
             }
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.tableView.isHidden = true
                 self.collectionView.isHidden = false
                 self.collectionView.reloadData()
             }
@@ -184,7 +199,8 @@ class MovieSearchViewController: MovieBaseViewController {
                     }
                 }
             }
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 self.tableView.isHidden = false
                 self.collectionView.isHidden = true
                 self.tableView.reloadData()
@@ -212,11 +228,22 @@ class MovieSearchViewController: MovieBaseViewController {
     }
     
     @objc func clearAction() {
+        self.clearBtn.isHidden = true
         self.textField.text = ""
     }
     
     @objc func cancelAction() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func changeKey() {
+        if let text = textField.text {
+            searchText(text)
+            clearBtn.isHidden = text.count == 0
+            clearBtn.snp.updateConstraints { make in
+                make.width.equalTo(text.count > 0 ? 44 : 0)
+            }
+        }
     }
 }
 
@@ -280,23 +307,10 @@ extension MovieSearchViewController: UICollectionViewDelegate, UICollectionViewD
 extension MovieSearchViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let text = textField.text {
-            searchText(text)
+            self.key = text
+            self.requestData()
         }
         return true
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        if let text = textField.text {
-            searchText(text)
-        }
-    }
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-        if let text = textField.text {
-            clearBtn.isHidden = text.count == 0
-            clearBtn.snp.updateConstraints { make in
-                make.width.equalTo(text.count > 0 ? 44 : 0)
-            }
-        }
     }
 }
 

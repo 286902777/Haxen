@@ -32,6 +32,22 @@ class HomeViewController: BaseViewController {
         setepUI()
         getAllDay()
         requestData()
+        NotificationCenter.default.addObserver(self, selector: #selector(netWorkChange), name: Notification.Name("netStatus"), object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func netWorkChange() {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            switch appDelegate.netStatus {
+            case .reachable(_):
+                HKConfig.share.appRequest()
+            default:
+                break
+            }
+        }
     }
     
     func setNavbar() {
@@ -354,17 +370,15 @@ extension HomeViewController:
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = HKTabBarViewController()
-        self.present(vc, animated: true)
-//        let mod = self.dataArray[indexPath.item]
-//        if mod.array.count > 0 {
-//            let vc = ListDetailViewController()
-//            vc.dataModel = mod
-//            vc.refreshBlock = {
-//                self.getAllDay()
-//            }
-//            self.navigationController?.pushViewController(vc, animated: true)
-//        }
+        let mod = self.dataArray[indexPath.item]
+        if mod.array.count > 0 {
+            let vc = ListDetailViewController()
+            vc.dataModel = mod
+            vc.refreshBlock = {
+                self.getAllDay()
+            }
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }
 

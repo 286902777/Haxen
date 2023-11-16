@@ -11,6 +11,7 @@ target 'HookMemory' do
   pod 'MJRefresh'
   pod 'Alamofire'
   pod 'HandyJSON'
+  pod 'SVProgressHUD'
   pod 'Kingfisher'
   pod 'IQKeyboardManagerSwift'
   target 'HookMemoryTests' do

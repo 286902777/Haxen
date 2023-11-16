@@ -74,15 +74,16 @@ extension UITableView: EmptyProtocol {
         let block = updateFrameBlock ?? {
             // 自动矫正
             let width = $0.width
-            let x: CGFloat = 0
+//            let x: CGFloat = 0
             var y: CGFloat = 0
             var height = $0.height
-            
+            let top = self.contentInset.top
+            let left = self.contentInset.left
             if let tableV = $1 as? UITableView {
                 y += tableV.tableHeaderView?.frame.height ?? 0
                 height -= (tableV.tableHeaderView?.frame.height ?? 0) + (tableV.tableFooterView?.frame.height ?? 0)
             }
-            return CGRect(x: x, y: y, width: width, height: height)
+            return CGRect(x: -left, y: -top, width: width, height: height)
         }
         showEmpty(emptyView, updateFrameBlock: block)
     }
@@ -109,15 +110,16 @@ extension UICollectionView: EmptyProtocol {
         let block = updateFrameBlock ?? {
             // 自动矫正
             let width = $0.width
-            let x: CGFloat = 0
+//            let _: CGFloat = 0
             var y: CGFloat = 0
             var height = $0.height
-            
+            let top = self.contentInset.top
+            let left = self.contentInset.left
             if let tableV = $1 as? UITableView {
                 y += tableV.tableHeaderView?.frame.height ?? 0
                 height -= (tableV.tableHeaderView?.frame.height ?? 0) + (tableV.tableFooterView?.frame.height ?? 0)
             }
-            return CGRect(x: x, y: y, width: width, height: height)
+            return CGRect(x: -left, y: -top, width: width, height: height)
         }
         showEmpty(emptyView, updateFrameBlock: block)
     }
@@ -191,6 +193,7 @@ class HKEmptyView: UIView {
         let lbl = UILabel()
         lbl.font = kTitleFont
         lbl.textColor = kTitleColor
+        lbl.numberOfLines = 0
         lbl.textAlignment = .center
         return lbl
     }()
@@ -233,7 +236,10 @@ class HKEmptyView: UIView {
             make.left.equalToSuperview().offset(40)
             make.right.equalToSuperview().offset(-40)
         }
-        
+        if let window = HKConfig.share.currentWindow() {
+            contentStack.center = window.center
+        }
+
         addImageView()
         addTitleLbl()
         addBtn()

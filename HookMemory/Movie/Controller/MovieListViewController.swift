@@ -31,14 +31,14 @@ class MovieListViewController: MovieBaseViewController {
         super.viewDidLoad()
         setUI()
         addRefresh()
-        requestData()
+        initData()
     }
     
     func addRefresh() {
         let footer = RefreshAutoNormalFooter { [weak self] in
             guard let self = self else { return }
             self.page += 1
-            self.requestData()
+            self.initData()
         }
         collectionView.mj_footer = footer
         collectionView.mj_header?.beginRefreshing()
@@ -58,8 +58,10 @@ class MovieListViewController: MovieBaseViewController {
         }
     }
     
-    func requestData() {
+    override func initData() {
+        ProgressHUD.showLoading()
         MovieAPI.share.movieMoreList(id: self.listId, page: self.page) { [weak self] success, model in
+            ProgressHUD.dismiss()
             guard let self = self else { return }
             if !success {
                 self.showEmpty(.noNet, view: self.collectionView)
@@ -71,8 +73,10 @@ class MovieListViewController: MovieBaseViewController {
             self.collectionView.mj_footer?.endRefreshing()
             if model.total == self.dataArr.count {
                 self.collectionView.mj_footer?.endRefreshingWithNoMoreData()
+                self.collectionView.mj_footer?.isHidden = true
             }
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 self.collectionView.reloadData()
             }
         }

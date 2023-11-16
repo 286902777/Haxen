@@ -49,13 +49,13 @@ class MovieHomeViewController: MovieBaseViewController {
     func addRefresh() {
         let header = RefreshGifHeader { [weak self] in
             guard let self = self else { return }
-            self.requestData()
+            self.initData()
         }
         tableView.mj_header = header
         tableView.mj_header?.beginRefreshing()
     }
     
-    func requestData() {
+    override func initData() {
         MovieAPI.share.movieHomeList { [weak self] success, list in
             guard let self = self else { return }
             if !success {
@@ -66,7 +66,8 @@ class MovieHomeViewController: MovieBaseViewController {
                 self.dataArr.removeFirst()
             }
             self.tableView.mj_header?.endRefreshing()
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 self.tableView.reloadData()
             }
         }
@@ -89,7 +90,8 @@ extension MovieHomeViewController: UITableViewDelegate, UITableViewDataSource {
         if let model = self.dataArr[indexPath.row] {
             cell.setModel(model: model, clickMoreBlock: { [weak self] in
                 guard let self = self else { return }
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
                     let vc = MovieListViewController()
                     if let mod = model.data.first {
                         vc.titleName = mod.name
