@@ -34,6 +34,16 @@ class MovieListViewController: MovieBaseViewController {
         initData()
     }
     
+    func setUI() {
+        cusBar.titleL.text = self.titleName
+        cusBar.rightBtn.setImage(IMG("movie_search"), for: .normal)
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(cusBar.snp.bottom)
+            make.left.bottom.right.equalToSuperview()
+        }
+    }
+    
     func addRefresh() {
         let footer = RefreshAutoNormalFooter { [weak self] in
             guard let self = self else { return }
@@ -48,23 +58,27 @@ class MovieListViewController: MovieBaseViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func setUI() {
-        cusBar.titleL.text = self.titleName
-        cusBar.rightBtn.setImage(IMG("movie_search"), for: .normal)
-        view.addSubview(collectionView)
-        collectionView.snp.makeConstraints { make in
-            make.top.equalTo(cusBar.snp.bottom)
-            make.left.bottom.right.equalToSuperview()
-        }
+    override func refreshRequest() {
+        self.collectionView.mj_header?.beginRefreshing()
     }
     
-    override func initData() {
+    func initData() {
+        if isNet == false {
+            self.collectionView.mj_header?.endRefreshing()
+            self.showEmpty(.noNet, self.collectionView)
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.dataArr.removeAll()
+                self.collectionView.reloadData()
+            }
+            return
+        }
         ProgressHUD.showLoading()
         MovieAPI.share.movieMoreList(id: self.listId, page: self.page) { [weak self] success, model in
             ProgressHUD.dismiss()
             guard let self = self else { return }
             if !success {
-                self.showEmpty(.noNet, view: self.collectionView)
+                self.showEmpty(.noNet, self.collectionView)
             } else {
                 self.dismissEmpty(self.collectionView)
                 self.dataArr.append(contentsOf: model.minfo)

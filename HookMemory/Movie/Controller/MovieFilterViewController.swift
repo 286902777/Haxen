@@ -92,19 +92,35 @@ class MovieFilterViewController: MovieBaseViewController {
         let footer = RefreshAutoNormalFooter { [weak self] in
             guard let self = self else { return }
             self.page += 1
+            self.selectL.text = ""
             self.loadMoreData()
         }
         collectionView.mj_footer = footer
         collectionView.mj_header?.beginRefreshing()
     }
     
-    override func initData() {
+    override func refreshRequest() {
+        self.collectionView.mj_header?.beginRefreshing()
+    }
+    
+    func initData() {
+        if isNet == false {
+            self.collectionView.mj_header?.endRefreshing()
+            self.showEmpty(.noNet, self.collectionView)
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.headerView.isHidden = true
+                self.dataArr.removeAll()
+                self.collectionView.reloadData()
+            }
+            return
+        }
         ProgressHUD.showLoading()
         MovieAPI.share.movieFilterInfo { [weak self] success, model in
             guard let self = self else { return }
             ProgressHUD.dismiss()
             if !success {
-                self.showEmpty(.noNet, view: self.collectionView)
+                self.showEmpty(.noNet, self.collectionView)
             } else {
                 self.dismissEmpty(self.collectionView)
                 self.dataArr.append(contentsOf: model.minfo)
@@ -121,6 +137,7 @@ class MovieFilterViewController: MovieBaseViewController {
             self.collectionView.mj_footer?.endRefreshing()
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
+                self.headerView.isHidden = false
                 self.collectionView.reloadData()
             }
         }
@@ -167,12 +184,14 @@ class MovieFilterViewController: MovieBaseViewController {
             guard let self = self else { return }
             ProgressHUD.dismiss()
             if !success {
-                self.showEmpty(.noNet, view: self.collectionView)
+                self.showEmpty(.noNet, self.collectionView)
             } else {
                 self.dataArr.append(contentsOf: model.minfo)
                 if self.dataArr.count == 0 {
-                    self.showEmpty(.noContent, view: self.collectionView)
+                    self.headerView.isHidden = true
+                    self.showEmpty(.noContent, self.collectionView)
                 } else {
+                    self.headerView.isHidden = false
                     self.dismissEmpty(self.collectionView)
                 }
             }
@@ -206,8 +225,10 @@ extension MovieFilterViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! MovieCell
-        let model = self.dataArr[indexPath.item]
-        cell.setModel(model: model)
+        if self.dataArr.count > 0 {
+            let model = self.dataArr[indexPath.item]
+            cell.setModel(model: model)
+        }
         return cell
     }
     
@@ -231,12 +252,16 @@ extension MovieFilterViewController: UICollectionViewDelegate, UICollectionViewD
 extension MovieFilterViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if self.selectL.text?.count == 0 {
+            self.cusBar.backgroundColor = .clear
+            self.selectView.isHidden = true
             return
         }
         
         if scrollView.contentOffset.y > 0 {
+            self.cusBar.backgroundColor = UIColor.hex("#141414")
             self.selectView.isHidden = false
         } else {
+            self.cusBar.backgroundColor = .clear
             self.selectView.isHidden = true
         }
     }

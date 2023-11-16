@@ -145,6 +145,12 @@ extension NetManager{
     }
     
 
+    class func cancelAllRequest() {
+        AF.session.getAllTasks { tasks in
+            tasks.forEach { $0.cancel() }
+        }
+    }
+    
     fileprivate class func response<T:HandyJSON>
     (
         _ modelType:T.Type,

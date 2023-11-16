@@ -139,6 +139,9 @@ class MovieSearchViewController: MovieBaseViewController {
     }
     
     private func requestData() {
+        if self.key.count == 0 {
+            return
+        }
         self.page = 1
         self.dataArr.removeAll()
         DispatchQueue.main.async { [weak self] in
@@ -148,6 +151,11 @@ class MovieSearchViewController: MovieBaseViewController {
         }
         self.loadMoreData()
     }
+
+    override func refreshRequest() {
+        self.requestData()
+    }
+    
     private func loadMoreData() {
         self.textField.resignFirstResponder()
         ProgressHUD.showLoading()
@@ -156,7 +164,7 @@ class MovieSearchViewController: MovieBaseViewController {
             ProgressHUD.dismiss()
             if !success {
                 self.collectionView.mj_footer?.isHidden = true
-                self.showEmpty(.noNet, view: self.collectionView)
+                self.showEmpty(.noNet, self.collectionView)
             } else {
                 if model.movie_tv_list.count > 0 {
                     self.collectionView.mj_footer?.isHidden = false
@@ -164,7 +172,7 @@ class MovieSearchViewController: MovieBaseViewController {
                     self.dataArr.append(contentsOf: model.movie_tv_list)
                 } else {
                     self.collectionView.mj_footer?.isHidden = true
-                    self.showEmpty(.noContent, view: self.collectionView)
+                    self.showEmpty(.noContent, self.collectionView)
                 }
             }
             self.collectionView.mj_header?.endRefreshing()
@@ -256,6 +264,7 @@ extension MovieSearchViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.key = self.searchKeys[indexPath.row]
+        self.textField.text = self.key
         self.requestData()
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

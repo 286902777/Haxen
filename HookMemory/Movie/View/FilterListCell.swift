@@ -32,6 +32,7 @@ class FilterListCell: UITableViewCell {
         }
         self.dataArr = arr
         self.collectionView.reloadData()
+        self.collectionView.scrollToItem(at: IndexPath.init(item: 0, section: 0), at: .left, animated: false)
     }
 }
 

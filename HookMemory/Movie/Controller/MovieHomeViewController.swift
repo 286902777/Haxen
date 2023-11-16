@@ -55,15 +55,31 @@ class MovieHomeViewController: MovieBaseViewController {
         tableView.mj_header?.beginRefreshing()
     }
     
-    override func initData() {
+    override func refreshRequest() {
+        tableView.mj_header?.beginRefreshing()
+    }
+    
+    func initData() {
+        if isNet == false {
+            self.tableView.mj_header?.endRefreshing()
+            self.showEmpty(.noNet, self.tableView)
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.dataArr.removeAll()
+                self.tableView.reloadData()
+            }
+            return
+        }
         MovieAPI.share.movieHomeList { [weak self] success, list in
             guard let self = self else { return }
             if !success {
                 self.showEmpty(.noNet, self.tableView)
             } else {
                 self.dismissEmpty(self.tableView)
-                self.dataArr = list ?? []
-                self.dataArr.removeFirst()
+                if let listArr = list, listArr.count > 0 {
+                    self.dataArr = listArr
+                    self.dataArr.removeFirst()
+                }
             }
             self.tableView.mj_header?.endRefreshing()
             DispatchQueue.main.async { [weak self] in
@@ -71,10 +87,6 @@ class MovieHomeViewController: MovieBaseViewController {
                 self.tableView.reloadData()
             }
         }
-    }
-    
-    override func reloadNetWorkData() {
-        tableView.mj_header?.beginRefreshing()
     }
     
     @objc func pushSearch() {
@@ -87,7 +99,7 @@ class MovieHomeViewController: MovieBaseViewController {
 extension MovieHomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:MovieListCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as! MovieListCell
-        if let model = self.dataArr[indexPath.row] {
+        if let model = self.dataArr[indexPath.row], self.dataArr.count > 0 {
             cell.setModel(model: model, clickMoreBlock: { [weak self] in
                 guard let self = self else { return }
                 DispatchQueue.main.async { [weak self] in

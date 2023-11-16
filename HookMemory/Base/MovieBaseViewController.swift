@@ -13,6 +13,20 @@ class MovieBaseViewController: UIViewController {
         let view = HookNavigationBar.view()
         return view
     }()
+    
+    var isNet: Bool {
+        get {
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                switch appDelegate.netStatus {
+                case .reachable(_):
+                    return true
+                default:
+                    return false
+                }
+            }
+            return false
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.hex("#141414")
@@ -23,6 +37,8 @@ class MovieBaseViewController: UIViewController {
     }
 
     deinit {
+        ProgressHUD.dismiss()
+        NetManager.cancelAllRequest()
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -30,14 +46,14 @@ class MovieBaseViewController: UIViewController {
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             switch appDelegate.netStatus {
             case .reachable(_):
-                initData()
+                refreshRequest()
             default:
                 noNetAction()
             }
         }
     }
     
-    func initData() {
+    func refreshRequest() {
         
     }
     
@@ -67,6 +83,7 @@ class MovieBaseViewController: UIViewController {
     
     func addNavBar() {
         self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.navigationBar.barStyle = .black
         view.addSubview(self.cusBar)
         cusBar.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
@@ -102,10 +119,10 @@ class MovieBaseViewController: UIViewController {
     func showEmpty(_ type: HKEmptyView.emptyType = .noNet, _ view: UITableView) {
         let image = IMG(type == .noNet ? "movie_no_network" : "movie_no_concent")
         let titleText = type == .noNet ? "No network, please retry" : "No results found. Try different keywords."
-        view.showTableEmpty(with: image, title: titleText, btnTitle: type == .noNet ? "Retry" : "", offsetY: kNavBarHeight) {
+        view.showTableEmpty(with: image, title: titleText, btnTitle: type == .noNet ? "Retry" : "", offsetY: 0) {
             
         } btnClickAction: { [weak self] in
-            self?.reloadNetWorkData()
+            self?.refreshRequest()
         }
     }
     
@@ -113,22 +130,17 @@ class MovieBaseViewController: UIViewController {
         view.dismissEmpty()
     }
     
-    func showEmpty(_ type: HKEmptyView.emptyType = .noNet, view: UICollectionView) {
+    func showEmpty(_ type: HKEmptyView.emptyType = .noNet, _ view: UICollectionView) {
         let image = IMG(type == .noNet ? "movie_no_network" : "movie_no_concent")
         let titleText = type == .noNet ? "No network, please retry" : "No results found. Try different keywords."
-        view.showTableEmpty(with: image, title: titleText, btnTitle: type == .noNet ? "" : "Retry", offsetY: kNavBarHeight) {
+        view.showTableEmpty(with: image, title: titleText, btnTitle: type == .noNet ? "Retry" : "", offsetY: 0) {
             
         } btnClickAction: { [weak self] in
-            self?.reloadNetWorkData()
+            self?.refreshRequest()
         }
     }
     
     func dismissEmpty(_ view: UICollectionView) {
         view.dismissEmpty()
-    }
-    
-    
-    func reloadNetWorkData() {
-        
     }
 }

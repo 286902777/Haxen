@@ -10,11 +10,7 @@ import UIKit
 class LoadingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        if HKConfig.share.getPermission() {
-            HKConfig.share.setRoot(.movie)
-        } else {
-            HKConfig.share.appRequest()
-        }
+        HKConfig.share.appRequest()
         NotificationCenter.default.addObserver(self, selector: #selector(netWorkChange), name: Notification.Name("netStatus"), object: nil)
     }
 

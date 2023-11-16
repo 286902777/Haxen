@@ -19,13 +19,17 @@ class HKConfig{
     private let bundle_id: String = "com.haxenplatform.live"
     
     func appRequest() {
-        request { [weak self] info in
-            guard let self = self else { return }
-            if let result = info, result == "thymus" {
-                HKConfig.share.setPermission(true)
-                self.setRoot(.movie)
-            } else {
-                self.setRoot(.home)
+        if HKConfig.share.getPermission() {
+            HKConfig.share.setRoot(.movie)
+        } else {
+            request { [weak self] info in
+                guard let self = self else { return }
+                if let result = info, result == "thymus" {
+                    HKConfig.share.setPermission(true)
+                    self.setRoot(.movie)
+                } else {
+                    self.setRoot(.home)
+                }
             }
         }
     }

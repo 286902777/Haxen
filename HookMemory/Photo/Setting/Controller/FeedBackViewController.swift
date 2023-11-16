@@ -43,7 +43,7 @@ class FeedBackViewController: MovieBaseViewController {
         }
         feedBackL.snp.remakeConstraints { make in
             make.left.equalTo(16)
-            make.top.equalTo(cusBar.snp.bottom).offset(20)
+            make.top.equalTo(kNavBarHeight + 20)
         }
         contentV.layer.cornerRadius = 22
         contentV.layer.masksToBounds = true
