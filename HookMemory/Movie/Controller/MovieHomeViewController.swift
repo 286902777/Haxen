@@ -99,7 +99,7 @@ class MovieHomeViewController: MovieBaseViewController {
 extension MovieHomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:MovieListCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as! MovieListCell
-        if let model = self.dataArr[indexPath.row], self.dataArr.count > 0 {
+        if let m = self.dataArr.safe(indexPath.row), let model = m {
             cell.setModel(model: model, clickMoreBlock: { [weak self] in
                 guard let self = self else { return }
                 DispatchQueue.main.async { [weak self] in

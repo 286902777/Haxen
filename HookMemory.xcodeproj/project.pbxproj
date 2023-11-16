@@ -54,6 +54,7 @@
 		A799FE812AF889B500840196 /* memoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799FE802AF889B500840196 /* memoryModel.swift */; };
 		A799FE832AF8C49C00840196 /* HKToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799FE822AF8C49C00840196 /* HKToast.swift */; };
 		A799FE852AF8F58100840196 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799FE842AF8F58100840196 /* UIImage+Extension.swift */; };
+		A79B972B2B05FDB700B34210 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79B972A2B05FDB700B34210 /* Array+Extension.swift */; };
 		A79D65E42AFB551E0094E411 /* HKEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79D65E32AFB551E0094E411 /* HKEmptyView.swift */; };
 		A79D65EA2AFB5DD00094E411 /* MovieHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79D65E92AFB5DD00094E411 /* MovieHomeViewController.swift */; };
 		A79D65EC2AFB66580094E411 /* HKRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79D65EB2AFB66580094E411 /* HKRefresh.swift */; };
@@ -163,6 +164,7 @@
 		A799FE802AF889B500840196 /* memoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = memoryModel.swift; sourceTree = "<group>"; };
 		A799FE822AF8C49C00840196 /* HKToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKToast.swift; sourceTree = "<group>"; };
 		A799FE842AF8F58100840196 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		A79B972A2B05FDB700B34210 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		A79D65E32AFB551E0094E411 /* HKEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKEmptyView.swift; sourceTree = "<group>"; };
 		A79D65E92AFB5DD00094E411 /* MovieHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieHomeViewController.swift; sourceTree = "<group>"; };
 		A79D65EB2AFB66580094E411 /* HKRefresh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKRefresh.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				A790666B2AF32E16006A3982 /* HookNavigationBar.xib */,
 				A790666F2AF331D6006A3982 /* HKCommon.swift */,
 				A799FE842AF8F58100840196 /* UIImage+Extension.swift */,
+				A79B972A2B05FDB700B34210 /* Array+Extension.swift */,
 				A77F8CCE2AF4D5E50031FA77 /* Date+Extension.swift */,
 				A72EB15C2AF47E3C00AF20C3 /* HKSheetController.swift */,
 				A799FE822AF8C49C00840196 /* HKToast.swift */,
@@ -793,6 +796,7 @@
 				A790662C2AF32CE4006A3982 /* AppDelegate.swift in Sources */,
 				A7C3F9D52AFC83D20094A15B /* MovieCell.swift in Sources */,
 				A7A0AE942AFE1FDD00646494 /* MovieSettingViewController.swift in Sources */,
+				A79B972B2B05FDB700B34210 /* Array+Extension.swift in Sources */,
 				A7C3F9D92AFCA9F20094A15B /* FilterListCell.swift in Sources */,
 				A77F8CDF2AF4F82F0031FA77 /* DBManager.swift in Sources */,
 				A77425FC2AF3A6A8000B458B /* ListDetailViewController.swift in Sources */,

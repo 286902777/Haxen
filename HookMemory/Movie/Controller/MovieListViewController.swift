@@ -108,8 +108,9 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: movieCellIdentifier, for: indexPath) as! MovieCell
-        let model = self.dataArr[indexPath.item]
-        cell.setModel(model: model)
+        if let model = self.dataArr.safe(indexPath.item) {
+            cell.setModel(model: model)
+        }
         return cell
     }
     

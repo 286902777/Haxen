@@ -225,8 +225,7 @@ extension MovieFilterViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! MovieCell
-        if self.dataArr.count > 0 {
-            let model = self.dataArr[indexPath.item]
+        if let model = self.dataArr.safe(indexPath.item) {
             cell.setModel(model: model)
         }
         return cell
