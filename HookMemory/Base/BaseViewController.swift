@@ -25,6 +25,7 @@ class BaseViewController: UIViewController {
     func addBackImage() {
         let imageV = UIImageView()
         view.addSubview(imageV)
+        view.sendSubviewToBack(imageV)
         imageV.image = UIImage.init(named: "backgroudImage")
         imageV.contentMode = .scaleToFill
         imageV.snp.makeConstraints { make in

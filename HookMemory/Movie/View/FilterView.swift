@@ -67,8 +67,8 @@ class FilterView: UIView {
 extension FilterView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:FilterListCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as! FilterListCell
-        if self.dataArr.count > 0 {
-            cell.setModel(self.dataArr[indexPath.row], clickBlock: { [weak self] id in
+        if let model = self.dataArr.safe(indexPath.row) {
+            cell.setModel(model, clickBlock: { [weak self] id in
                 guard let self = self else { return }
                 self.clickHandle?(filterType(rawValue: indexPath.row) ?? .type, id)
             })

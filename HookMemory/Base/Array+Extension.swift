@@ -10,11 +10,8 @@ import Foundation
 extension Array {
     func safe(_ index: Int) -> Element? {
         guard index >= 0, index < count else {
-            #if DEBUG
-            fatalError("数组越界啦")
-            #else
+            print("数组越界啦")
             return nil
-            #endif
         }
         return self[index]
     }

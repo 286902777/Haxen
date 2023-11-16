@@ -57,7 +57,9 @@ extension MovieListCell: UICollectionViewDelegateFlowLayout, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! MovieCell
-        cell.setModel(model: self.list[indexPath.item])
+        if let model = self.list.safe(indexPath.item) {
+            cell.setModel(model: model)
+        }
         return cell
     }
     

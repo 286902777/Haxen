@@ -47,7 +47,9 @@ extension FilterListCell: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! FilterCell
-        cell.setModel(dataArr[indexPath.item])
+        if let model = dataArr.safe(indexPath.item) {
+            cell.setModel(model)
+        }
         return cell
     }
     

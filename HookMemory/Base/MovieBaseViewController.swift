@@ -76,6 +76,7 @@ class MovieBaseViewController: UIViewController {
         view.addSubview(imageV)
         imageV.image = UIImage.init(named: "movie_view_bg")
         imageV.contentMode = .scaleToFill
+        view.sendSubviewToBack(imageV)
         imageV.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -90,7 +91,6 @@ class MovieBaseViewController: UIViewController {
             make.height.equalTo(kNavBarHeight)
         }
         cusBar.NaviBarBlock = { [weak self] tag in
-            print(tag)
             guard let self = self else { return }
             switch tag {
             case 0:

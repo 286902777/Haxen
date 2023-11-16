@@ -11,6 +11,7 @@ import IQKeyboardManagerSwift
 class FeedBackViewController: MovieBaseViewController {
     var titleName: String = ""
     
+    @IBOutlet weak var top: NSLayoutConstraint!
     @IBOutlet weak var feedBackL: UILabel!
     @IBOutlet weak var contentV: IQTextView!
     @IBOutlet weak var emailV: IQTextView!
@@ -41,10 +42,7 @@ class FeedBackViewController: MovieBaseViewController {
             make.centerY.equalTo(cusBar.backBtn)
             make.size.equalTo(CGSize(width: 64, height: 32))
         }
-        feedBackL.snp.remakeConstraints { make in
-            make.left.equalTo(16)
-            make.top.equalTo(kNavBarHeight + 20)
-        }
+        top.constant = kNavBarHeight + 20
         contentV.layer.cornerRadius = 22
         contentV.layer.masksToBounds = true
         contentV.textContainerInset = UIEdgeInsets.init(top: 16, left: 16, bottom: 16, right: 16)
