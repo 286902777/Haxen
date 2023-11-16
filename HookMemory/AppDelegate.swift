@@ -9,12 +9,27 @@ import UIKit
 import CoreData
 import IQKeyboardManagerSwift
 import AppTrackingTransparency
+import Alamofire
+import SVProgressHUD
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {   
+    private lazy var reachabilityManager: NetworkReachabilityManager? = {
+        let reachbility = NetworkReachabilityManager.default
+        return reachbility
+    }()
+    var netStatus: NetworkReachabilityManager.NetworkReachabilityStatus = .unknown {
+        didSet {
+            if netStatus != oldValue {
+                NotificationCenter.default.post(name: NSNotification.Name("netStatus"), object: nil)
+            }
+        }
+    }
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         initIQKeyBoard()
+        initSVProgressHUD()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             if #available(iOS 14, *) {
                 ATTrackingManager.requestTrackingAuthorization { status in
@@ -22,6 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         }
+        self.reachabilityManager?.startListening(onQueue: DispatchQueue.main, onUpdatePerforming: { [weak self] (status) in
+            self?.netStatus = status
+        })
         return true
     }
     /// 配置IQKeyboardManager
@@ -32,6 +50,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
         IQKeyboardManager.shared.previousNextDisplayMode = .alwaysHide
         IQKeyboardManager.shared.enableAutoToolbar = true
+    }
+    
+    func initSVProgressHUD() {
+        SVProgressHUD.setMinimumSize(CGSizeMake(100, 100))
     }
     // MARK: UISceneSession Lifecycle
 

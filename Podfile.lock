@@ -1,20 +1,46 @@
 PODS:
+  - Alamofire (5.8.1)
+  - HandyJSON (5.0.2)
   - IQKeyboardManagerSwift (6.5.16)
+  - Kingfisher (7.10.0)
+  - lottie-ios (4.3.3)
+  - MJRefresh (3.7.6)
   - SnapKit (5.6.0)
+  - SVProgressHUD (2.3.1):
+    - SVProgressHUD/Core (= 2.3.1)
+  - SVProgressHUD/Core (2.3.1)
 
 DEPENDENCIES:
+  - Alamofire
+  - HandyJSON
   - IQKeyboardManagerSwift
+  - Kingfisher
+  - lottie-ios
+  - MJRefresh
   - SnapKit
+  - SVProgressHUD
 
 SPEC REPOS:
   trunk:
+    - Alamofire
+    - HandyJSON
     - IQKeyboardManagerSwift
+    - Kingfisher
+    - lottie-ios
+    - MJRefresh
     - SnapKit
+    - SVProgressHUD
 
 SPEC CHECKSUMS:
+  Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
+  HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   IQKeyboardManagerSwift: 12d89768845bb77b55cc092ecc2b1f9370f06b76
+  Kingfisher: a18f05d3b6d37d8650ee4a3e61d57a28fc6207f6
+  lottie-ios: 25e7b2675dad5c3ddad369ac9baab03560c5bfdd
+  MJRefresh: 2fe7fb43a5167ceda20bb7e63f130c04fd1814a5
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  SVProgressHUD: 4837c74bdfe2e51e8821c397825996a8d7de6e22
 
-PODFILE CHECKSUM: 931ecf077eaf30df3145193ae98047083293f8c5
+PODFILE CHECKSUM: d66ffee3ca3bf8aa7046aaba032e109f4dc5d684
 
 COCOAPODS: 1.14.2

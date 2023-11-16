@@ -8,16 +8,13 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
     var window: UIWindow?
-
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScenc = (scene as? UIWindowScene) else { return }
-        let vc = HomeViewController()
-        let nav = UINavigationController(rootViewController: vc)
+        let vc = LoadingViewController()
         self.window = UIWindow.init(windowScene: windowScenc)
-        self.window?.rootViewController = nav
+        self.window?.rootViewController = vc
         self.window?.makeKeyAndVisible()
     }
 

@@ -19,6 +19,7 @@ class BaseViewController: UIViewController {
         view.backgroundColor = UIColor.hex("#141414")
         addBackImage()
         addNavBar()
+        hidesBottomBarWhenPushed = true
     }
     
     func addBackImage() {
@@ -33,6 +34,7 @@ class BaseViewController: UIViewController {
     
     func addNavBar() {
         self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.navigationBar.barStyle = .black
         view.addSubview(self.cusBar)
         cusBar.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
