@@ -60,11 +60,19 @@ struct ResponseModel<T:HandyJSON>{
 class NetManager {
     static let defualt: NetManager = NetManager()
 
+    var contentType: String = "application/x-www-form-urlencoded"
+    
     /// 接口地址
 #if DEBUG
-    let RequestUrlHost: String = "https://movie.powerfulclean.net/v1/downloader/routing/"
+    let RequestUrlHost: String = "https://www.movieson.net/v1/downloader/routing/"
+    
+    let RequestVideoHost: String = "https://www.movieson.net/v1/media/"
+
 #else
     let RequestUrlHost: String = "https://www.movieson.net/v1/downloader/routing/"
+    
+    let RequestVideoHost: String = "https://www.movieson.net/v1/media/"
+
 #endif
     
     /// 参数编码方式
@@ -79,7 +87,10 @@ extension NetManager{
     ) -> DataRequest{
         AF.sessionConfiguration.timeoutIntervalForRequest = 15
         var headers : HTTPHeaders = HTTPHeaders()
-        headers.add(name: "Content-Type", value: "application/x-www-form-urlencoded")
+        headers.add(name: "Content-Type", value: NetManager.defualt.contentType)
+        if NetManager.defualt.contentType != "application/x-www-form-urlencoded" {
+            NetManager.defualt.contentType = "application/x-www-form-urlencoded"
+        }
         let encoder : ParameterEncoder = NetManager.defualt.HKParameterEncoder
         let requestUrl = url.jointHost()
         
@@ -110,6 +121,7 @@ extension NetManager{
     class func request<Parameters: Encodable>(url:String,
                                               method:HTTPMethod = .post,
                                               parameters:Parameters,
+                                              contentType: String = "",
                                               resultBlock:ResponseBlock<ResponseDefault>?){
         self.request(url: url, method: method, parameters: parameters, modelType: ResponseDefault.self, resultBlock: resultBlock)
     }
@@ -171,6 +183,7 @@ extension NetManager{
         }
         responseModel.status = ResponseError(rawValue: baseModel.status ?? 0) ?? .unkown
         if let _ = baseModel.msg{
+            print(responseModel.status, baseModel.msg ?? "")
             responseModel.errorMessage = baseModel.msg!
         }
         responseModel.resultData = baseModel.data

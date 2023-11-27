@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.8.1)
+  - CryptoSwift (1.8.0)
   - HandyJSON (5.0.2)
   - IQKeyboardManagerSwift (6.5.16)
   - Kingfisher (7.10.0)
@@ -9,9 +10,11 @@ PODS:
   - SVProgressHUD (2.3.1):
     - SVProgressHUD/Core (= 2.3.1)
   - SVProgressHUD/Core (2.3.1)
+  - ZIPFoundation (0.9.16)
 
 DEPENDENCIES:
   - Alamofire
+  - CryptoSwift
   - HandyJSON
   - IQKeyboardManagerSwift
   - Kingfisher
@@ -19,10 +22,12 @@ DEPENDENCIES:
   - MJRefresh
   - SnapKit
   - SVProgressHUD
+  - ZIPFoundation
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - CryptoSwift
     - HandyJSON
     - IQKeyboardManagerSwift
     - Kingfisher
@@ -30,9 +35,11 @@ SPEC REPOS:
     - MJRefresh
     - SnapKit
     - SVProgressHUD
+    - ZIPFoundation
 
 SPEC CHECKSUMS:
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
+  CryptoSwift: 52aaf3fce7337552863b1d952e408085f0e65030
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   IQKeyboardManagerSwift: 12d89768845bb77b55cc092ecc2b1f9370f06b76
   Kingfisher: a18f05d3b6d37d8650ee4a3e61d57a28fc6207f6
@@ -40,7 +47,8 @@ SPEC CHECKSUMS:
   MJRefresh: 2fe7fb43a5167ceda20bb7e63f130c04fd1814a5
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SVProgressHUD: 4837c74bdfe2e51e8821c397825996a8d7de6e22
+  ZIPFoundation: d170fa8e270b2a32bef9dcdcabff5b8f1a5deced
 
-PODFILE CHECKSUM: d66ffee3ca3bf8aa7046aaba032e109f4dc5d684
+PODFILE CHECKSUM: f07927135555b20225a687b26fa535d63670dfd0
 
 COCOAPODS: 1.14.2

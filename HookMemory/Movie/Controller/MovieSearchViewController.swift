@@ -119,7 +119,8 @@ class MovieSearchViewController: MovieBaseViewController {
         view.addSubview(collectionView)
         tableView.snp.makeConstraints { make in
             make.top.equalTo(cusBar.snp.bottom)
-            make.left.bottom.right.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.left.right.equalToSuperview()
         }
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(cusBar.snp.bottom)
@@ -298,7 +299,10 @@ extension MovieSearchViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        if let model = self.dataArr.safe(indexPath.item) {
+            DBManager.share.updateVideoData(model)
+            HKPlayerManager.share.gotoPlayer(controller: self, id: model.id, from: .search)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

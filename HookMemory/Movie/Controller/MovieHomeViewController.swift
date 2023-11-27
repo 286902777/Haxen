@@ -60,7 +60,7 @@ class MovieHomeViewController: MovieBaseViewController {
     }
     
     func initData() {
-        if isNet == false {
+        if HKConfig.share.isNet == false {
             self.tableView.mj_header?.endRefreshing()
             self.showEmpty(.noNet, self.tableView)
             DispatchQueue.main.async { [weak self] in
@@ -112,8 +112,13 @@ extension MovieHomeViewController: UITableViewDelegate, UITableViewDataSource {
                     vc.hidesBottomBarWhenPushed = true
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
-            }, clickBlock: { movieId in
-                
+            }, clickBlock: { movieModel in
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+//                    movieModel.id = "53865"
+                    DBManager.share.updateVideoData(movieModel)
+                    HKPlayerManager.share.gotoPlayer(controller: self, id: movieModel.id, from: .net)
+                }
             })
         }
         return cell

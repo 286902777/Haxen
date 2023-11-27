@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="HKPlayerSelectEpsView" customModule="Haxen" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="738" height="655"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zgm-f6-QfQ">
+                    <rect key="frame" x="430" y="0.0" width="308" height="655"/>
+                    <subviews>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="FGh-U6-vBv">
+                            <rect key="frame" x="42" y="40" width="266" height="36"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="36" id="Yxp-ja-NFr"/>
+                            </constraints>
+                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="30Q-gC-2pf">
+                                <size key="itemSize" width="128" height="128"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                            <connections>
+                                <outlet property="dataSource" destination="iN0-l3-epB" id="KwH-tk-yog"/>
+                                <outlet property="delegate" destination="iN0-l3-epB" id="2LF-6X-PR9"/>
+                            </connections>
+                        </collectionView>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Yen-C1-cjq">
+                            <rect key="frame" x="42" y="77" width="266" height="578"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="WAJ-KG-HbF">
+                                <size key="itemSize" width="128" height="128"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="30" maxX="24" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                            <connections>
+                                <outlet property="dataSource" destination="iN0-l3-epB" id="4ng-2P-2Av"/>
+                                <outlet property="delegate" destination="iN0-l3-epB" id="EHA-JK-M7q"/>
+                            </connections>
+                        </collectionView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lfA-Pv-QFu">
+                            <rect key="frame" x="42" y="76" width="266" height="1"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="tRd-kn-Yoa"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="FGh-U6-vBv" firstAttribute="top" secondItem="Zgm-f6-QfQ" secondAttribute="top" constant="40" id="1Yx-jz-pml"/>
+                        <constraint firstItem="lfA-Pv-QFu" firstAttribute="leading" secondItem="Zgm-f6-QfQ" secondAttribute="leading" constant="42" id="CWE-ac-8e0"/>
+                        <constraint firstAttribute="width" constant="308" id="Mg9-8g-5Rs"/>
+                        <constraint firstAttribute="trailing" secondItem="lfA-Pv-QFu" secondAttribute="trailing" id="Qnt-y3-bdc"/>
+                        <constraint firstAttribute="trailing" secondItem="FGh-U6-vBv" secondAttribute="trailing" id="Qxk-df-QNi"/>
+                        <constraint firstAttribute="bottom" secondItem="Yen-C1-cjq" secondAttribute="bottom" id="SAo-Tu-CBQ"/>
+                        <constraint firstItem="FGh-U6-vBv" firstAttribute="leading" secondItem="Zgm-f6-QfQ" secondAttribute="leading" constant="42" id="dpK-9d-Nma"/>
+                        <constraint firstItem="Yen-C1-cjq" firstAttribute="leading" secondItem="Zgm-f6-QfQ" secondAttribute="leading" constant="42" id="k5U-hw-uOK"/>
+                        <constraint firstItem="lfA-Pv-QFu" firstAttribute="top" secondItem="FGh-U6-vBv" secondAttribute="bottom" id="kXW-TZ-cmz"/>
+                        <constraint firstItem="Yen-C1-cjq" firstAttribute="top" secondItem="lfA-Pv-QFu" secondAttribute="bottom" id="naP-oN-1ul"/>
+                        <constraint firstAttribute="trailing" secondItem="Yen-C1-cjq" secondAttribute="trailing" id="qCK-Qx-XjF"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="Zgm-f6-QfQ" secondAttribute="bottom" id="1bX-CF-VCY"/>
+                <constraint firstAttribute="trailing" secondItem="Zgm-f6-QfQ" secondAttribute="trailing" id="XmA-vU-Cc3"/>
+                <constraint firstItem="Zgm-f6-QfQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ljK-SK-hck"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="epsCollectionView" destination="Yen-C1-cjq" id="5tq-T1-hCT"/>
+                <outlet property="epsView" destination="Zgm-f6-QfQ" id="8ea-58-yzR"/>
+                <outlet property="ssnCollectionView" destination="FGh-U6-vBv" id="Gqq-D3-mfE"/>
+            </connections>
+            <point key="canvasLocation" x="444.27480916030532" y="131.33802816901408"/>
+        </view>
+    </objects>
+</document>

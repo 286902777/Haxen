@@ -14,19 +14,6 @@ class MovieBaseViewController: UIViewController {
         return view
     }()
     
-    var isNet: Bool {
-        get {
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                switch appDelegate.netStatus {
-                case .reachable(_):
-                    return true
-                default:
-                    return false
-                }
-            }
-            return false
-        }
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.hex("#141414")
@@ -142,5 +129,22 @@ class MovieBaseViewController: UIViewController {
     
     func dismissEmpty(_ view: UICollectionView) {
         view.dismissEmpty()
+    }
+}
+
+extension MovieBaseViewController {
+    // 是否支持自动转屏
+    override var shouldAutorotate: Bool {
+        return false
+    }
+
+    // 支持哪些屏幕方向
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+
+    // 默认的屏幕方向
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
     }
 }

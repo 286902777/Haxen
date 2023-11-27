@@ -34,3 +34,31 @@ class HKTabBarViewController: UITabBarController {
         return UINavigationController.init(rootViewController: vc)
     }
 }
+
+extension HKTabBarViewController {
+    override var shouldAutorotate: Bool {
+        guard let navigationController = selectedViewController as? UINavigationController else { return selectedViewController?.shouldAutorotate ?? false }
+        return navigationController.topViewController?.shouldAutorotate ?? false
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        guard let navigationController = selectedViewController as? UINavigationController else { return selectedViewController?.supportedInterfaceOrientations ?? .portrait }
+        return navigationController.topViewController?.supportedInterfaceOrientations ?? .portrait
+    }
+
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        guard let navigationController = selectedViewController as? UINavigationController else { return selectedViewController?.preferredInterfaceOrientationForPresentation ?? .portrait }
+        return navigationController.topViewController?.preferredInterfaceOrientationForPresentation ?? .portrait
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        guard let navigationController = selectedViewController as? UINavigationController else { return selectedViewController?.preferredStatusBarStyle ?? .default }
+        return navigationController.topViewController?.preferredStatusBarStyle ?? .default
+    }
+
+    /// 是否隐藏状态栏
+    override var prefersStatusBarHidden: Bool {
+        guard let navigationController = selectedViewController as? UINavigationController else { return selectedViewController?.prefersStatusBarHidden ?? false }
+        return navigationController.topViewController?.prefersStatusBarHidden ?? false
+    }
+}

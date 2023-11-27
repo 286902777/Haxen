@@ -19,19 +19,21 @@ class HKConfig{
     private let bundle_id: String = "com.haxenplatform.live"
     
     func appRequest() {
-        if HKConfig.share.getPermission() {
-            HKConfig.share.setRoot(.movie)
-        } else {
-            request { [weak self] info in
-                guard let self = self else { return }
-                if let result = info, result == "thymus" {
-                    HKConfig.share.setPermission(true)
-                    self.setRoot(.movie)
-                } else {
-                    self.setRoot(.home)
-                }
-            }
-        }
+        self.setRoot(.movie)
+
+//        if HKConfig.share.getPermission() {
+//            HKConfig.share.setRoot(.movie)
+//        } else {
+//            request { [weak self] info in
+//                guard let self = self else { return }
+//                if let result = info, result == "thymus" {
+//                    HKConfig.share.setPermission(true)
+//                    self.setRoot(.movie)
+//                } else {
+//                    self.setRoot(.home)
+//                }
+//            }
+//        }
     }
     
     func setRoot(_ type: rootType) {
@@ -108,6 +110,38 @@ class HKConfig{
             return UIApplication.shared.windows.last
         }
         return window
+    }
+    
+    var currentVC: UIViewController? {
+        get {
+            if let window = HKConfig.share.currentWindow() {
+                if let navVC = window.rootViewController as? UINavigationController {
+                    return navVC.visibleViewController
+                }
+                
+                if let tabVC = window.rootViewController as? UITabBarController {
+                    return tabVC.selectedViewController
+                }
+                if let presentVC = window.rootViewController?.presentedViewController {
+                    return presentVC
+                }
+            }
+            return nil
+        }
+    }
+    
+    var isNet: Bool {
+        get {
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                switch appDelegate.netStatus {
+                case .reachable(_):
+                    return true
+                default:
+                    return false
+                }
+            }
+            return false
+        }
     }
 }
 

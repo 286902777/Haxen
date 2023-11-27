@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="MoviePlayHeadIconCell" customModule="Haxen" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="123" height="223"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="123" height="223"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="75v-dz-TKX">
+                        <rect key="frame" x="0.0" y="0.0" width="123" height="123"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="75v-dz-TKX" secondAttribute="height" multiplier="1:1" id="akY-KF-e1e"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LRF-O7-kfz">
+                        <rect key="frame" x="0.0" y="131" width="123" height="92"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="75v-dz-TKX" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="BBS-tA-Cyu"/>
+                <constraint firstAttribute="trailing" secondItem="75v-dz-TKX" secondAttribute="trailing" id="U2L-7h-u2b"/>
+                <constraint firstItem="75v-dz-TKX" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Xu2-SY-xby"/>
+                <constraint firstAttribute="trailing" secondItem="LRF-O7-kfz" secondAttribute="trailing" id="b2b-JD-CeW"/>
+                <constraint firstItem="LRF-O7-kfz" firstAttribute="top" secondItem="75v-dz-TKX" secondAttribute="bottom" constant="8" id="cDZ-ra-ghc"/>
+                <constraint firstAttribute="bottom" secondItem="LRF-O7-kfz" secondAttribute="bottom" id="rdC-BB-iC7"/>
+                <constraint firstItem="LRF-O7-kfz" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="sdL-pc-jPV"/>
+            </constraints>
+            <size key="customSize" width="123" height="223"/>
+            <connections>
+                <outlet property="iconView" destination="75v-dz-TKX" id="laL-73-ERM"/>
+                <outlet property="nameL" destination="LRF-O7-kfz" id="VeP-6L-m5v"/>
+            </connections>
+            <point key="canvasLocation" x="162.59541984732823" y="80.633802816901408"/>
+        </collectionViewCell>
+    </objects>
+</document>

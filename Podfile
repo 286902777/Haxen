@@ -14,6 +14,9 @@ target 'HookMemory' do
   pod 'SVProgressHUD'
   pod 'Kingfisher'
   pod 'IQKeyboardManagerSwift'
+  pod 'CryptoSwift'
+  pod 'ZIPFoundation'
+
   target 'HookMemoryTests' do
     inherit! :search_paths
     # Pods for testing

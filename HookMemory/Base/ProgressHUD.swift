@@ -13,6 +13,14 @@ class ProgressHUD {
         SVProgressHUD.show(withStatus: "loading")
     }
     
+    static func showSuccess(_ text: String) {
+        SVProgressHUD.showSuccess(withStatus: text)
+    }
+    
+    static func showError(_ text: String) {
+        SVProgressHUD.showError(withStatus: text)
+    }
+    
     static func dismiss() {
         SVProgressHUD.dismiss()
     }

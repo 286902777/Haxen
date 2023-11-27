@@ -13,7 +13,7 @@ class MovieListCell: UITableViewCell {
     typealias clickMoreBlock = () -> Void
     var clickMoreHandle : clickMoreBlock?
     var list: [MovieDataInfoModel] = []
-    typealias clickBlock = (_ movieId: String) -> Void
+    typealias clickBlock = (_ movieModel: MovieDataInfoModel) -> Void
     var clickHandle : clickBlock?
     
     @IBOutlet weak var titleL: UILabel!
@@ -64,7 +64,9 @@ extension MovieListCell: UICollectionViewDelegateFlowLayout, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.clickHandle?("123")
+        if let model = self.list.safe(indexPath.item) {
+            self.clickHandle?(model)
+        }
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

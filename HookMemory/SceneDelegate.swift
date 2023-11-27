@@ -49,6 +49,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
 
-
+    func windowScene(_ windowScene: UIWindowScene, didUpdate previousCoordinateSpace: UICoordinateSpace, interfaceOrientation previousInterfaceOrientation: UIInterfaceOrientation, traitCollection previousTraitCollection: UITraitCollection) {
+        var userInfo: [AnyHashable : Any] = [:]
+        if previousInterfaceOrientation.isLandscape {
+            userInfo["isLandscape"] = 0
+        } else {
+            userInfo["isLandscape"] = 1
+        }
+        NotificationCenter.default.post(name: Noti_WindowInterface, object: nil, userInfo: userInfo)
+    }
 }
 

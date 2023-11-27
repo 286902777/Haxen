@@ -76,5 +76,10 @@ class MovieDataInfoModel: BaseModel {
     var ep: String = ""
     var age: String = ""
     var video_flag: String = ""
+    var isMovie: Bool {
+        get {
+            return m_type != "tv_mflx"
+        }
+    }
 }
 

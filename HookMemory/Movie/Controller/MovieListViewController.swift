@@ -63,7 +63,7 @@ class MovieListViewController: MovieBaseViewController {
     }
     
     func initData() {
-        if isNet == false {
+        if HKConfig.share.isNet == false {
             self.collectionView.mj_header?.endRefreshing()
             self.showEmpty(.noNet, self.collectionView)
             DispatchQueue.main.async { [weak self] in
@@ -115,7 +115,10 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        if let model = self.dataArr.safe(indexPath.item) {
+            DBManager.share.updateVideoData(model)
+            HKPlayerManager.share.gotoPlayer(controller: self, id: model.id, from: .net)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

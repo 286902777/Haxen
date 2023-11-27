@@ -51,6 +51,14 @@ var kTabBarHeight: CGFloat {
     }
 }
 
+var ScreenisFull = false
+
+let Noti_WindowInterface = NSNotification.Name(rawValue: "windowInterface")
+
+let Noti_PlaylistRefresh = NSNotification.Name(rawValue: "playlistRefresh")
+
+let Noti_CaptionRefresh = NSNotification.Name(rawValue: "captionRefresh")
+
 extension UIFont {
     static func font(weigth: UIFont.Weight = .regular ,size: CGFloat) -> UIFont {
         return UIFont.systemFont(ofSize: size, weight: weigth)

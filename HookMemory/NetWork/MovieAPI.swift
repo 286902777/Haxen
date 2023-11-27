@@ -15,6 +15,12 @@ enum MovieNetAPI: String {
     case movieSearchApi = "api/search_video/"
     /// filter
     case movieFilterApi = "api/video/"
+    /// tvSeason
+    case movieTvSeasonApi = "api/video_season/"
+    /// tvssn
+    case movieTvSSNApi = "api/video_ssn/"
+    /// movie,tvInfo
+    case movieInfoApi = "api/video_detail/"
 }
 
 class MovieAPI {
@@ -77,5 +83,108 @@ class MovieAPI {
             }
         }
     }
+    //MARK: - Movie,TV data Info
+    func movieInfo(ssn_id: String = "", eps_id: String = "", id: String, _ completion: @escaping (_ success: Bool, _ model: MovieVideoInfoModel?) -> ()) {
+        para["ssn_id"] = ssn_id
+        para["eps_id"] = eps_id
+        para["id"] = id
+        var url = String(format: "app_id=100&device_os=android&lang=en&device=android&app_ver=1.0.0&os_ver=11.1.1&resolution=800*600&deviceNo=D5C27BB2-3272-4CA9-869F-771A5DA1DABB&page=1&page_size=20&token=1&id=%@", id)
+        if ssn_id.count > 0, eps_id.count > 0 {
+            url = String(format: "app_id=100&device_os=android&lang=en&device=android&app_ver=1.0.0&os_ver=11.1.1&resolution=800*600&deviceNo=D5C27BB2-3272-4CA9-869F-771A5DA1DABB&page=1&page_size=20&type=2&token=1&id=%@&ssn_id=%@&eps_id=%@", id, ssn_id, eps_id)
+        }
+        let host = NetManager.defualt.RequestUrlHost + MovieNetAPI.movieInfoApi.rawValue
+        var request: URLRequest = URLRequest(url: URL(string: host)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 15)
+        request.httpMethod = "POST"
+        let data = url.data(using: .ascii, allowLossyConversion: true)
+        request.httpBody = data
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
+        let session: URLSession = URLSession(configuration: configuration)
+        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+            guard error == nil else {
+                completion(false, nil)
+                return
+            }
+            if let res = response as? HTTPURLResponse, res.statusCode == 200, let data = data {
+                let dataString = String(data: data, encoding: .utf8)
+                if let model = MovieVideoInfoModel.deserialize(from: dataString) {
+                    completion(true, model)
+                }
+            } else {
+                completion(false, nil)
+            }
+        })
+        task.resume()
+    }
+    
+    //MARK: - TV
+    func movieTVSeason(id: String, _ completion: @escaping (_ success: Bool, _ list: [MovieVideoInfoSsnlistModel?]) -> ()) {
+        para["id"] = id
+        ProgressHUD.showLoading()
+        NetManager.request(url: MovieNetAPI.movieTvSeasonApi.rawValue, method: .post, parameters: para, modelType: MovieVideoInfoSsnlistModel.self) { responseModel in
+            ProgressHUD.dismiss()
+            if let list = responseModel.models {
+                completion(responseModel.status == .success, list)
+            }
+        }
+    }
+    func movieTVSSN(ssn_id: String, id: String, _ completion: @escaping (_ success: Bool, _ model: MovieTVEpsListModel) -> ()) {
+        para["ssn_id"] = ssn_id
+        para["id"] = id
+        ProgressHUD.showLoading()
+        NetManager.request(url: MovieNetAPI.movieTvSSNApi.rawValue, method: .post, parameters: para, modelType: MovieTVEpsListModel.self) { responseModel in
+            ProgressHUD.dismiss()
+            if let mod = responseModel.model {
+                completion(responseModel.status == .success, mod)
+            }
+        }
+    }
+    
+    func getCaptions(id: String, type: Int, _ completion: @escaping (_ success: Bool, _ list: [MovieCaptionModel?]?) -> ()) {
+        let url = String(format:"%@get_captions?source_sequence=%@&source_type_ordinal=%d&source_key=%@", NetManager.defualt.RequestVideoHost, id, type, "68D23E4E2A7013E21D82C5A24D8E051A")
+        var request: URLRequest = URLRequest(url: URL(string: url)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 15)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
+        let session: URLSession = URLSession(configuration: configuration)
+        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+            guard error == nil else {
+                completion(false, nil)
+                return
+            }
+            if let res = response as? HTTPURLResponse, res.statusCode == 200, let data = data {
+                let dataString = String(data: data, encoding: .utf8)
+                if let list = [MovieCaptionModel].deserialize(from: dataString) {
+                    completion(true, list)
+                }
+            } else {
+                completion(false, nil)
+            }
+        })
+        task.resume()
+    }
+    
+    func getVideoLink(id: String, type: Int, _ completion: @escaping (_ success: Bool, _ model: MoviePlayLinkModel?) -> Void) {
+        let url = String(format:"%@get/play_address?source_sequence=%@&source_type_ordinal=%d&source_key=%@", NetManager.defualt.RequestVideoHost, id, type, "68D23E4E2A7013E21D82C5A24D8E051A")
+        var request: URLRequest = URLRequest(url: URL(string: url)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 15)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
+        let session: URLSession = URLSession(configuration: configuration)
+        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+            guard error == nil else {
+                completion(false, nil)
+                return
+            }
+            if let res = response as? HTTPURLResponse, res.statusCode == 200, let data = data {
+                let dataString = String(data: data, encoding: .utf8)
+                if let model = MoviePlayLinkModel.deserialize(from: dataString) {
+                    completion(true, model)
+                }
+            } else {
+                completion(false, nil)
+            }
+        })
+        task.resume()
+    }
 }
-//&page=%d&page_size=%d&v_type=0&keyword=%@

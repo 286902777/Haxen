@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22225" systemVersion="22G74" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CaptionDB" representedClassName="CaptionDB" syncable="YES">
+        <attribute name="captionId" optional="YES" attributeType="String"/>
+        <attribute name="display_name" optional="YES" attributeType="String"/>
+        <attribute name="local_address" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="original_address" optional="YES" attributeType="String"/>
+        <attribute name="short_name" optional="YES" attributeType="String"/>
+        <attribute name="transferred_address" optional="YES" attributeType="String"/>
+        <relationship name="captionShip" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VideoDB" inverseName="videoShip" inverseEntity="VideoDB"/>
+    </entity>
+    <entity name="DayDB" representedClassName="DayDB" syncable="YES">
+        <attribute name="array" optional="YES" attributeType="Transformable"/>
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="day" optional="YES" attributeType="String"/>
+        <attribute name="month" optional="YES" attributeType="String"/>
+        <relationship name="dayShip" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MemoryDB" inverseName="memoryShip" inverseEntity="MemoryDB"/>
+    </entity>
+    <entity name="MemoryDB" representedClassName="MemoryDB" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="day" optional="YES" attributeType="String"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="month" optional="YES" attributeType="String"/>
+        <attribute name="typeID" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+        <relationship name="memoryShip" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DayDB" inverseName="dayShip" inverseEntity="DayDB"/>
+    </entity>
+    <entity name="VideoDB" representedClassName="VideoDB" syncable="YES">
+        <attribute name="captions" optional="YES" attributeType="Transformable" valueTransformerName="CaptionTransformer" customClassName="[MovieCaption]"/>
+        <attribute name="country" optional="YES" attributeType="String"/>
+        <attribute name="coverImageUrl" optional="YES" attributeType="String"/>
+        <attribute name="dataSize" optional="YES" attributeType="String"/>
+        <attribute name="eps_id" optional="YES" attributeType="String"/>
+        <attribute name="eps_name" optional="YES" attributeType="String"/>
+        <attribute name="eps_num" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="format" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="isImport" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isMovie" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="path" optional="YES" attributeType="String"/>
+        <attribute name="playedTime" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="playProgress" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="rate" optional="YES" attributeType="String"/>
+        <attribute name="ssn_eps" optional="YES" attributeType="String"/>
+        <attribute name="ssn_id" optional="YES" attributeType="String"/>
+        <attribute name="ssn_name" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="totalTime" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="updateTime" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="uploadTime" optional="YES" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+        <attribute name="videoInfo" optional="YES" attributeType="String"/>
+        <relationship name="videoShip" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CaptionDB" inverseName="captionShip" inverseEntity="CaptionDB"/>
+    </entity>
+</model>

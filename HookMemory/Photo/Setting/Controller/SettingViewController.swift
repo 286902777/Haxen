@@ -34,7 +34,7 @@ class SettingViewController: BaseViewController {
         tableView.snp.makeConstraints { make in
             make.top.equalTo(self.cusBar.snp.bottom)
             make.left.right.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
