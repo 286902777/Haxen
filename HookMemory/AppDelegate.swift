@@ -14,7 +14,8 @@ import SVProgressHUD
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    var allowRotate = false
+    var allowRotate: Bool = false
+    var screenLock: Bool = false
     override init() {
         super.init()
         CaptionTransformer.register()    // 注册CaptionTransformer
@@ -120,7 +121,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        return allowRotate ? .all : .portrait
+        if screenLock {
+            return .landscape
+        } else {
+            return allowRotate ? .all : .portrait
+        }
     }
 }
 

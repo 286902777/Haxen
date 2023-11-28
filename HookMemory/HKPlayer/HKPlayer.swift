@@ -19,10 +19,11 @@ protocol HKPlayerDelegate: AnyObject {
     func player(player: HKPlayer, loadedTimeDidChange loadedDuration: TimeInterval, totalDuration: TimeInterval)
     func player(player: HKPlayer, playTimeDidChange currentTime : TimeInterval, totalTime: TimeInterval)
     func player(player: HKPlayer, playerIsPlaying playing: Bool)
-    func player(player: HKPlayer, playerOrientChanged isFullscreen: Bool)
+//    func player(player: HKPlayer, playerOrientChanged isFullscreen: Bool)
     func playerShowCaptionView(_ isfull: Bool)
     func playerShowEpsView()
     func playerNext()
+    func playerScreenLock(_ lock: Bool)
 }
 
 
@@ -62,7 +63,7 @@ class HKPlayer: UIView {
 
     var playStateDidChange:((Bool) -> Void)?
 
-    var playOrientChanged:((Bool) -> Void)?
+//    var playOrientChanged:((Bool) -> Void)?
 
     var isPlayingStateChanged:((Bool) -> Void)?
 
@@ -110,7 +111,7 @@ class HKPlayer: UIView {
     let autoFadeOutTimeInterval: Double = 0.5
     
     /// 用来保存时间状态
-    var sumTime         : TimeInterval = 0
+    fileprivate var sumTime         : TimeInterval = 0
     var totalDuration   : TimeInterval = 0
     var currentPosition : TimeInterval = 0
     fileprivate var shouldSeekTo    : TimeInterval = 0
@@ -174,7 +175,7 @@ class HKPlayer: UIView {
 //                    MTDataManager.changeProgressAndPlayedTime(video: video, time: 0, progress: 0)
 //                } else {
 //                    if video.playProgress > 0 {
-//                        //                    HBToast.playerToast(String(format: HBCommons.localizedString(key: "Targeted to"), BMPlayer.formatSecondsToString(video.playTime, duration: video.totalTime)))
+//                        //                    HBToast.playerToast(String(format: HBCommons.localizedString(key: "Targeted to"), BMPlayer.secondsToFormat(video.playTime, duration: video.totalTime)))
 //                        self.seek(video.playedTime)
 //                    }
 //                }
@@ -233,8 +234,8 @@ class HKPlayer: UIView {
     /**
      update UI to fullScreen
      */
-    func updateUI(_ isFullScreen: Bool) {
-        controlView.updateUI(isFullScreen)
+    func setUpdateUI(_ isFullScreen: Bool) {
+        controlView.setUpdateUI(isFullScreen)
     }
     
     func addVolume(step: Float = 0.1) {
@@ -386,30 +387,30 @@ class HKPlayer: UIView {
         }
     }
     
-    @objc open func onOrientationChanged() {
-        self.updateUI(isFullScreen)
-        delegate?.player(player: self, playerOrientChanged: isFullScreen)
-        playOrientChanged?(isFullScreen)
-    }
+//    @objc open func onOrientationChanged() {
+//        self.setUpdateUI(isFullScreen)
+//        delegate?.player(player: self, playerOrientChanged: isFullScreen)
+//        playOrientChanged?(isFullScreen)
+//    }
     
     @objc func fullScreenButtonPressed() {
-        controlView.updateUI(!self.isFullScreen)
-        
+        self.isFullScreen = !self.isFullScreen
+        controlView.setUpdateUI(self.isFullScreen)
+        self.controlView.controlViewAnimation(isShow: self.isFullScreen)
         if #available(iOS 16.0, *) {
             vc?.setNeedsUpdateOfSupportedInterfaceOrientations()
             let scene = UIApplication.shared.connectedScenes.first
             guard let windowScene = scene as? UIWindowScene else { return }
-            let orientation: UIInterfaceOrientationMask = isFullScreen ?  UIInterfaceOrientationMask.portrait : UIInterfaceOrientationMask.landscapeRight
+            let orientation: UIInterfaceOrientationMask = isFullScreen ?  UIInterfaceOrientationMask.landscapeRight : UIInterfaceOrientationMask.portrait
             let geometryPreferencesIOS = UIWindowScene.GeometryPreferences.iOS(interfaceOrientations: orientation)
             windowScene.requestGeometryUpdate(geometryPreferencesIOS) { error in
                 print("geometryPreferencesIOS error: \(error)")
             }
-            
         } else {
             if isFullScreen {
-                UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
-            } else {
                 UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
+            } else {
+                UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
             }
         }
     }
@@ -422,6 +423,7 @@ class HKPlayer: UIView {
     deinit {
         playerLayer?.pause()
         playerLayer?.prepareToDeinit()
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didChangeStatusBarOrientationNotification, object: nil)
     }
     
     
@@ -462,7 +464,7 @@ class HKPlayer: UIView {
         }
         
         addSubview(controlView)
-        controlView.updateUI(isFullScreen)
+        controlView.setUpdateUI(isFullScreen)
         controlView.delegate = self
         controlView.player   = self
         controlView.snp.makeConstraints { (make) in
@@ -472,6 +474,8 @@ class HKPlayer: UIView {
         panGes = UIPanGestureRecognizer(target: self, action: #selector(self.panDirection(_:)))
         panGes.delegate = self
         self.addGestureRecognizer(panGes)
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.onOrientationChanged), name: UIApplication.didChangeStatusBarOrientationNotification, object: nil)
     }
     
     fileprivate func configureVolume() {
@@ -647,11 +651,11 @@ extension HKPlayer: HKPlayerControlViewDelegate {
             switch action {
             case .back:
                 backBlock?(isFullScreen)
-                if isFullScreen {
-                    fullScreenButtonPressed()
-                } else {
-                    playerLayer?.prepareToDeinit()
-                }
+//                if isFullScreen {
+//                    fullScreenButtonPressed()
+//                } else {
+//                    playerLayer?.prepareToDeinit()
+//                }
             case .play:
                 if button.isSelected {
                     pause()
@@ -665,7 +669,6 @@ extension HKPlayer: HKPlayerControlViewDelegate {
                     }
                     play()
                 }
-                
             case .replay:
                 isPlayEnd = false
                 seek(0)
@@ -683,14 +686,12 @@ extension HKPlayer: HKPlayerControlViewDelegate {
                 
             case .backword:
                 controlView.backword()
-                
+                self.showSeekViewWithTime(false)
             case .forword:
                 controlView.forword()
-                
+                self.showSeekViewWithTime(true)
             case .list:
-                break
-//                MTAlertManager.shared.showPlaylistView(view: self)
-                
+                break                
             case .cc:
                 self.controlView.controlViewAnimation(isShow: false)
                 self.delegate?.playerShowCaptionView(isFullScreen)
@@ -698,9 +699,27 @@ extension HKPlayer: HKPlayerControlViewDelegate {
                 self.delegate?.playerShowEpsView()
             case .next:
                 self.delegate?.playerNext()
+            case .lock:
+                self.delegate?.playerScreenLock(controlView.lockBtn.isSelected)
             default:
                 print("[Error] unhandled Action")
             }
+        }
+    }
+    
+    func showSeekViewWithTime(_ forword: Bool = false) {
+        if let playerItem = playerLayer?.playerItem, let player = playerLayer?.player{
+            let time = player.currentTime()
+            var sumTime: TimeInterval = TimeInterval(time.value) / TimeInterval(time.timescale)
+            let totalTime = playerItem.duration
+            
+            // 防止出现NAN
+            if totalTime.timescale == 0 { return }
+            
+            let totalDuration = TimeInterval(totalTime.value) / TimeInterval(totalTime.timescale)
+            if (sumTime >= totalDuration) { sumTime = totalDuration }
+            if (sumTime <= 0) { sumTime = 0 }
+            controlView.forOrBackSeekToView(forword, to: sumTime, total: totalDuration, isAdd: forword)
         }
     }
     
@@ -749,7 +768,7 @@ extension HKPlayer: HKPlayerControlViewDelegate {
 }
 
 extension HKPlayer {
-    static func formatSecondsToString(_ seconds: TimeInterval, duration: TimeInterval) -> String {
+    static func secondsToFormat(_ seconds: TimeInterval, duration: TimeInterval) -> String {
         if seconds.isNaN {
             return "00:00"
         }

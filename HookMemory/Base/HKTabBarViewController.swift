@@ -35,30 +35,19 @@ class HKTabBarViewController: UITabBarController {
     }
 }
 
-extension HKTabBarViewController {
-    override var shouldAutorotate: Bool {
-        guard let navigationController = selectedViewController as? UINavigationController else { return selectedViewController?.shouldAutorotate ?? false }
-        return navigationController.topViewController?.shouldAutorotate ?? false
-    }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        guard let navigationController = selectedViewController as? UINavigationController else { return selectedViewController?.supportedInterfaceOrientations ?? .portrait }
-        return navigationController.topViewController?.supportedInterfaceOrientations ?? .portrait
-    }
-
-    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-        guard let navigationController = selectedViewController as? UINavigationController else { return selectedViewController?.preferredInterfaceOrientationForPresentation ?? .portrait }
-        return navigationController.topViewController?.preferredInterfaceOrientationForPresentation ?? .portrait
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        guard let navigationController = selectedViewController as? UINavigationController else { return selectedViewController?.preferredStatusBarStyle ?? .default }
-        return navigationController.topViewController?.preferredStatusBarStyle ?? .default
-    }
-
-    /// 是否隐藏状态栏
-    override var prefersStatusBarHidden: Bool {
-        guard let navigationController = selectedViewController as? UINavigationController else { return selectedViewController?.prefersStatusBarHidden ?? false }
-        return navigationController.topViewController?.prefersStatusBarHidden ?? false
-    }
-}
+//extension HKTabBarViewController {
+//    // 是否支持自动转屏
+//    override var shouldAutorotate: Bool {
+//        return false
+//    }
+//
+//    // 支持哪些屏幕方向
+//    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+//        return .portrait
+//    }
+//
+//    // 默认的屏幕方向
+//    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+//        return .portrait
+//    }
+//}

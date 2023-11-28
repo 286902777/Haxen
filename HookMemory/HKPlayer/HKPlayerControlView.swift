@@ -106,19 +106,19 @@ class HKPlayerControlView: UIView {
     var ImageView = UIImageView()
     
     /// top views
-    var topWrapperView = UIView()
+    var topWrapView = UIView()
     var backBtn = UIButton(type : .custom)
     //    var rate1Button = UIButton(type : .custom)
     var ccButton = UIButton(type : .custom)
     var epsButton = UIButton(type : .custom)
-    var titleLabel = UILabel()
-    var chooseDefinitionView = UIView()
+    var titleL = UILabel()
+    var definitionChooseView = UIView()
     
     /// bottom view
-    var bottomWrapperView = UIView()
+    var bottomWrapView = UIView()
     var currentTimeL = UILabel()
     //    var centerTimeLabel = UILabel()
-    var totalTimeLabel   = UILabel()
+    var totalTimeL   = UILabel()
     
     /// Progress slider
     var timeSlider = HKTimeSlider()
@@ -127,44 +127,42 @@ class HKPlayerControlView: UIView {
     var progressView = UIProgressView()
     
     /* play button
-     playButton.isSelected = player.isPlaying
+     playBtn.isSelected = player.isPlaying
      */
-    var playButton = UIButton(type: .custom)
+    var playBtn = UIButton(type: .custom)
     //    var forwordBtn = UIButton(type: .custom)
     //    var backwordBtn = UIButton(type: .custom)
     
     
-    var centerWrapperView = UIView()
+    var centerWrapView = UIView()
     var play1Btn = UIButton(type: .custom)
-    var forword1Button = UIButton(type: .custom)
-    var backword1Button = UIButton(type: .custom)
+    var forwordBtn = UIButton(type: .custom)
+    var backwordBtn = UIButton(type: .custom)
     
     var lockBtn = UIButton(type: .custom)
     /* fullScreen button
-     fullScreenButton.isSelected = player.isFullscreen
+     fullscreenBtn.isSelected = player.isFullscreen
      */
     var nextBtn = UIButton(type: .custom)
-    var fullscreenButton = UIButton(type: .custom)
+    var fullscreenBtn = UIButton(type: .custom)
     //    var rateButton = UIButton(type: .custom)
     
     var subtitleL    = UILabel()
     var subtitleBackView = UIView()
-    var subtileAttribute: [NSAttributedString.Key : Any]?
+    var subtileAttr: [NSAttributedString.Key : Any]?
     
     /// Activty Indector for loading
-    //      var loadingIndicator  = NVActivityIndicatorView(frame:  CGRect(x: 0, y: 0, width: 30, height: 30))
-    //      var loadingIndicator  = MTPageLoadingView.initWithXib()
     
-    //    lazy var loadingIndicator: MTPageLoadingView = {
-    //        let view = MTPageLoadingView.initWithXib()
-    //        return view
-    //    }()
+    lazy var loadingView: HKPlayerLoadingView = {
+        let view = HKPlayerLoadingView.view()
+        return view
+    }()
     
     var seekToView       = UIView()
-    var seekToEffView    = UIView()
+    var seekEffView    = UIView()
     var seekToViewImage  = UIImageView()
-    var seekToLabel      = UILabel()
-    var offsetToLabel    = UILabel()
+    var seekToL      = UILabel()
+    var offsetToL    = UILabel()
     
     //    var replayBtn     = UIButton(type: .custom)
     
@@ -182,8 +180,8 @@ class HKPlayerControlView: UIView {
      - parameter totalTime:   total duration
      */
     func playTimeDidChange(currentTime: TimeInterval, totalTime: TimeInterval) {
-        currentTimeL.text = HKPlayer.formatSecondsToString(currentTime, duration: totalTime)
-        totalTimeLabel.text   = HKPlayer.formatSecondsToString(totalTime, duration: totalTime)
+        currentTimeL.text = HKPlayer.secondsToFormat(currentTime, duration: totalTime)
+        totalTimeL.text   = HKPlayer.secondsToFormat(totalTime, duration: totalTime)
         timeSlider.value      = Float(currentTime) / Float(totalTime)
         showSubtile(from: resource?.subtitle, at: currentTime)
     }
@@ -217,14 +215,13 @@ class HKPlayerControlView: UIView {
             
         case .waiting:
             showLoader()
-            
         case .finished:
             if self.isReadyToPlayed {
                 hideLoader()
             }
             
         case .end:
-            playButton.isSelected = false
+            playBtn.isSelected = false
             play1Btn.isSelected = false
             lockBtn.isSelected = false
             controlViewAnimation(isShow: true)
@@ -243,21 +240,36 @@ class HKPlayerControlView: UIView {
      */
     func showSeekToView(to toSecound: TimeInterval, total totalDuration:TimeInterval, isAdd: Bool) {
         seekToView.isHidden = false
-        //        seekToLabel.text    = BMPlayer.formatSecondsToString(toSecound, duration: totalDuration)
-        seekToLabel.text = HKPlayer.formatSecondsToString(self.player?.panPosition ?? 0, duration: totalDuration)
+        seekToL.text = HKPlayer.secondsToFormat(self.player?.panPosition ?? 0, duration: totalDuration)
         
-        if let currentPosition = self.player?.currentPosition {
-            //            let offset = toSecound - currentPosition
+        if let _ = self.player?.currentPosition {
             let offset = toSecound - (self.player?.panPosition ?? 0)
-            offsetToLabel.text  = "\(offset > 0 ? "+ " : "- ")\(HKPlayer.formatSecondsToString(offset, duration: totalDuration))"
+            offsetToL.text  = "\(offset > 0 ? "+ " : "- ")\(HKPlayer.secondsToFormat(offset, duration: totalDuration))"
         }
-        
-        //        let rotate = isAdd ? 0 : CGFloat(Double.pi)
-        //        seekToViewImage.transform = CGAffineTransform(rotationAngle: rotate)
-        
-        let targetTime = HKPlayer.formatSecondsToString(toSecound, duration: totalDuration)
+                
+        let targetTime = HKPlayer.secondsToFormat(toSecound, duration: totalDuration)
         timeSlider.value = Float(toSecound / totalDuration)
         currentTimeL.text = targetTime
+    }
+    
+    func forOrBackSeekToView(_ forword: Bool = false, to toSecound: TimeInterval, total totalDuration:TimeInterval, isAdd: Bool) {
+        seekToView.isHidden = false
+        seekToL.text = HKPlayer.secondsToFormat(toSecound, duration: totalDuration)
+        
+        if let _ = self.player?.currentPosition {
+            let offset: TimeInterval = forword ? 15 : -15
+            offsetToL.text  = "\(offset > 0 ? "+ " : "- ")\(HKPlayer.secondsToFormat(offset, duration: totalDuration))"
+        }
+                
+        let targetTime = HKPlayer.secondsToFormat(toSecound, duration: totalDuration)
+        timeSlider.value = Float(toSecound / totalDuration)
+        currentTimeL.text = targetTime
+        if seekToView.isHidden == false {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                guard let self = self else { return }
+                self.seekToView.isHidden = true
+            }
+        }
     }
     
     // MARK: - UI update related function
@@ -270,14 +282,14 @@ class HKPlayerControlView: UIView {
     func prepareUI(for resource: HKPlayerResource, selectedIndex index: Int) {
         self.resource = resource
         self.selectedIndex = index
-        titleLabel.text = resource.name
-        prepareChooseDefinitionView()
+        titleL.text = resource.name
+        preparedefinitionChooseView()
         fadeOutControlViewWithAnimation()
     }
     
     func playStateDidChange(isPlaying: Bool) {
         fadeOutControlViewWithAnimation()
-        playButton.isSelected = isPlaying
+        playBtn.isSelected = isPlaying
         play1Btn.isSelected = isPlaying
     }
     
@@ -285,7 +297,7 @@ class HKPlayerControlView: UIView {
      auto fade out controll view with animtion
      */
     func fadeOutControlViewWithAnimation() {
-        cancelAutoFadeOutAnimation()
+        cancelFadeOutAnimation()
         delayItem = DispatchWorkItem { [weak self] in
             if self?.playerState != .end {
                 self?.controlViewAnimation(isShow: false)
@@ -298,7 +310,7 @@ class HKPlayerControlView: UIView {
     /**
      cancel auto fade out controll view with animtion
      */
-    func cancelAutoFadeOutAnimation() {
+    func cancelFadeOutAnimation() {
         delayItem?.cancel()
     }
     
@@ -322,9 +334,7 @@ class HKPlayerControlView: UIView {
                 $0.left.right.equalTo(self.mainView)
                 $0.height.equalTo(self.isFullscreen ? 200 : 50)
             }
-            if self.isFullscreen {
-                self.lockBtn.isHidden = !isShow
-            }
+           
             self.centerView.snp.remakeConstraints {
                 $0.center.equalToSuperview()
                 $0.height.equalTo(56)
@@ -332,8 +342,14 @@ class HKPlayerControlView: UIView {
             }
             if isShow, self.player?.isReminder == false {
                 self.centerView.alpha = 1.0
+                if self.isFullscreen {
+                    self.lockBtn.isHidden = false
+                } else {
+                    self.lockBtn.isHidden = true
+                }
             } else {
                 self.centerView.alpha = 0
+                self.lockBtn.isHidden = true
             }
             self.mainView.backgroundColor = UIColor(white: 0, alpha: isShow ? (self.isFullscreen ? 0.65 : 0.16) : 0)
             self.layoutIfNeeded()
@@ -347,11 +363,11 @@ class HKPlayerControlView: UIView {
      
      - parameter isFull: is for full screen
      */
-    func updateUI(_ isFull: Bool) {
+    func setUpdateUI(_ isFull: Bool) {
         isFullscreen = isFull
-        fullscreenButton.isSelected = isFull
-        titleLabel.isHidden = !isFull
-        chooseDefinitionView.isHidden = !HKPlayerManager.share.enableChooseDefinition || !isFull
+        fullscreenBtn.isSelected = isFull
+        titleL.isHidden = !isFull
+        definitionChooseView.isHidden = !HKPlayerManager.share.enableChooseDefinition || !isFull
         if isFull {
             if HKPlayerManager.share.topBarInCase.rawValue == 2 {
                 topView.isHidden = true
@@ -381,63 +397,34 @@ class HKPlayerControlView: UIView {
             make.leading.equalToSuperview().offset(isFullscreen ? 0 : marge)
             make.bottom.equalToSuperview()
         }
-        
-        //        rate1Button.snp.remakeConstraints {  make in
-        //            make.width.equalTo(40)
-        //            make.height.equalTo(20)
-        //            make.trailing.equalToSuperview().offset(isFullscreen ? -leading - 10 : -10)
-        //            make.centerY.equalTo(self.backBtn)
-        //        }
-        
-        // Bottom views
-        //            backwordBtn.isHidden = true
-        playButton.isHidden = isFullscreen
-        //            forwordBtn.isHidden = true
-        backword1Button.isHidden = false
+  
+        playBtn.isHidden = isFullscreen
+        backwordBtn.isHidden = false
         play1Btn.isHidden = false
-        forword1Button.isHidden = false
+        forwordBtn.isHidden = false
         if isFullscreen {
             play1Btn.snp.remakeConstraints { (make) in
                 make.width.height.equalTo(48)
                 make.center.equalToSuperview()
             }
             
-            backword1Button.snp.remakeConstraints {  make in
+            backwordBtn.snp.remakeConstraints {  make in
                 make.width.height.equalTo(48)
                 make.trailing.equalTo(play1Btn.snp.leading).offset(-38)
                 make.centerY.equalToSuperview()
             }
             
-            forword1Button.snp.remakeConstraints { (make) in
+            forwordBtn.snp.remakeConstraints { (make) in
                 make.width.height.equalTo(48)
                 make.leading.equalTo(play1Btn.snp.trailing).offset(38)
                 make.centerY.equalToSuperview()
             }
+//            lockBtn.isHidden = false
         } else {
-            forword1Button.isHidden = true
-            backword1Button.isHidden = true
+            forwordBtn.isHidden = true
+            lockBtn.isHidden = true
+            backwordBtn.isHidden = true
             play1Btn.isHidden = true
-            //                forword1Button.setImage(UIImage(named: "back"),  for: .normal)
-            //                backword1Button.setImage(UIImage(named: "Fast forward"),  for: .normal)
-            //                play1Btn.setImage(UIImage(named: "play"),  for: .normal)
-            //                play1Btn.setImage(UIImage(named: "normal"),  for: .selected)
-            
-            //                play1Btn.snp.remakeConstraints { (make) in
-            //                    make.width.height.equalTo(42)
-            //                    make.center.equalToSuperview()
-            //                }
-            //
-            //                backword1Button.snp.remakeConstraints {  make in
-            //                    make.width.height.equalTo(32)
-            //                    make.trailing.equalTo(play1Btn.snp.leading).offset(-36)
-            //                    make.centerY.equalToSuperview()
-            //                }
-            //
-            //                forword1Button.snp.remakeConstraints { (make) in
-            //                    make.width.height.equalTo(32)
-            //                    make.leading.equalTo(play1Btn.snp.trailing).offset(36)
-            //                    make.centerY.equalToSuperview()
-            //                }
         }
         
         currentTimeL.snp.remakeConstraints {  make in
@@ -445,35 +432,30 @@ class HKPlayerControlView: UIView {
                 make.bottom.equalTo(timeSlider.snp.top).offset(4)
                 make.left.equalToSuperview().offset(leading)
             } else {
-                make.centerY.equalTo(playButton)
-                make.left.equalTo(playButton.snp.right)
+                make.centerY.equalTo(playBtn)
+                make.left.equalTo(playBtn.snp.right)
             }
             make.height.equalTo(17)
         }
         
-        //        centerTimeLabel.snp.remakeConstraints {  make in
-        //            make.centerY.equalTo(self.currentTimeL)
-        //            make.leading.equalTo(self.currentTimeL.snp.trailing)
-        //        }
-        
-        totalTimeLabel.snp.remakeConstraints {  make in
+        totalTimeL.snp.remakeConstraints {  make in
             make.centerY.equalTo(self.currentTimeL)
             if isFullscreen {
                 make.right.equalToSuperview().offset(-leading)
             } else {
-                make.right.equalTo(fullscreenButton.snp.left).offset(-marge)
+                make.right.equalTo(fullscreenBtn.snp.left).offset(-marge)
             }
         }
         
         timeSlider.snp.remakeConstraints {  make in
             if isFullscreen {
-                make.bottom.equalTo(fullscreenButton.snp.top)
-                make.left.equalToSuperview().offset(leading)
-                make.right.equalToSuperview().offset(-leading)
+                make.bottom.equalTo(fullscreenBtn.snp.top)
+                make.leading.equalToSuperview().offset(leading)
+                make.trailing.equalToSuperview().offset(-leading)
             } else {
-                make.centerY.equalTo(playButton)
-                make.left.equalTo(currentTimeL.snp.right).offset(marge)
-                make.right.equalTo(totalTimeLabel.snp.left).offset(-marge)
+                make.centerY.equalTo(playBtn)
+                make.leading.equalTo(currentTimeL.snp.trailing).offset(marge)
+                make.trailing.equalTo(totalTimeL.snp.leading).offset(-marge)
             }
             make.height.equalTo(30)
         }
@@ -490,29 +472,29 @@ class HKPlayerControlView: UIView {
             make.left.equalToSuperview().offset(marge)
         }
         
-        fullscreenButton.snp.remakeConstraints {  make in
+        fullscreenBtn.snp.remakeConstraints {  make in
             make.width.height.equalTo(40)
             if isFullscreen {
                 make.bottom.equalToSuperview().offset(-leading)
                 make.trailing.equalToSuperview().offset(-marge)
             } else {
-                make.centerY.equalTo(playButton)
+                make.centerY.equalTo(playBtn)
                 make.right.equalToSuperview().offset(-marge)
             }
         }
         
         ccButton.removeFromSuperview()
         if isFullscreen {
-            bottomWrapperView.addSubview(ccButton)
+            bottomWrapView.addSubview(ccButton)
         } else {
-            topWrapperView.addSubview(ccButton)
+            topWrapView.addSubview(ccButton)
         }
         
         ccButton.snp.remakeConstraints { make in
             make.width.height.equalTo(40)
             if isFullscreen {
-                make.centerY.equalTo(fullscreenButton)
-                make.right.equalTo(fullscreenButton.snp.left).offset(-marge)
+                make.centerY.equalTo(fullscreenBtn)
+                make.right.equalTo(fullscreenBtn.snp.left).offset(-marge)
             } else {
                 make.trailing.equalTo(-marge)
                 make.centerY.equalTo(self.backBtn)
@@ -521,7 +503,7 @@ class HKPlayerControlView: UIView {
         
         epsButton.snp.remakeConstraints { make in
             make.width.height.equalTo(40)
-            make.centerY.equalTo(fullscreenButton)
+            make.centerY.equalTo(fullscreenBtn)
             make.right.equalTo(ccButton.snp.left).offset(-marge)
         }
         //        self.rate1Button.isHidden = false
@@ -545,102 +527,7 @@ class HKPlayerControlView: UIView {
             $0.width.equalTo(220)
             $0.height.equalTo(56)
         }
-        
-        //        self.player?.sliderView.snp.remakeConstraints { make in
-        //            make.width.equalTo(204)
-        //            make.height.equalTo(40)
-        //            make.centerX.equalToSuperview()
-        //            if isUrl {
-        //                make.top.equalToSuperview().offset(isFullscreen ? 40 : 10)
-        //            } else {
-        //                make.top.equalToSuperview().offset(isFullscreen ? 40 : kNavBarHeight + 32)
-        //            }
-        //        }
-        //        self.player?.sliderView.backgroundColor = isFullscreen ? UIColor(white: 0, alpha: 0.7) : UIColor(white: 1, alpha: 0.0marge)
-        //        self.player?.sliderView.layoutIfNeeded()
-        //
-        //        self.player?.forwardView.snp.remakeConstraints { make in
-        //            make.width.equalTo(13marge)
-        //            make.height.equalTo(40)
-        //            make.centerX.equalToSuperview()
-        //            if isUrl {
-        //                make.top.equalToSuperview().offset(isFullscreen ? 40 : 10)
-        //            } else {
-        //                make.top.equalToSuperview().offset(isFullscreen ? 40 : kNavBarHeight + 32)
-        //            }
-        //
-        //        }
-        //        self.player?.forwardView.backgroundColor = isFullscreen ? UIColor(white: 0, alpha: 0.7) : UIColor(white: 1, alpha: 0.0marge)
-        //        self.player?.forwardView.layoutIfNeeded()
-        //
-        //        if isFullscreen {
-        //            MTAleartManager.shared.speedView.cons1.constant = 29
-        //            MTAleartManager.shared.speedView.cons2.constant = 20
-        //            MTAleartManager.shared.speedView.cons3.constant = leading
-        //            MTAleartManager.shared.speedView.cons4.constant = leading
-        //            MTAleartManager.shared.speedView.cons5.constant = leading
-        //            MTAleartManager.shared.speedView.cons6.constant = 145
-        //            MTAleartManager.shared.speedView.cons7.constant = 32
-        //            MTAleartManager.shared.speedView.colorView.isHidden = false
-        //            MTAleartManager.shared.speedView.backgroundColor = .clear
-        //            MTAleartManager.shared.speedView.backView.backgroundColor = .clear
-        //        } else {
-        //            MTAleartManager.shared.speedView.cons1.constant = 26
-        //            MTAleartManager.shared.speedView.cons2.constant = 34
-        //            MTAleartManager.shared.speedView.cons3.constant = 12
-        //            MTAleartManager.shared.speedView.cons4.constant = 0
-        //            MTAleartManager.shared.speedView.cons5.constant = 0
-        //            MTAleartManager.shared.speedView.cons6.constant = kBottomSafeAreaHeight + 1marge6
-        //            MTAleartManager.shared.speedView.cons7.constant = marge2
-        //            if isUrl {
-        //                MTAleartManager.shared.speedView.backgroundColor = UIColor(white: 0, alpha: 0.7)
-        //                MTAleartManager.shared.speedView.backView.backgroundColor = UIColor.dark45ColorWithAlpha()
-        //                MTAleartManager.shared.speedView.colorView.isHidden = true
-        //            } else {
-        //                MTAleartManager.shared.speedView.backgroundColor = .clear
-        //                MTAleartManager.shared.speedView.backView.backgroundColor = .clear
-        //                MTAleartManager.shared.speedView.colorView.isHidden = false
-        //            }
-        //        }
-        //        MTAleartManager.shared.speedView.layoutSubviews()
-        //
-        //        if isUrl {
-        //            if isFullscreen {
-        //                MTAleartManager.shared.subtitlesView.verView.isHidden = true
-        //                MTAleartManager.shared.subtitlesView.tapView.isHidden = true
-        //                MTAleartManager.shared.subtitlesView.horView.isHidden = false
-        //                MTAleartManager.shared.subtitlesView.horTapView.isHidden = false
-        //                MTAleartManager.shared.subtitlesView.backgroundColor = .clear
-        //                MTAleartManager.shared.subtitlesView.colorView.isHidden = false
-        //
-        //                MTAleartManager.shared.subtitlesListView.verView.isHidden = true
-        //                MTAleartManager.shared.subtitlesListView.verTapView.isHidden = true
-        //                MTAleartManager.shared.subtitlesListView.horView.isHidden = false
-        //                MTAleartManager.shared.subtitlesListView.horTapView.isHidden = false
-        //                MTAleartManager.shared.subtitlesListView.backgroundColor = .clear
-        //                MTAleartManager.shared.subtitlesListView.colorView.isHidden = false
-        //            } else {
-        //                MTAleartManager.shared.subtitlesView.verView.isHidden = false
-        //                MTAleartManager.shared.subtitlesView.tapView.isHidden = false
-        //                MTAleartManager.shared.subtitlesView.horView.isHidden = true
-        //                MTAleartManager.shared.subtitlesView.horTapView.isHidden = true
-        //                MTAleartManager.shared.subtitlesView.backgroundColor = UIColor(white: 0, alpha: 0.7)
-        //                MTAleartManager.shared.subtitlesView.colorView.isHidden = true
-        //
-        //                MTAleartManager.shared.subtitlesListView.verView.isHidden = false
-        //                MTAleartManager.shared.subtitlesListView.verTapView.isHidden = false
-        //                MTAleartManager.shared.subtitlesListView.horView.isHidden = true
-        //                MTAleartManager.shared.subtitlesListView.horTapView.isHidden = true
-        //                MTAleartManager.shared.subtitlesListView.backgroundColor = UIColor(white: 0, alpha: 0.7)
-        //                MTAleartManager.shared.subtitlesListView.colorView.isHidden = true
-        //            }
-        //            MTAleartManager.shared.subtitlesView.layoutSubviews()
-        //            MTAleartManager.shared.subtitlesListView.layoutSubviews()
-        //        }
-        //
-        //        self.player?.bringSubviewToFront(self.player!.forwardView)
-        //        self.player?.bringSubviewToFront(self.player!.sliderView)
-        
+                
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = .center
         paragraph.lineHeightMultiple = 1.0
@@ -648,7 +535,7 @@ class HKPlayerControlView: UIView {
         shadow.shadowColor = UIColor(white: 0, alpha: 0.75)
         shadow.shadowBlurRadius = 7
         shadow.shadowOffset = CGSize(width: 2, height: 2)
-        self.subtileAttribute = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: isFullscreen ? 16 : 12, weight: .medium), NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.strokeColor: UIColor.red, NSAttributedString.Key.strokeWidth: -0.3, NSAttributedString.Key.paragraphStyle: paragraph, NSAttributedString.Key.shadow: shadow]
+        self.subtileAttr = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: isFullscreen ? 16 : 12, weight: .medium), NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.strokeColor: UIColor.red, NSAttributedString.Key.strokeWidth: -0.3, NSAttributedString.Key.paragraphStyle: paragraph, NSAttributedString.Key.shadow: shadow]
         
         subtitleBackView.snp.remakeConstraints {  make in
             make.bottom.equalTo(self.snp.bottom).offset(isFullscreen ? -24 : -16)
@@ -658,7 +545,6 @@ class HKPlayerControlView: UIView {
         
         self.layoutIfNeeded()
         self.player?.layoutIfNeeded()
-        
     }
     
     /**
@@ -673,15 +559,13 @@ class HKPlayerControlView: UIView {
     }
     
     func showLoader() {
-        ProgressHUD.showLoading()
-        //        loadingIndicator.isHidden = false
-        //        loadingIndicator.selectAnimation()
+        loadingView.isHidden = false
+        loadingView.showAnimation()
     }
     
     func hideLoader() {
-        ProgressHUD.dismiss()
-        //        loadingIndicator.isHidden = true
-        //        loadingIndicator.defaultAnimation()
+        loadingView.isHidden = true
+        loadingView.dismissAnimation()
     }
     
     func hideSeekToView() {
@@ -713,11 +597,11 @@ class HKPlayerControlView: UIView {
         self.ImageView.isHidden = true
     }
     
-    func prepareChooseDefinitionView() {
+    func preparedefinitionChooseView() {
         guard let resource = resource else {
             return
         }
-        for item in chooseDefinitionView.subviews {
+        for item in definitionChooseView.subviews {
             item.removeFromSuperview()
         }
         
@@ -733,14 +617,14 @@ class HKPlayerControlView: UIView {
             }
             
             button.setTitle("\(resource.definitions[button.tag].definition)", for: UIControl.State())
-            chooseDefinitionView.addSubview(button)
+            definitionChooseView.addSubview(button)
             button.addTarget(self, action: #selector(self.onDefinitionSelected(_:)), for: UIControl.Event.touchUpInside)
             button.snp.makeConstraints({ (make) in
                 //                guard let `self` = self else { return }
-                make.top.equalTo(chooseDefinitionView.snp.top).offset(35 * i)
+                make.top.equalTo(definitionChooseView.snp.top).offset(35 * i)
                 make.width.equalTo(50)
                 make.height.equalTo(25)
-                make.centerX.equalTo(chooseDefinitionView)
+                make.centerX.equalTo(definitionChooseView)
             })
             
             if resource.definitions.count == 1 {
@@ -760,7 +644,7 @@ class HKPlayerControlView: UIView {
      
      - parameter button: action Button
      */
-    @objc func onButtonPressed(_ button: UIButton) {
+    @objc func clickBtnAction(_ button: UIButton) {
         fadeOutControlViewWithAnimation()
         if let type = HKButtonType(rawValue: button.tag) {
             switch type {
@@ -784,11 +668,11 @@ class HKPlayerControlView: UIView {
         self.nextBtn.isEnabled = !lock
         self.ccButton.isEnabled = !lock
         self.epsButton.isEnabled = !lock
-        self.fullscreenButton.isEnabled = !lock
-        self.playButton.isEnabled = !lock
+        self.fullscreenBtn.isEnabled = !lock
+        self.playBtn.isEnabled = !lock
         self.play1Btn.isEnabled = !lock
-        self.forword1Button.isEnabled = !lock
-        self.backword1Button.isEnabled = !lock
+        self.forwordBtn.isEnabled = !lock
+        self.backwordBtn.isEnabled = !lock
         self.timeSlider.isEnabled = !lock
     }
     /**
@@ -843,21 +727,21 @@ class HKPlayerControlView: UIView {
     }
     
     // MARK: - handle UI slider actions
-    @objc func progressSliderToucMTegan(_ sender: UISlider)  {
+    @objc func progressSliderTouch(_ sender: UISlider)  {
         self.player?.tempIsPlaying = self.player?.isPlaying ?? true
         self.player?.pause()
         delegate?.controlView(controlView: self, slider: sender, onSliderEvent: .touchDown)
     }
     
-    @objc func progressSliderValueChanged(_ sender: UISlider)  {
+    @objc func progressSliderChanged(_ sender: UISlider)  {
         hidePlayToTheEndView()
-        cancelAutoFadeOutAnimation()
+        cancelFadeOutAnimation()
         let currentTime = Double(sender.value) * totalDuration
-        currentTimeL.text = HKPlayer.formatSecondsToString(currentTime, duration: totalDuration)
+        currentTimeL.text = HKPlayer.secondsToFormat(currentTime, duration: totalDuration)
         delegate?.controlView(controlView: self, slider: sender, onSliderEvent: .touchDown)
     }
     
-    @objc func progressSliderTouchEnded(_ sender: UISlider)  {
+    @objc func progressSliderEnded(_ sender: UISlider)  {
         fadeOutControlViewWithAnimation()
         delegate?.controlView(controlView: self, slider: sender, onSliderEvent: .touchUpInside)
     }
@@ -868,7 +752,7 @@ class HKPlayerControlView: UIView {
         DispatchQueue.main.async {
             if let subtitle = subtitle, let group = subtitle.search(for: time), HKPlayerManager.share.subtitleOn == true {
                 self.subtitleBackView.isHidden = false
-                self.subtitleL.attributedText = NSAttributedString(string: group.text, attributes: self.subtileAttribute)
+                self.subtitleL.attributedText = NSAttributedString(string: group.text, attributes: self.subtileAttr)
             } else {
                 self.subtitleBackView.isHidden = true
             }
@@ -877,7 +761,7 @@ class HKPlayerControlView: UIView {
     
     @objc fileprivate func onDefinitionSelected(_ button:UIButton) {
         let height = isSelectDefinition ? 35 : resource!.definitions.count * 40
-        chooseDefinitionView.snp.updateConstraints { (make) in
+        definitionChooseView.snp.updateConstraints { (make) in
             make.height.equalTo(height)
         }
         
@@ -889,7 +773,7 @@ class HKPlayerControlView: UIView {
             selectedIndex = button.tag
             delegate?.controlView(controlView: self, didChooseDefinition: button.tag)
         }
-        prepareChooseDefinitionView()
+        preparedefinitionChooseView()
     }
     
     @objc fileprivate func onReplyButtonPressed() {
@@ -899,24 +783,17 @@ class HKPlayerControlView: UIView {
     // MARK: - Init
     override public init(frame: CGRect) {
         super.init(frame: frame)
-        setupUIComponents()
-        addSnapKitConstraint()
-        customizeUIComponents()
+        setUI()
+        setConstraint()
     }
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setupUIComponents()
-        addSnapKitConstraint()
-        customizeUIComponents()
+        setUI()
+        setConstraint()
     }
     
-    /// Add Customize functions here
-    func customizeUIComponents() {
-        
-    }
-    
-    func setupUIComponents() {
+    func setUI() {
         let graph = NSMutableParagraphStyle()
         graph.alignment = .center
         graph.lineHeightMultiple = 1.0
@@ -924,7 +801,7 @@ class HKPlayerControlView: UIView {
         shadow.shadowColor = UIColor(white: 0, alpha: 0.75)
         shadow.shadowBlurRadius = 7
         shadow.shadowOffset = CGSize(width: 2, height: 2)
-        self.subtileAttribute = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12, weight: .medium), NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.strokeColor: UIColor.red, NSAttributedString.Key.strokeWidth: -0.3, NSAttributedString.Key.paragraphStyle: graph, NSAttributedString.Key.shadow: shadow]
+        self.subtileAttr = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12, weight: .medium), NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.strokeColor: UIColor.red, NSAttributedString.Key.strokeWidth: -0.3, NSAttributedString.Key.paragraphStyle: graph, NSAttributedString.Key.shadow: shadow]
         // Subtile view
         subtitleL.numberOfLines = 0
         subtitleL.textAlignment = .center
@@ -950,186 +827,135 @@ class HKPlayerControlView: UIView {
         rightView.backgroundColor  = UIColor.clear
         
         // Top views
-        topView.addSubview(topWrapperView)
-        topWrapperView.addSubview(backBtn)
-        //        topWrapperView.addSubview(rate1Button)
+        topView.addSubview(topWrapView)
+        topWrapView.addSubview(backBtn)
+        //        topWrapView.addSubview(rate1Button)
         
-        topWrapperView.addSubview(titleLabel)
-        topWrapperView.addSubview(chooseDefinitionView)
+        topWrapView.addSubview(titleL)
+        topWrapView.addSubview(definitionChooseView)
         
         backBtn.tag = HKButtonType.back.rawValue
         backBtn.setImage(UIImage(named: "play_back"), for: .normal)
-        backBtn.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
-        
-        //        rate1Button.tag = HKButtonType.rate.rawValue
-        //        rate1Button.setTitle("\(self.playRate)X", for: .normal)
-        //        rate1Button.titleLabel?.font = UIFont.systemFont(ofSize: 10)
-        //        rate1Button.backgroundColor = .clear
-        //        rate1Button.layer.cornerRadius = 2
-        //        rate1Button.layer.borderColor = UIColor.white.cgColor
-        //        rate1Button.layer.borderWidth = 1
-        //        rate1Button.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
-        //        rate1Button.isHidden = true
+        backBtn.addTarget(self, action: #selector(clickBtnAction(_:)), for: .touchUpInside)
         
         ccButton.tag = HKButtonType.cc.rawValue
         ccButton.setImage(UIImage(named: "play_captions"), for: .normal)
         ccButton.setImage(UIImage(named: "play_unCaptions"), for: .disabled)
-        ccButton.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
-        //        ccButton.isHidden = true
+        ccButton.addTarget(self, action: #selector(clickBtnAction(_:)), for: .touchUpInside)
         
         epsButton.tag = HKButtonType.eps.rawValue
         epsButton.setImage(UIImage(named: "play_eps"), for: .normal)
-        epsButton.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
+        epsButton.addTarget(self, action: #selector(clickBtnAction(_:)), for: .touchUpInside)
         
-        titleLabel.textColor = UIColor.white
-        titleLabel.font      = UIFont.systemFont(ofSize: 14, weight: .medium)
+        titleL.textColor = UIColor.white
+        titleL.font      = UIFont.systemFont(ofSize: 14, weight: .medium)
         
-        chooseDefinitionView.clipsToBounds = true
+        definitionChooseView.clipsToBounds = true
         
         // Bottom views
-        bottomView.addSubview(bottomWrapperView)
-        bottomWrapperView.addSubview(playButton)
-        //        bottomWrapperView.addSubview(forwordBtn)
-        //        bottomWrapperView.addSubview(backwordBtn)
-        bottomWrapperView.addSubview(currentTimeL)
-        //        bottomWrapperView.addSubview(centerTimeLabel)
-        bottomWrapperView.addSubview(totalTimeLabel)
-        bottomWrapperView.addSubview(progressView)
-        bottomWrapperView.addSubview(timeSlider)
-        bottomWrapperView.addSubview(nextBtn)
-        bottomWrapperView.addSubview(epsButton)
-        bottomWrapperView.addSubview(fullscreenButton)
-        //        bottomWrapperView.addSubview(airPlayButton)
-        //        bottomWrapperView.addSubview(rateButton)
+        bottomView.addSubview(bottomWrapView)
+        bottomWrapView.addSubview(playBtn)
+        bottomWrapView.addSubview(currentTimeL)
+        bottomWrapView.addSubview(totalTimeL)
+        bottomWrapView.addSubview(progressView)
+        bottomWrapView.addSubview(timeSlider)
+        bottomWrapView.addSubview(nextBtn)
+        bottomWrapView.addSubview(epsButton)
+        bottomWrapView.addSubview(fullscreenBtn)
         
-        //        bottomWrapperView.setColorLayerVertical(colorO: UIColor.clear, colorT: UIColor(white: 0, alpha: 0.65), frame: CGRect(x: 0, y: 0, width: kScreenHeight, height: 200))
-        
-        playButton.tag = HKButtonType.play.rawValue
-        playButton.setImage(UIImage(named: "play_play"),  for: .normal)
-        playButton.setImage(UIImage(named: "play_pause"), for: .selected)
-        playButton.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
-        
-        //        forwordBtn.tag = HKButtonType.forword.rawValue
-        //        forwordBtn.setImage(UIImage(named: "back"),  for: .normal)
-        //        forwordBtn.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
-        //
-        //        backwordBtn.tag = HKButtonType.backword.rawValue
-        //        backwordBtn.setImage(UIImage(named: "Fast forward"),  for: .normal)
-        //        backwordBtn.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
+        playBtn.tag = HKButtonType.play.rawValue
+        playBtn.setImage(UIImage(named: "play_play"),  for: .normal)
+        playBtn.setImage(UIImage(named: "play_pause"), for: .selected)
+        playBtn.addTarget(self, action: #selector(clickBtnAction(_:)), for: .touchUpInside)
         
         currentTimeL.textColor  = UIColor.white
         currentTimeL.font       = UIFont.systemFont(ofSize: 10, weight: .medium)
         currentTimeL.text       = "00:00"
         currentTimeL.textAlignment = NSTextAlignment.center
         
-        //        centerTimeLabel.textColor    = UIColor(white: 1, alpha: 0.5)
-        //        centerTimeLabel.font         = UIFont.systemFont(ofSize: 12, weight: .regular)
-        //        centerTimeLabel.text         = "/"
-        //        centerTimeLabel.textAlignment   = NSTextAlignment.center
+        totalTimeL.textColor    = UIColor.white
+        totalTimeL.font         = UIFont.systemFont(ofSize: 10, weight: .medium)
+        totalTimeL.text         = "00:00"
+        totalTimeL.textAlignment   = NSTextAlignment.center
         
-        totalTimeLabel.textColor    = UIColor.white
-        totalTimeLabel.font         = UIFont.systemFont(ofSize: 10, weight: .medium)
-        totalTimeLabel.text         = "00:00"
-        totalTimeLabel.textAlignment   = NSTextAlignment.center
-        
-        
+        currentTimeL.setContentHuggingPriority(.required, for: .horizontal)
+        totalTimeL.setContentHuggingPriority(.required, for: .horizontal)
         timeSlider.maximumValue = 1.0
         timeSlider.minimumValue = 0.0
         timeSlider.value        = 0.0
         timeSlider.setThumbImage(IMG("play_timeslider"), for: .normal)
         timeSlider.maximumTrackTintColor = UIColor.hex("#FFFFFF", alpha: 0.5)
         timeSlider.minimumTrackTintColor = UIColor.hex("#FF4131")
+                
+        timeSlider.addTarget(self, action: #selector(progressSliderTouch(_:)),
+                             for: .touchDown)
         
-        //        timeSlider.setMinimumTrackImage(UIImage(named: "play_timeslider"), for: .normal)
+        timeSlider.addTarget(self, action: #selector(progressSliderChanged(_:)),
+                             for: .valueChanged)
         
-        timeSlider.addTarget(self, action: #selector(progressSliderToucMTegan(_:)),
-                             for: UIControl.Event.touchDown)
+        timeSlider.addTarget(self, action: #selector(progressSliderEnded(_:)),
+                             for: [.touchUpInside, .touchCancel, .touchUpOutside])
         
-        timeSlider.addTarget(self, action: #selector(progressSliderValueChanged(_:)),
-                             for: UIControl.Event.valueChanged)
-        
-        timeSlider.addTarget(self, action: #selector(progressSliderTouchEnded(_:)),
-                             for: [UIControl.Event.touchUpInside,UIControl.Event.touchCancel, UIControl.Event.touchUpOutside])
-        
-        progressView.tintColor      = UIColor.hex("#FF4131", alpha: 0.4)
-        //        progressView.trackTintColor = UIColor.hex("#FF4131", alpha: 0.4)
+        progressView.tintColor = UIColor.hex("#FF4131", alpha: 0.4)
         
         mainView.addSubview(lockBtn)
         
         nextBtn.tag = HKButtonType.next.rawValue
         nextBtn.setImage(UIImage(named: "play_next"), for: .normal)
-        nextBtn.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
+        nextBtn.addTarget(self, action: #selector(clickBtnAction(_:)), for: .touchUpInside)
         
         lockBtn.tag = HKButtonType.lock.rawValue
         lockBtn.setImage(UIImage(named: "play_unlock"), for: .normal)
         lockBtn.setImage(UIImage(named: "play_lock"), for: .selected)
-        lockBtn.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
+        lockBtn.addTarget(self, action: #selector(clickBtnAction(_:)), for: .touchUpInside)
         lockBtn.isHidden = true
         
-        fullscreenButton.tag = HKButtonType.fullscreen.rawValue
-        fullscreenButton.setImage(UIImage(named: "play_offscreen"), for: .normal)
-        fullscreenButton.setImage(UIImage(named: "play_fullscreen"), for: .selected)
-        fullscreenButton.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
+        fullscreenBtn.tag = HKButtonType.fullscreen.rawValue
+        fullscreenBtn.setImage(UIImage(named: "play_offscreen"), for: .normal)
+        fullscreenBtn.setImage(UIImage(named: "play_fullscreen"), for: .selected)
+        fullscreenBtn.addTarget(self, action: #selector(clickBtnAction(_:)), for: .touchUpInside)
         
-        //        airPlayButton.activeTintColor = .white
-        //        airPlayButton.tintColor = .white
-        
-        //        rateButton.tag = HKButtonType.rate.rawValue
-        //        rateButton.setTitle("\(self.playRate)X", for: .normal)
-        //        rateButton.titleLabel?.font = UIFont.systemFont(ofSize: 10)
-        //        rateButton.backgroundColor = .clear
-        //        rateButton.layer.cornerRadius = 4
-        //        rateButton.layer.borderColor = UIColor.white.cgColor
-        //        rateButton.layer.borderWidth = 1
-        //        rateButton.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
-        
-        centerView.addSubview(centerWrapperView)
-        centerWrapperView.addSubview(play1Btn)
-        centerWrapperView.addSubview(backword1Button)
-        centerWrapperView.addSubview(forword1Button)
+        centerView.addSubview(centerWrapView)
+        centerWrapView.addSubview(play1Btn)
+        centerWrapView.addSubview(backwordBtn)
+        centerWrapView.addSubview(forwordBtn)
         
         play1Btn.tag = HKButtonType.play.rawValue
         play1Btn.setImage(UIImage(named: "play_play_full"),  for: .normal)
         play1Btn.setImage(UIImage(named: "play_pause_full"), for: .selected)
-        play1Btn.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
+        play1Btn.addTarget(self, action: #selector(clickBtnAction(_:)), for: .touchUpInside)
         
-        forword1Button.tag = HKButtonType.forword.rawValue
-        forword1Button.setImage(UIImage(named: "play_forward"),  for: .normal)
-        forword1Button.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
+        forwordBtn.tag = HKButtonType.forword.rawValue
+        forwordBtn.setImage(UIImage(named: "play_forward"),  for: .normal)
+        forwordBtn.addTarget(self, action: #selector(clickBtnAction(_:)), for: .touchUpInside)
         
-        backword1Button.tag = HKButtonType.backword.rawValue
-        backword1Button.setImage(UIImage(named: "play_backward"),  for: .normal)
-        backword1Button.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
-        
-        //        mainView.addSubview(loadingIndicator)
-        //        loadingIndicator.frame = CGRect(x: 0, y: 0, width: 70, height: 70)
-        //        loadingIndicator.type  = BMPlayerConf.loaderType
-        //        loadingIndicator.color = BMPlayerConf.tintColor
-        
-        // View to show when slide to seek
+        backwordBtn.tag = HKButtonType.backword.rawValue
+        backwordBtn.setImage(UIImage(named: "play_backward"),  for: .normal)
+        backwordBtn.addTarget(self, action: #selector(clickBtnAction(_:)), for: .touchUpInside)
+
         addSubview(seekToView)
-        //        seekToView.addSubview(seekToViewImage)
-        seekToView.addSubview(seekToEffView)
-        seekToView.addSubview(seekToLabel)
-        seekToView.addSubview(offsetToLabel)
+
+        seekToView.addSubview(seekEffView)
+        seekToView.addSubview(seekToL)
+        seekToView.addSubview(offsetToL)
         
         let blur = UIBlurEffect(style: .dark)
         let blurView = UIVisualEffectView(effect: blur)
         blurView.frame.size = CGSize(width: 134, height: 72)
-        seekToEffView.addSubview(blurView)
+        seekEffView.addSubview(blurView)
         
-        seekToLabel.font                  = UIFont.systemFont(ofSize: 18)
-        seekToLabel.textColor             = .white
-        seekToLabel.textAlignment         = .center
-        offsetToLabel.font                = UIFont.systemFont(ofSize: 12)
-        offsetToLabel.textColor           = .white
-        offsetToLabel.textAlignment       = .center
+        seekToL.font                  = UIFont.systemFont(ofSize: 18)
+        seekToL.textColor             = .white
+        seekToL.textAlignment         = .center
+        offsetToL.font                = UIFont.systemFont(ofSize: 12)
+        offsetToL.textColor           = .white
+        offsetToL.textAlignment       = .center
         seekToView.backgroundColor        = UIColor(white: 1, alpha: 0.08)
         seekToView.layer.cornerRadius     = 2
         seekToView.layer.masksToBounds    = true
         seekToView.isHidden               = true
-        seekToEffView.layer.cornerRadius  = 2
-        seekToEffView.layer.masksToBounds = true
+        seekEffView.layer.cornerRadius  = 2
+        seekEffView.layer.masksToBounds = true
         
         tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapGestureTapped(_:)))
         addGestureRecognizer(tapGesture)
@@ -1137,7 +963,7 @@ class HKPlayerControlView: UIView {
         if HKPlayerManager.share.enablePlayControlGestures {
             doubleGesture = UITapGestureRecognizer(target: self, action: #selector(ondoubleGestureRecognized(_:)))
             doubleGesture.numberOfTapsRequired = 2
-            doubleGesture.delegate = self
+//            doubleGesture.delegate = self
             addGestureRecognizer(doubleGesture)
             
             tapGesture.require(toFail: doubleGesture)
@@ -1156,7 +982,7 @@ class HKPlayerControlView: UIView {
         tapGesture.require(toFail: rightGesture)
     }
     
-    func addSnapKitConstraint() {
+    func setConstraint() {
         // Main  view
         mainView.snp.makeConstraints {  make in
             make.edges.equalTo(self)
@@ -1180,7 +1006,7 @@ class HKPlayerControlView: UIView {
             make.top.leading.trailing.equalTo(self.mainView)
         }
         
-        topWrapperView.snp.makeConstraints { (make) in
+        topWrapView.snp.makeConstraints { (make) in
             make.height.equalTo(44)
             make.leading.trailing.bottom.equalToSuperview()
         }
@@ -1189,7 +1015,7 @@ class HKPlayerControlView: UIView {
             make.bottom.leading.trailing.equalTo(self.mainView)
         }
         
-        bottomWrapperView.snp.makeConstraints { (make) in
+        bottomWrapView.snp.makeConstraints { (make) in
             make.height.equalTo(200)
             make.bottom.leading.trailing.equalToSuperview()
         }
@@ -1198,7 +1024,7 @@ class HKPlayerControlView: UIView {
             make.bottom.leading.trailing.equalTo(self.mainView)
         }
         
-        centerWrapperView.snp.makeConstraints { (make) in
+        centerWrapView.snp.makeConstraints { (make) in
             make.height.equalTo(56)
             make.top.leading.trailing.equalToSuperview()
         }
@@ -1210,164 +1036,99 @@ class HKPlayerControlView: UIView {
             make.bottom.equalToSuperview()
         }
         
-        //        rate1Button.snp.makeConstraints {  make in
-        //            make.width.equalTo(40)
-        //            make.height.equalTo(20)
-        //            make.trailing.equalToSuperview().offset(-10)
-        //            make.centerY.equalTo(self.backBtn)
-        //        }
-        
-        //        ccButton.snp.makeConstraints {  make in
-        //            make.width.height.equalTo(40)
-        //            make.trailing.equalTo(-marge)
-        //            make.centerY.equalTo(self.backBtn)
-        //        }
-        
         lockBtn.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.leading.equalTo(backBtn)
             make.width.height.equalTo(40)
         }
         
-        titleLabel.snp.makeConstraints {  make in
+        titleL.snp.makeConstraints {  make in
             make.leading.equalTo(self.backBtn.snp.trailing).offset(6)
             make.trailing.equalToSuperview().offset(-130)
             make.centerY.equalTo(self.backBtn)
         }
         
-        chooseDefinitionView.snp.makeConstraints {  make in
+        definitionChooseView.snp.makeConstraints {  make in
             make.trailing.equalToSuperview().offset(-20)
-            make.top.equalTo(self.titleLabel.snp.top).offset(-4)
+            make.top.equalTo(self.titleL.snp.top).offset(-4)
             make.width.equalTo(60)
             make.height.equalTo(30)
         }
         
-        // Bottom views
-        
-        //        backwordBtn.snp.makeConstraints {  make in
-        //            make.width.height.equalTo(40)
-        //            make.leading.equalToSuperview().offset(4)
-        //            make.bottom.equalToSuperview().offset(-1marge)
-        //        }
-        
-        playButton.snp.makeConstraints { (make) in
+        playBtn.snp.makeConstraints { (make) in
             make.width.height.equalTo(40)
             make.left.equalTo(marge)
             make.bottom.equalToSuperview().offset(-marge)
         }
-        
-        //        forwordBtn.snp.makeConstraints { (make) in
-        //            make.width.height.equalTo(40)
-        //            make.leading.equalTo(playButton.snp.trailing).offset(14)
-        //            make.centerY.equalTo(backwordBtn)
-        //        }
-        
+
         currentTimeL.snp.makeConstraints {  make in
-            make.centerY.equalTo(self.playButton)
-            make.left.equalTo(self.playButton.snp.right).offset(marge)
+            make.centerY.equalTo(self.playBtn)
+            make.left.equalTo(self.playBtn.snp.right).offset(marge)
             make.height.equalTo(17)
         }
         
-        //        centerTimeLabel.snp.makeConstraints {  make in
-        //            make.centerY.equalTo(self.currentTimeL)
-        //            make.leading.equalTo(self.currentTimeL.snp.trailing)
-        //        }
-        
-        totalTimeLabel.snp.makeConstraints {  make in
-            make.centerY.equalTo(self.playButton)
-            make.right.equalTo(self.fullscreenButton.snp.left).offset(-marge)
-        }
-        
-        timeSlider.snp.makeConstraints {  make in
-            make.centerY.equalTo(self.playButton)
-            make.left.equalTo(currentTimeL.snp.right).offset(marge)
-            make.right.equalTo(totalTimeLabel.snp.left).offset(-marge)
-            make.height.equalTo(30)
+        totalTimeL.snp.makeConstraints {  make in
+            make.centerY.equalTo(self.playBtn)
+            make.right.equalTo(self.fullscreenBtn.snp.left).offset(-marge)
         }
         
         progressView.snp.makeConstraints {  make in
             make.leading.trailing.equalTo(self.timeSlider)
-            make.centerY.equalTo(self.timeSlider).offset(1)
+            make.centerY.equalTo(self.timeSlider)
             make.height.equalTo(4)
         }
         
-        fullscreenButton.snp.makeConstraints {  make in
+        fullscreenBtn.snp.makeConstraints {  make in
             make.width.height.equalTo(40)
             make.bottom.right.equalToSuperview().offset(-marge)
         }
-        
-        //        airPlayButton.snp.makeConstraints {  make in
-        //            make.width.height.equalTo(36)
-        //            make.centerY.equalTo(self.playButton)
-        //            make.trailing.equalTo(self.fullscreenButton.snp.leading)
-        //        }
-        
-        //        rateButton.snp.makeConstraints {  make in
-        //            make.width.equalTo(30)
-        //            make.height.equalTo(20)
-        //            make.centerY.equalTo(self.playButton)
-        //            make.trailing.equalTo(self.fullscreenButton.snp.leading).offset(-marge)
-        //        }
-        
+    
         play1Btn.snp.makeConstraints { (make) in
-            make.width.height.equalTo(56)
+            make.width.height.equalTo(48)
             make.center.equalToSuperview()
         }
         
-        backword1Button.snp.makeConstraints {  make in
-            make.width.height.equalTo(32)
-            make.trailing.equalTo(play1Btn.snp.leading).offset(-48)
+        backwordBtn.snp.makeConstraints {  make in
+            make.width.height.equalTo(48)
+            make.trailing.equalTo(play1Btn.snp.leading).offset(-38)
             make.centerY.equalToSuperview()
         }
         
-        forword1Button.snp.makeConstraints { (make) in
-            make.width.height.equalTo(32)
-            make.leading.equalTo(play1Btn.snp.trailing).offset(48)
+        forwordBtn.snp.makeConstraints { (make) in
+            make.width.height.equalTo(48)
+            make.leading.equalTo(play1Btn.snp.trailing).offset(38)
             make.centerY.equalToSuperview()
         }
-        
-        //        loadingIndicator.snp.makeConstraints {  make in
-        //            make.center.equalTo(self.mainView)
-        //            make.width.height.equalTo(70)
-        //        }
-        
-        // View to show when slide to seek
+
+        mainView.addSubview(loadingView)
+        loadingView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.height.width.equalTo(80)
+        }
+
         seekToView.snp.makeConstraints {  make in
-            make.centerX.equalTo(self.snp.centerX)
-            make.top.equalToSuperview().offset(kNavBarHeight + 32)
+            make.center.equalTo(self)
             make.width.equalTo(134)
             make.height.equalTo(72)
         }
         
-        seekToEffView.snp.makeConstraints {  make in
+        seekEffView.snp.makeConstraints {  make in
             make.center.equalTo(self.snp.center)
             make.width.equalTo(134)
             make.height.equalTo(72)
         }
         
-        //        seekToViewImage.snp.makeConstraints {  make in
-        //            make.leading.equalTo(self.seekToView.snp.leading).offset(15)
-        //            make.centerY.equalTo(self.seekToView.snp.centerY)
-        //            make.height.equalTo(15)
-        //            make.width.equalTo(25)
-        //        }
-        
-        seekToLabel.snp.makeConstraints {  make in
+        seekToL.snp.makeConstraints {  make in
             make.centerX.equalTo(self.seekToView)
             make.top.equalTo(self.seekToView).offset(11)
             make.height.equalTo(25)
         }
         
-        offsetToLabel.snp.makeConstraints {  make in
+        offsetToL.snp.makeConstraints {  make in
             make.centerX.equalTo(self.seekToView)
-            make.top.equalTo(self.seekToLabel.snp.bottom).offset(marge)
+            make.top.equalTo(self.seekToL.snp.bottom).offset(marge)
             make.height.equalTo(17)
         }
-        
-        //        replayBtn.snp.makeConstraints {  make in
-        //            make.center.equalTo(self.mainView)
-        //            make.width.height.equalTo(50)
-        //        }
         
         subtitleBackView.snp.makeConstraints {  make in
             make.bottom.equalTo(self.snp.bottom).offset(-16)
@@ -1382,18 +1143,13 @@ class HKPlayerControlView: UIView {
             make.bottom.equalTo(self.subtitleBackView.snp.bottom).offset(-2)
         }
     }
-    
-    fileprivate func BMImageResourcePath(_ fileName: String) -> UIImage? {
-        let bundle = Bundle(for: HKPlayer.self)
-        return UIImage(named: fileName, in: bundle, compatibleWith: nil)
-    }
 }
 
-extension HKPlayerControlView: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if HKPlayerManager.share.isLock {
-            return false
-        }
-        return true
-    }
-}
+//extension HKPlayerControlView: UIGestureRecognizerDelegate {
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+//        if HKPlayerManager.share.isLock {
+//            return false
+//        }
+//        return true
+//    }
+//}

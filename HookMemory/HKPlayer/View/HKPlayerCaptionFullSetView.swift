@@ -15,20 +15,24 @@ class HKPlayerCaptionFullSetView: UIView {
     
     @IBOutlet weak var languageBtn: UIButton!
     
+    private var langView: HKPlayerLanguageFullView?
     @IBAction func clickAction(_ sender: Any) {
         if let btn = sender as? UIButton, btn.tag == 0 {
             btn.isSelected = !btn.isSelected
             HKPlayerManager.share.subtitleOn = btn.isSelected
         } else {
-            let langView = HKPlayerLanguageFullView.view()
-            self.superV?.addSubview(langView)
-            langView.snp.makeConstraints { make in
+            self.langView = HKPlayerLanguageFullView.view()
+            self.superV?.addSubview(self.langView!)
+            self.langView?.snp.makeConstraints { make in
                 make.left.top.bottom.equalToSuperview()
                 make.right.equalTo(-48)
             }
-            langView.setModel(self.dataArr)
-            langView.clickBlock = { [weak self] id in
+            self.langView?.setModel(self.dataArr)
+            self.langView?.clickBlock = { [weak self] id in
                 self?.clickBlock?(id)
+            }
+            self.langView?.backBlock = { [weak self] in
+                self?.dismissView()
             }
         }
     }
@@ -51,6 +55,7 @@ class HKPlayerCaptionFullSetView: UIView {
     }
     
     @objc func dismissView() {
+        self.langView?.removeFromSuperview()
         self.removeFromSuperview()
     }
 }

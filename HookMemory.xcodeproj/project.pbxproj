@@ -92,6 +92,9 @@
 		A79D66512B0DFDB00069F359 /* MoviePlayHeadInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79D664F2B0DFDB00069F359 /* MoviePlayHeadInfoCell.xib */; };
 		A79D66542B0DFF4A0069F359 /* MoviePlayHeadIconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79D66522B0DFF4A0069F359 /* MoviePlayHeadIconCell.swift */; };
 		A79D66552B0DFF4A0069F359 /* MoviePlayHeadIconCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79D66532B0DFF4A0069F359 /* MoviePlayHeadIconCell.xib */; };
+		A79DE7682B15B1B80029A612 /* HKPlayerLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79DE7672B15B1B80029A612 /* HKPlayerLoadingView.swift */; };
+		A79DE76A2B15B1C90029A612 /* HKPlayerLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79DE7692B15B1C90029A612 /* HKPlayerLoadingView.xib */; };
+		A79DE76C2B15B4020029A612 /* playLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = A79DE76B2B15B4020029A612 /* playLoading.json */; };
 		A79EA6272B0EF93C0007104B /* MoviePlayLikeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79EA6252B0EF93C0007104B /* MoviePlayLikeCell.swift */; };
 		A79EA6282B0EF93C0007104B /* MoviePlayLikeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79EA6262B0EF93C0007104B /* MoviePlayLikeCell.xib */; };
 		A79EA62A2B0F27BD0007104B /* HKPlayLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79EA6292B0F27BD0007104B /* HKPlayLayout.swift */; };
@@ -252,6 +255,9 @@
 		A79D664F2B0DFDB00069F359 /* MoviePlayHeadInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MoviePlayHeadInfoCell.xib; sourceTree = "<group>"; };
 		A79D66522B0DFF4A0069F359 /* MoviePlayHeadIconCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviePlayHeadIconCell.swift; sourceTree = "<group>"; };
 		A79D66532B0DFF4A0069F359 /* MoviePlayHeadIconCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MoviePlayHeadIconCell.xib; sourceTree = "<group>"; };
+		A79DE7672B15B1B80029A612 /* HKPlayerLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKPlayerLoadingView.swift; sourceTree = "<group>"; };
+		A79DE7692B15B1C90029A612 /* HKPlayerLoadingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HKPlayerLoadingView.xib; sourceTree = "<group>"; };
+		A79DE76B2B15B4020029A612 /* playLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = playLoading.json; sourceTree = "<group>"; };
 		A79EA6252B0EF93C0007104B /* MoviePlayLikeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviePlayLikeCell.swift; sourceTree = "<group>"; };
 		A79EA6262B0EF93C0007104B /* MoviePlayLikeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MoviePlayLikeCell.xib; sourceTree = "<group>"; };
 		A79EA6292B0F27BD0007104B /* HKPlayLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKPlayLayout.swift; sourceTree = "<group>"; };
@@ -398,6 +404,7 @@
 				A7A0AE9B2AFE27F000646494 /* FjallaOne-Regular.ttf */,
 				A7A0AE9C2AFE27F000646494 /* Hind-SemiBold.ttf */,
 				A77E07762B01E91F005A813C /* loading.json */,
+				A79DE76B2B15B4020029A612 /* playLoading.json */,
 				A79066372AF32CE6006A3982 /* Assets.xcassets */,
 				A790663C2AF32CE6006A3982 /* Info.plist */,
 			);
@@ -656,6 +663,8 @@
 				A79ED77D2B11C1D6009DC462 /* HKPlayerLanguageFullView.xib */,
 				A79ED77F2B11CD3B009DC462 /* HKPlayerLightView.swift */,
 				A79ED7802B11CD3B009DC462 /* HKPlayerLightView.xib */,
+				A79DE7672B15B1B80029A612 /* HKPlayerLoadingView.swift */,
+				A79DE7692B15B1C90029A612 /* HKPlayerLoadingView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -781,6 +790,7 @@
 				A79066382AF32CE6006A3982 /* Assets.xcassets in Resources */,
 				A79D65FE2AFB83FB0094E411 /* SearchView.xib in Resources */,
 				A79ED7822B11CD3B009DC462 /* HKPlayerLightView.xib in Resources */,
+				A79DE76C2B15B4020029A612 /* playLoading.json in Resources */,
 				A79D66512B0DFDB00069F359 /* MoviePlayHeadInfoCell.xib in Resources */,
 				A79D66552B0DFF4A0069F359 /* MoviePlayHeadIconCell.xib in Resources */,
 				A7C3F9D62AFC83D20094A15B /* MovieCell.xib in Resources */,
@@ -793,6 +803,7 @@
 				A79D663D2B0D9E680069F359 /* HKPlayerSelectEpsView.xib in Resources */,
 				A790669B2AF37CF3006A3982 /* FeedBackViewController.xib in Resources */,
 				A7C3F9D02AFC7F520094A15B /* FilterCell.xib in Resources */,
+				A79DE76A2B15B1C90029A612 /* HKPlayerLoadingView.xib in Resources */,
 				A77E07772B01E91F005A813C /* loading.json in Resources */,
 				A79ED77A2B11A12B009DC462 /* HKPlayerCaptionFullSetView.xib in Resources */,
 				A79F0F842B10A54C00C2729B /* HKPlayerLanguageCell.xib in Resources */,
@@ -939,6 +950,7 @@
 				A79BD7562B07623900AD3508 /* HKPlayerItem.swift in Sources */,
 				A79ED7782B11A120009DC462 /* HKPlayerCaptionFullSetView.swift in Sources */,
 				A79F0F7F2B10A44100C2729B /* HKPlayerLanguageView.swift in Sources */,
+				A79DE7682B15B1B80029A612 /* HKPlayerLoadingView.swift in Sources */,
 				A79ED77C2B11C1CA009DC462 /* HKPlayerLanguageFullView.swift in Sources */,
 				A79066652AF32D79006A3982 /* CustomLayout.swift in Sources */,
 				A7C3F9DE2AFCADAB0094A15B /* MovieSearchCell.swift in Sources */,
@@ -1216,7 +1228,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.testbird.HookMemor2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.testbird.HookMemor3;
 				PRODUCT_NAME = Haxen;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1256,7 +1268,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.testbird.HookMemor2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.testbird.HookMemor3;
 				PRODUCT_NAME = Haxen;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

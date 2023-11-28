@@ -213,7 +213,7 @@ class DBManager {
             m.isMovie = model.m_type != "tv_mflx"
             m.ssn_eps = model.ss_eps
             m.country = model.country
-            m.updateTime = m.isMovie ? Double(Date().timeIntervalSince1970) : 0
+            m.updateTime = Double(Date().timeIntervalSince1970)
         } else {
             let m: MovieVideoModel = MovieVideoModel()
             m.id = model.id
@@ -224,6 +224,7 @@ class DBManager {
             m.isMovie = model.m_type != "tv_mflx"
             m.ssn_eps = model.ss_eps
             m.country = model.country
+            m.updateTime = Double(Date().timeIntervalSince1970)
             self.insertVideoData(mod: m)
         }
         
@@ -253,6 +254,7 @@ class DBManager {
             m.eps_name = model.eps_name
             m.updateTime = Double(Date().timeIntervalSince1970)
         } else {
+            model.updateTime = Double(Date().timeIntervalSince1970)
             self.insertVideoData(mod: model)
         }
         
@@ -272,6 +274,7 @@ class DBManager {
             m.playProgress = model.playProgress
             m.totalTime = model.totalTime
             m.playedTime = model.playedTime
+            m.updateTime = Double(Date().timeIntervalSince1970)
         }
         if context.hasChanges {
             do {
@@ -392,13 +395,21 @@ class DBManager {
     func findVideoDataWithModel(id: String, ssn_id: String = "", eps_id: String = "") -> VideoDB? {
         let context:NSManagedObjectContext = DBManager.share.mainQueueContext
         let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "VideoDB")
-        
-        fetchRequest.predicate = NSPredicate(format: "id=%@ AND ssn_id=%@ AND eps_id=%@", id, ssn_id, eps_id)
-        
+        fetchRequest.sortDescriptors = [NSSortDescriptor.init(key: "updateTime", ascending: false)]
+        if ssn_id.isEmpty, eps_id.isEmpty {
+            fetchRequest.predicate = NSPredicate(format: "id=%@", id)
+        } else {
+            fetchRequest.predicate = NSPredicate(format: "id=%@ AND ssn_id=%@ AND eps_id=%@", id, ssn_id, eps_id)
+        }
         do {
             let searchResults = try context.fetch(fetchRequest)
             if searchResults.count > 0 {
-                let model:VideoDB = searchResults[0] as! VideoDB
+//                for (idx, item) in searchResults.enumerated() {
+//                    if let mod = item as? VideoDB {
+//                        print(idx,mod.id, mod.ssn_id, mod.eps_id, mod.updateTime)
+//                    }
+//                }
+                let model:VideoDB = searchResults.first as! VideoDB
                 return model
             } else {
                 return nil
@@ -413,8 +424,12 @@ class DBManager {
         let context:NSManagedObjectContext = DBManager.share.mainQueueContext
         let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "VideoDB")
         fetchRequest.sortDescriptors = [NSSortDescriptor.init(key: "updateTime", ascending: false)]
+        if ssn_id.isEmpty, eps_id.isEmpty {
+            fetchRequest.predicate = NSPredicate(format: "id=%@", id)
+        } else {
+            fetchRequest.predicate = NSPredicate(format: "id=%@ AND ssn_id=%@ AND eps_id=%@", id, ssn_id, eps_id)
+        }
 
-        fetchRequest.predicate = NSPredicate(format: "id=%@ AND ssn_id=%@ AND eps_id=%@", id, ssn_id, eps_id)
         do {
             let searchResults = try context.fetch(fetchRequest)
             if let mod = searchResults.first as? VideoDB {

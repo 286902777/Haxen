@@ -22,6 +22,6 @@ class HKPlayerRemindView: UIView {
     }
     
     @IBAction func remindAction(_ sender: UIButton) {
-        ProgressHUD.showSuccess("Subscription Successed!")
+        ProgressHUD.showSuccess("Thank you! Your reminder has been recorded.")
     }
 }

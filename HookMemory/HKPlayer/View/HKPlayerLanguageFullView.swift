@@ -17,6 +17,7 @@ class HKPlayerLanguageFullView: UIView {
     
     @IBOutlet weak var tableView: UITableView!
     
+    var backBlock: (()->())?
     var clickBlock: ((_ id: String)->())?
     private let cellIdentifier = "HKPlayerLanguageCell"
     private var dataArr: [MovieCaption] = []
@@ -24,9 +25,15 @@ class HKPlayerLanguageFullView: UIView {
         let view = Bundle.main.loadNibNamed(String(describing: HKPlayerLanguageFullView.self), owner: nil)?.first as! HKPlayerLanguageFullView
         view.bgView.backgroundColor = UIColor.hex("#FFFFFF", alpha: 0.05)
         view.bgView.effectView(CGSize(width: 308, height: kScreenWidth))
+        let tap = UITapGestureRecognizer(target: view, action: #selector(dismissView))
+        view.addGestureRecognizer(tap)
         return view
     }
     
+    @objc func dismissView() {
+        self.backBlock?()
+        self.removeFromSuperview()
+    }
     func setModel(_ list: [MovieCaption]) {
         self.tableView.register(UINib(nibName: String(describing: HKPlayerLanguageCell.self), bundle: nil), forCellReuseIdentifier: cellIdentifier)
         self.dataArr = list
