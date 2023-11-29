@@ -11,6 +11,7 @@ class HKPlayerLanguageView: UIViewController {
     /// 点击空白区域是否收起弹窗
     var dataArr: [MovieCaption] = []
     var clickBlock: ((_ id: String)->())?
+    var backBlock: (()->())?
 
     private let height: CGFloat = 450
 
@@ -78,6 +79,9 @@ class HKPlayerLanguageView: UIViewController {
             make.left.right.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissView))
+        tap.delegate = self
+        view.addGestureRecognizer(tap)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,6 +98,10 @@ class HKPlayerLanguageView: UIViewController {
         }
     }
     
+    @objc func dismissView() {
+        self.backBlock?()
+        self.dismiss(animated: false)
+    }
     @objc func clickBackAction () {
         self.dismiss(animated: false)
     }
@@ -124,3 +132,13 @@ extension HKPlayerLanguageView : UITableViewDelegate, UITableViewDataSource{
     }
 }
 
+extension HKPlayerLanguageView: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if let view = touch.view {
+            if view.isDescendant(of: self.tableView) {
+                return false
+            }
+        }
+        return true
+    }
+}

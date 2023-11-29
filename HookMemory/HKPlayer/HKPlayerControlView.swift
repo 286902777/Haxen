@@ -344,8 +344,6 @@ class HKPlayerControlView: UIView {
                 self.centerView.alpha = 1.0
                 if self.isFullscreen {
                     self.lockBtn.isHidden = false
-                } else {
-                    self.lockBtn.isHidden = true
                 }
             } else {
                 self.centerView.alpha = 0
@@ -381,15 +379,19 @@ class HKPlayerControlView: UIView {
                 topView.isHidden = false
             }
         }
-        
+        if isFullscreen, self.isShowing {
+            self.lockBtn.isHidden = false
+        } else {
+            self.lockBtn.isHidden = true
+        }
         leftView.snp.remakeConstraints {  make in
             make.top.leading.bottom.equalTo(self.mainView)
-            make.width.equalTo(isFullscreen ? (kScreenHeight * 0.45) : (kScreenWidth * 0.45))
+            make.width.equalTo(isFullscreen ? ((kScreenHeight - 144) * 0.45) : (kScreenWidth * 0.45))
         }
         
         rightView.snp.remakeConstraints {  make in
             make.top.trailing.bottom.equalTo(self.mainView)
-            make.width.equalTo(isFullscreen ? (kScreenHeight * 0.45) : (kScreenWidth * 0.45))
+            make.width.equalTo(isFullscreen ? ((kScreenHeight - 144) * 0.45) : (kScreenWidth * 0.45))
         }
         
         backBtn.snp.remakeConstraints { (make) in
@@ -419,10 +421,8 @@ class HKPlayerControlView: UIView {
                 make.leading.equalTo(play1Btn.snp.trailing).offset(38)
                 make.centerY.equalToSuperview()
             }
-//            lockBtn.isHidden = false
         } else {
             forwordBtn.isHidden = true
-            lockBtn.isHidden = true
             backwordBtn.isHidden = true
             play1Btn.isHidden = true
         }
@@ -746,6 +746,12 @@ class HKPlayerControlView: UIView {
         delegate?.controlView(controlView: self, slider: sender, onSliderEvent: .touchUpInside)
     }
     
+    @objc func tapProgressSlider(_ sender: UITapGestureRecognizer) {
+        let point = sender.location(in: self.timeSlider)
+        let v: Double = point.x / self.timeSlider.frame.size.width
+        fadeOutControlViewWithAnimation()
+//        delegate?.controlView(controlView: self, value: v, onSliderEvent: .touchUpInside)
+    }
     
     // MARK: - private functions
     fileprivate func showSubtile(from subtitle: HKSubtitles?, at time: TimeInterval) {
@@ -978,7 +984,7 @@ class HKPlayerControlView: UIView {
         rightGesture = UITapGestureRecognizer(target: self, action: #selector(onrightGestureRecognized(_:)))
         rightGesture.numberOfTapsRequired = 2
         rightView.addGestureRecognizer(rightGesture)
-        
+
         tapGesture.require(toFail: rightGesture)
     }
     
@@ -1041,7 +1047,6 @@ class HKPlayerControlView: UIView {
             make.leading.equalTo(backBtn)
             make.width.height.equalTo(40)
         }
-        
         titleL.snp.makeConstraints {  make in
             make.leading.equalTo(self.backBtn.snp.trailing).offset(6)
             make.trailing.equalToSuperview().offset(-130)

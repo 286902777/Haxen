@@ -44,7 +44,7 @@ protocol ResponseBaseParam: BaseModel{
 struct ResponseDefault: HandyJSON {}
 
 struct ResponseData: HandyJSON{
-    var status    :   Int?
+    var status  :   Int?
     var msg     :   String?
     var data    :   Any?
 }
@@ -87,7 +87,7 @@ extension NetManager{
     ) -> DataRequest{
         AF.sessionConfiguration.timeoutIntervalForRequest = 15
         var headers : HTTPHeaders = HTTPHeaders()
-        headers.add(name: "Content-Type", value: NetManager.defualt.contentType)
+        headers.add(name: "Accept", value: NetManager.defualt.contentType)
         if NetManager.defualt.contentType != "application/x-www-form-urlencoded" {
             NetManager.defualt.contentType = "application/x-www-form-urlencoded"
         }
@@ -121,7 +121,6 @@ extension NetManager{
     class func request<Parameters: Encodable>(url:String,
                                               method:HTTPMethod = .post,
                                               parameters:Parameters,
-                                              contentType: String = "",
                                               resultBlock:ResponseBlock<ResponseDefault>?){
         self.request(url: url, method: method, parameters: parameters, modelType: ResponseDefault.self, resultBlock: resultBlock)
     }

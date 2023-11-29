@@ -26,6 +26,7 @@ class HKPlayerLanguageFullView: UIView {
         view.bgView.backgroundColor = UIColor.hex("#FFFFFF", alpha: 0.05)
         view.bgView.effectView(CGSize(width: 308, height: kScreenWidth))
         let tap = UITapGestureRecognizer(target: view, action: #selector(dismissView))
+        tap.delegate = view
         view.addGestureRecognizer(tap)
         return view
     }
@@ -72,5 +73,16 @@ extension HKPlayerLanguageFullView: UITableViewDelegate, UITableViewDataSource {
             clickBlock?(model.captionId)
         }
         tableView.reloadData()
+    }
+}
+
+extension HKPlayerLanguageFullView: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if let view = touch.view {
+            if view.isDescendant(of: self.tableView) {
+                return false
+            }
+        }
+        return true
     }
 }

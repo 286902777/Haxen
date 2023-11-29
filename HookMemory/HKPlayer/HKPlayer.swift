@@ -43,6 +43,7 @@ class HKPlayer: UIView {
     }
     
     var backBlock:((Bool) -> Void)?
+    var exitFullScreen:((Bool) -> Void)?
 
     open var isPlaying: Bool {
         get {
@@ -55,6 +56,9 @@ class HKPlayer: UIView {
         didSet {
             DispatchQueue.main.async {
                 self.controlView.controlViewAnimation(isShow: !self.controlView.isShowing)
+            }
+            if isReminder {
+                self.controlView.hideLoader()
             }
         }
     }
@@ -396,6 +400,7 @@ class HKPlayer: UIView {
     @objc func fullScreenButtonPressed() {
         self.isFullScreen = !self.isFullScreen
         controlView.setUpdateUI(self.isFullScreen)
+        self.exitFullScreen?(self.isFullScreen)
         self.controlView.controlViewAnimation(isShow: self.isFullScreen)
         if #available(iOS 16.0, *) {
             vc?.setNeedsUpdateOfSupportedInterfaceOrientations()

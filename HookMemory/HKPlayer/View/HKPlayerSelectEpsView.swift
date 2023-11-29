@@ -15,7 +15,7 @@ class HKPlayerSelectEpsView: UIView {
     @IBOutlet weak var epsCollectionView: UICollectionView!
     let ssnCellId = "HKPlayerSelectSsnCell"
     let epsCellId = "HKPlayerSelectEpsCell"
-    typealias clickBlock = (_ ssnId: String, _ epsId: String) -> Void
+    typealias clickBlock = (_ list: [MovieVideoInfoEpssModel], _ ssnId: String, _ epsId: String) -> Void
     var clickHandle : clickBlock?
     private var videoId: String = ""
     private var ssnId: String = ""
@@ -43,6 +43,7 @@ class HKPlayerSelectEpsView: UIView {
         self.videoId = id
         self.ssnList = model.ssn_list
         self.epsList = model.epss
+        self.epsId = model.epss.first(where: {$0.isSelect == true})?.id ?? ""
         self.ssnCollectionView.reloadData()
         self.epsCollectionView.reloadData()
         for (index, item) in self.ssnList.enumerated() {
@@ -116,7 +117,7 @@ extension HKPlayerSelectEpsView: UICollectionViewDelegate, UICollectionViewDataS
         } else {
             if let model = self.epsList.safe(indexPath.item) {
                 self.epsId = model.id
-                self.clickHandle?(self.ssnId, self.epsId)
+                self.clickHandle?(self.epsList, self.ssnId, self.epsId)
                 let _ = self.epsList.map({$0.isSelect = false})
                 self.epsList.first(where: {$0.id == model.id})?.isSelect = true
                 self.epsCollectionView.reloadData()
