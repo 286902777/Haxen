@@ -139,7 +139,7 @@
 		A7C3F9DC2AFCAD480094A15B /* MovieSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C3F9DB2AFCAD480094A15B /* MovieSearchViewController.swift */; };
 		A7C3F9DE2AFCADAB0094A15B /* MovieSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C3F9DD2AFCADAB0094A15B /* MovieSearchCell.swift */; };
 		A7C3F9E42AFCDEFC0094A15B /* MovieFilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C3F9E32AFCDEFC0094A15B /* MovieFilterModel.swift */; };
-		A7D3CAA02B17176B006AA727 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A7D3CA9F2B17176B006AA727 /* GoogleService-Info.plist */; };
+		A7D3CAA22B17180E006AA727 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A7D3CAA12B17180E006AA727 /* GoogleService-Info.plist */; };
 		C50AF4D1D3F661D42335614D /* Pods_HookMemory_HookMemoryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55DD2C6C99F99B2759CCFF65 /* Pods_HookMemory_HookMemoryUITests.framework */; };
 		E8BFAF8CADF4FB190F307BB5 /* Pods_HookMemoryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A72E917D762FE67A1D2F85D0 /* Pods_HookMemoryTests.framework */; };
 /* End PBXBuildFile section */
@@ -303,7 +303,7 @@
 		A7C3F9DB2AFCAD480094A15B /* MovieSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchViewController.swift; sourceTree = "<group>"; };
 		A7C3F9DD2AFCADAB0094A15B /* MovieSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchCell.swift; sourceTree = "<group>"; };
 		A7C3F9E32AFCDEFC0094A15B /* MovieFilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieFilterModel.swift; sourceTree = "<group>"; };
-		A7D3CA9F2B17176B006AA727 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A7D3CAA12B17180E006AA727 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B218BBEE663398166B997330 /* Pods-HookMemoryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HookMemoryTests.debug.xcconfig"; path = "Target Support Files/Pods-HookMemoryTests/Pods-HookMemoryTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E63D3EF19A721FCDC3809788 /* Pods_HookMemory.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HookMemory.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E2188CB3C8570FD231369E /* Pods-HookMemory.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HookMemory.release.xcconfig"; path = "Target Support Files/Pods-HookMemory/Pods-HookMemory.release.xcconfig"; sourceTree = "<group>"; };
@@ -405,7 +405,7 @@
 				A79066312AF32CE4006A3982 /* Main.storyboard */,
 				A7A0AE9B2AFE27F000646494 /* FjallaOne-Regular.ttf */,
 				A7A0AE9C2AFE27F000646494 /* Hind-SemiBold.ttf */,
-				A7D3CA9F2B17176B006AA727 /* GoogleService-Info.plist */,
+				A7D3CAA12B17180E006AA727 /* GoogleService-Info.plist */,
 				A77E07762B01E91F005A813C /* loading.json */,
 				A79DE76B2B15B4020029A612 /* playLoading.json */,
 				A79066372AF32CE6006A3982 /* Assets.xcassets */,
@@ -790,7 +790,7 @@
 				A79D66492B0DF2350069F359 /* MoviePlayHeadCell.xib in Resources */,
 				A790666C2AF32E16006A3982 /* HookNavigationBar.xib in Resources */,
 				A7BC83DF2B04615B000912F1 /* LoadingViewController.xib in Resources */,
-				A7D3CAA02B17176B006AA727 /* GoogleService-Info.plist in Resources */,
+				A7D3CAA22B17180E006AA727 /* GoogleService-Info.plist in Resources */,
 				A72EB1612AF482A800AF20C3 /* HKSheetCell.xib in Resources */,
 				A79066382AF32CE6006A3982 /* Assets.xcassets in Resources */,
 				A79D65FE2AFB83FB0094E411 /* SearchView.xib in Resources */,

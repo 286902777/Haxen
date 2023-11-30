@@ -182,7 +182,6 @@ extension NetManager{
         }
         responseModel.status = ResponseError(rawValue: baseModel.status ?? 0) ?? .unkown
         if let _ = baseModel.msg{
-            print(responseModel.status, baseModel.msg ?? "")
             responseModel.errorMessage = baseModel.msg!
         }
         responseModel.resultData = baseModel.data

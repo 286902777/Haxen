@@ -8,7 +8,7 @@
 import UIKit
 
 class MovieFilterViewController: MovieBaseViewController {
-    private let headerView: FilterView = FilterView(frame: CGRect(x: 0, y: -232, width: kScreenWidth, height: 232))
+    private let headerView: FilterView = FilterView(frame: CGRect(x: 0, y: -232, width: kScreenWidth - 32, height: 232))
     let cellIdentifier = "MovieCellIdentifier"
     let cellW = floor((kScreenWidth - 48) / 3)
     var dataArr: [MovieDataInfoModel] = []
