@@ -73,6 +73,7 @@ class MoviePlayViewController: UIViewController {
         }
     }
     
+    private var statusH = kStatusBarHeight
     private var countPlayTime: Int = 30
     private var timer: Timer?
     private var playLock: Bool = false
@@ -131,8 +132,10 @@ class MoviePlayViewController: UIViewController {
                     ScreenisFull = true
                     self.onOrientationChanged(isLand: true)
                 } else if device.orientation == .portrait || device.orientation == .portraitUpsideDown {
-                    ScreenisFull = false
-                    self.onOrientationChanged(isLand: false)
+                    if self.playLock == false {
+                        ScreenisFull = false
+                        self.onOrientationChanged(isLand: false)
+                    }
                 }
             }
         }
@@ -165,15 +168,15 @@ class MoviePlayViewController: UIViewController {
         self.setCoverImage()
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        DispatchQueue.main.async {
-            if self.playLock == false {
-                self.playerTransed(isFull: self.player.isFullScreen)
-                self.player.setUpdateUI(self.player.isFullScreen)
-            }
-        }
-    }
+//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//        super.viewWillTransition(to: size, with: coordinator)
+//        DispatchQueue.main.async {
+//            if self.playLock == false {
+//                self.playerTransed(isFull: self.player.isFullScreen)
+//                self.player.setUpdateUI(self.player.isFullScreen)
+//            }
+//        }
+//    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -201,7 +204,7 @@ class MoviePlayViewController: UIViewController {
         player.sourceKey = self.model.id
         player.snp.makeConstraints { (make) in
             make.leading.trailing.equalToSuperview()
-            make.top.equalToSuperview().offset(kStatusBarHeight)
+            make.top.equalToSuperview().offset(statusH)
             make.height.equalTo(self.videoHeight)
         }
         
@@ -404,7 +407,7 @@ class MoviePlayViewController: UIViewController {
                 make.trailing.equalTo(-72)
             } else {
                 make.leading.trailing.equalToSuperview()
-                make.top.equalToSuperview().offset(kStatusBarHeight)
+                make.top.equalToSuperview().offset(statusH)
                 make.height.equalTo(self.videoHeight)
             }
         }
@@ -544,20 +547,19 @@ class MoviePlayViewController: UIViewController {
 
 extension MoviePlayViewController: HKPlayerDelegate {
     // Call when player orinet changed
-//    func player(player: HKPlayer, playerOrientChanged isFullscreen: Bool) {
-//        player.snp.remakeConstraints { (make) in
-//            if isFullscreen {
-//                make.top.equalTo(view.snp.top)
-//                make.leading.equalTo(view.snp.leading)
-//                make.trailing.equalTo(view.snp.trailing)
-//                make.height.equalTo(kScreenWidth)
-//            } else {
-//                make.leading.trailing.equalToSuperview()
-//                make.top.equalToSuperview().offset(kStatusBarHeight)
-//                make.height.equalTo(self.videoHeight)
-//            }
-//        }
-//    }
+    func player(player: HKPlayer, playerOrientChanged isFullscreen: Bool) {
+        player.snp.remakeConstraints { (make) in
+            if isFullscreen {
+                make.top.bottom.equalToSuperview()
+                make.leading.equalTo(72)
+                make.trailing.equalTo(-72)
+            } else {
+                make.leading.trailing.equalToSuperview()
+                make.top.equalToSuperview().offset(statusH)
+                make.height.equalTo(self.videoHeight)
+            }
+        }
+    }
     
     func player(player: HKPlayer, playerIsPlaying playing: Bool) {
         print("playing: \(playing)")

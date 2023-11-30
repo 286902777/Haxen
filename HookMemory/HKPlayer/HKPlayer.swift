@@ -19,7 +19,7 @@ protocol HKPlayerDelegate: AnyObject {
     func player(player: HKPlayer, loadedTimeDidChange loadedDuration: TimeInterval, totalDuration: TimeInterval)
     func player(player: HKPlayer, playTimeDidChange currentTime : TimeInterval, totalTime: TimeInterval)
     func player(player: HKPlayer, playerIsPlaying playing: Bool)
-//    func player(player: HKPlayer, playerOrientChanged isFullscreen: Bool)
+    func player(player: HKPlayer, playerOrientChanged isFullscreen: Bool)
     func playerShowCaptionView(_ isfull: Bool)
     func playerShowEpsView()
     func playerNext()
@@ -399,6 +399,7 @@ class HKPlayer: UIView {
     
     @objc func fullScreenButtonPressed() {
         self.isFullScreen = !self.isFullScreen
+        delegate?.player(player: self, playerOrientChanged: isFullScreen)
         controlView.setUpdateUI(self.isFullScreen)
         self.exitFullScreen?(self.isFullScreen)
         self.controlView.controlViewAnimation(isShow: self.isFullScreen)

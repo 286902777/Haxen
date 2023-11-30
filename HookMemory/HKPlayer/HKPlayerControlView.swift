@@ -340,6 +340,7 @@ class HKPlayerControlView: UIView {
                 $0.height.equalTo(56)
                 $0.width.equalTo(220)
             }
+
             if isShow, self.player?.isReminder == false {
                 self.centerView.alpha = 1.0
                 if self.isFullscreen {
