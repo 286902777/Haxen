@@ -56,7 +56,6 @@ class HKPlayerCaptionSetView: UIViewController {
         bgView.effectView(CGSize(width: kScreenWidth, height: 254))
         bgView.addCorner(conrners: [.topLeft, .topRight], radius: 24)
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissAnimate))
-        
         view.addGestureRecognizer(tap)
     }
     override func viewDidLoad() {
@@ -71,6 +70,9 @@ class HKPlayerCaptionSetView: UIViewController {
         vc.dataArr = self.dataArr
         vc.clickBlock = { [weak self] id in
             self?.clickBlock?(id)
+        }
+        vc.backBlock = { [weak self] in
+            self?.dismissAnimate()
         }
         vc.modalPresentationStyle = .overFullScreen
         self.present(vc, animated: false)

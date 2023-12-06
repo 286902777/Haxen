@@ -17,6 +17,11 @@ target 'HookMemory' do
   pod 'CryptoSwift'
   pod 'ZIPFoundation'
 
+  pod 'FBSDKCoreKit'
+  
+  pod 'Firebase/Analytics'
+  pod 'FirebaseCrashlytics'
+
   target 'HookMemoryTests' do
     inherit! :search_paths
     # Pods for testing

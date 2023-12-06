@@ -275,6 +275,9 @@ class DBManager {
             m.totalTime = model.totalTime
             m.playedTime = model.playedTime
             m.updateTime = Double(Date().timeIntervalSince1970)
+        } else {
+            model.updateTime = Double(Date().timeIntervalSince1970)
+            self.insertVideoData(mod: model)
         }
         if context.hasChanges {
             do {

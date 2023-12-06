@@ -21,6 +21,8 @@ enum MovieNetAPI: String {
     case movieTvSSNApi = "api/video_ssn/"
     /// movie,tvInfo
     case movieInfoApi = "api/video_detail/"
+    /// redmin
+    case movieRedminApi = "need_created_media/upsert"
 }
 
 class MovieAPI {
@@ -183,6 +185,35 @@ class MovieAPI {
                 }
             } else {
                 completion(false, nil)
+            }
+        })
+        task.resume()
+    }
+    
+    func uploadRedmin(id: String, ssn_id: String = "", eps_id: String = "", isMoive: Bool = true, _ completion: @escaping (_ success: Bool) -> ()) {
+        para["video_id"] = id
+        para["tv_season_id"] = ssn_id
+        para["tv_id"] = eps_id
+        para["source_type_ordinal"] = isMoive ? "1" : "0"
+        let host = NetManager.defualt.RequestVideoHost + MovieNetAPI.movieRedminApi.rawValue
+        var request: URLRequest = URLRequest(url: URL(string: host)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 15)
+        request.httpMethod = "POST"
+        if let data = try? JSONSerialization.data(withJSONObject: para) {
+            request.httpBody = data
+        }
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
+        let session: URLSession = URLSession(configuration: configuration)
+        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+            guard error == nil else {
+                completion(false)
+                return
+            }
+            if let res = response as? HTTPURLResponse, res.statusCode == 200, let data = data {
+                let dataString = String(data: data, encoding: .utf8)
+                completion(true)
+            } else {
+                completion(false)
             }
         })
         task.resume()
