@@ -15,6 +15,7 @@ class MoviePlayViewController: UIViewController {
     private var controller = HKPlayerControlView()
     private var player: HKPlayer!
     private var currentTime: TimeInterval = 0
+    private var isPlayAd: Bool = false
     private var videoId: String = ""
     private var videoUrl: String = ""
     private var ssnId: String = ""
@@ -244,8 +245,10 @@ class MoviePlayViewController: UIViewController {
         self.controller.isReadyToPlayed = false
         var asset: HKPlayerResource?
         
-        HKConfig.showInterAD(type: self.player.isFullScreen ? .other : .play, placement: .play) { _ in
-            
+        HKConfig.showInterAD(type: self.player.isFullScreen ? .other : .play, placement: .play) { [weak self] success in
+            if success {
+                self?.isPlayAd = true
+            }
         }
 
         ProgressHUD.showLoading()
@@ -306,8 +309,6 @@ class MoviePlayViewController: UIViewController {
         }
         group.notify(queue: dispatchQueue){ [weak self] in
             guard let self = self else { return }
-            let name = self.videoModel.ssn.ssn_list.first(where: {$0.isSelect == true})?.title
-            HKLog.hk_movie_play_sh(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: name ?? "", source: "\(from.rawValue)", movie_type: self.model.isMovie ? "1" : "2")
             DispatchQueue.main.async {
                 ProgressHUD.dismiss()
                 self.tableView.isHidden = false
@@ -324,14 +325,31 @@ class MoviePlayViewController: UIViewController {
                 if let url = URL(string: self.videoUrl) {
                     self.remView.isHidden = true
                     self.player.isReminder = false
-                    asset = HKPlayerResource(name: self.videoModel.data.title, definitions: [HKPlayerResourceConfig(url: url, definition: "480p")], cover: nil, subtitles: self.captions)
-                    self.player.setVideo(resource: asset!, sourceKey: self.videoId)
+                    if self.isPlayAd == false {
+                        let name = self.videoModel.ssn.ssn_list.first(where: {$0.isSelect == true})?.title
+                        HKLog.hk_movie_play_sh(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: name ?? "", source: "\(self.from.rawValue)", movie_type: self.model.isMovie ? "1" : "2")
+
+                        asset = HKPlayerResource(name: self.videoModel.data.title, definitions: [HKPlayerResourceConfig(url: url, definition: "480p")], cover: nil, subtitles: self.captions)
+                        self.player.setVideo(resource: asset!, sourceKey: self.videoId)
+                    }
                 } else {
                     self.tableView.isHidden = true
                     self.remView.isHidden = false
                     self.player.isReminder = true
                 }
             }
+        }
+        HKADManager.share.tempDismissComplete = { [weak self] in
+            guard let self = self else { return }
+            if self.isPlayAd == true {
+                if let a = asset {
+                    let name = self.videoModel.ssn.ssn_list.first(where: {$0.isSelect == true})?.title
+                    HKLog.hk_movie_play_sh(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: name ?? "", source: "\(self.from.rawValue)", movie_type: self.model.isMovie ? "1" : "2")
+                    self.player.setVideo(resource: a, sourceKey: self.videoId)
+                }
+                self.isPlayAd = false
+            }
+            HKADManager.share.tempDismissComplete = nil
         }
     }
     

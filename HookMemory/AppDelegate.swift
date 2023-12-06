@@ -82,6 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaults.standard.set(1, forKey: HKCommon.appOpneCount)
         }
         HKADManager.share.initSet()
+        HKTBAManager.share.initSet()
         HKRemoteManager.share.initConfig()
 
         GADMobileAds.sharedInstance().start { status in

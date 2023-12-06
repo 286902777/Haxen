@@ -3,4 +3,166 @@
    uuid = "60644F78-B3CE-47F1-A30D-A12E08B3C9FD"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2AC30872-09EF-41FD-A884-B2547C89255E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HookMemory/Base/HKTBAManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "194"
+            endingLineNumber = "194"
+            landmarkName = "getTabParameters(type:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "2AC30872-09EF-41FD-A884-B2547C89255E - 14304360483c58a6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Haxen.HKTBAManager.getTabParameters(type: Haxen.HKTBAType) -&gt; Swift.Dictionary&lt;Swift.String, Any&gt;"
+                  moduleName = "Haxen"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hf/Desktop/HookMemory/HookMemory/Base/HKTBAManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "194"
+                  endingLineNumber = "194"
+                  offsetFromSymbolStart = "6828">
+               </Location>
+               <Location
+                  uuid = "2AC30872-09EF-41FD-A884-B2547C89255E - 14304360483c58a6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Haxen.HKTBAManager.getTabParameters(type: Haxen.HKTBAType) -&gt; Swift.Dictionary&lt;Swift.String, Any&gt;"
+                  moduleName = "Haxen"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hf/Desktop/HookMemory/HookMemory/Base/HKTBAManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "194"
+                  endingLineNumber = "194"
+                  offsetFromSymbolStart = "5312">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "146D84BD-5242-4447-9EEA-711F8EB4E168"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HookMemory/Base/HKADManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "783"
+            endingLineNumber = "783"
+            landmarkName = "didDisplay(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "146D84BD-5242-4447-9EEA-711F8EB4E168 - 1bd761e5aff20010"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Haxen.HKADManager.didDisplay(__C.MAAd) -&gt; ()"
+                  moduleName = "Haxen"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hf/Desktop/HookMemory/HookMemory/Base/HKADManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "783"
+                  endingLineNumber = "783"
+                  offsetFromSymbolStart = "184">
+               </Location>
+               <Location
+                  uuid = "146D84BD-5242-4447-9EEA-711F8EB4E168 - 1bd761e5aff20010"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Haxen.HKADManager.didDisplay(__C.MAAd) -&gt; ()"
+                  moduleName = "Haxen"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hf/Desktop/HookMemory/HookMemory/Base/HKADManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "783"
+                  endingLineNumber = "783"
+                  offsetFromSymbolStart = "392">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9A0C13E0-C669-49D8-B5FC-F87DF045C83B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HookMemory/Base/HKADManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "872"
+            endingLineNumber = "872"
+            landmarkName = "didPayRevenue(for:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1D82175F-7F63-48B5-BD87-C37753714702"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HookMemory/Base/HKADManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "744"
+            endingLineNumber = "744"
+            landmarkName = "didLoad(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1D82175F-7F63-48B5-BD87-C37753714702 - 52364bf1841309b0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Haxen.HKADManager.didLoad(__C.MAAd) -&gt; ()"
+                  moduleName = "Haxen"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hf/Desktop/HookMemory/HookMemory/Base/HKADManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "744"
+                  endingLineNumber = "744"
+                  offsetFromSymbolStart = "296">
+               </Location>
+               <Location
+                  uuid = "1D82175F-7F63-48B5-BD87-C37753714702 - 52364bf1841309b0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Haxen.HKADManager.didLoad(__C.MAAd) -&gt; ()"
+                  moduleName = "Haxen"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hf/Desktop/HookMemory/HookMemory/Base/HKADManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "744"
+                  endingLineNumber = "744"
+                  offsetFromSymbolStart = "548">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

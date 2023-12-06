@@ -208,12 +208,12 @@ class HKConfig{
                         complete(true)
                     } else if let ad = ad as? GADRewardedAd {
                         ad.present(fromRootViewController: vc, userDidEarnRewardHandler: {
-                            toast("Reward received!")
+//                            toast("Reward received!")
                         })
                         complete(true)
                     } else if let ad = ad as? GADRewardedInterstitialAd {
                         ad.present(fromRootViewController: vc, userDidEarnRewardHandler: {
-                            toast("Reward received!")
+//                            toast("Reward received!")
                         })
                         complete(true)
                     } else {

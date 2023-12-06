@@ -66,7 +66,7 @@ class HKTBAManager: NSObject {
     
     var task: URLSessionDataTask?
     
-    func preSet() {
+    func initSet() {
         cacheTimer = DispatchSource.makeTimerSource(flags: [], queue: .main)
         cacheTimer?.setEventHandler(handler: { [weak self] in
             self?.tbaNeedRequest()
@@ -95,15 +95,13 @@ class HKTBAManager: NSObject {
         }
         
         let tempTbaLogs = self.tbaLogs
-        let urlString = "\(self.host)?bayonet=\(HKConfig.share.netStatus)&fin=\(UIDevice.current.systemVersion)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)! // bundle_id  idfa  brand
+        let urlString = "\(self.host)?itll=\(HKConfig.share.getDistinctId())&sneaky=\(HKConfig.idfv)&pershing=\(HKConfig.share.getDistinctId())".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)! // bundle_id  idfa  brand
         
         var request: URLRequest = URLRequest(url: URL(string: urlString)!)
         request.httpMethod = "POST"
         
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue(HKConfig.idfv, forHTTPHeaderField: "sneaky") // idfv
-        request.setValue(String(Int(Date().timeIntervalSince1970 * 1000)), forHTTPHeaderField: "virus") // client_ts
-        request.setValue("", forHTTPHeaderField: "louvre") // channel
         
         if let data = try? JSONSerialization.data(withJSONObject: tempTbaLogs, options: []) {
             request.httpBody = data
@@ -126,7 +124,7 @@ class HKTBAManager: NSObject {
                 HKLog.log("TBA success!")
 
                 for item in tempTbaLogs {
-                    if let index = self.tbaLogs.firstIndex(where: { ($0["kinetic"] as? String) == (item["kinetic"] as? String) }) {
+                    if let index = self.tbaLogs.firstIndex(where: { ($0["itll"] as? String) == (item["itll"] as? String) }) {
                         self.tbaLogs.remove(at: index)
                     }
                 }
@@ -140,29 +138,39 @@ class HKTBAManager: NSObject {
     }
     
     func getTabParameters(type: HKTBAType) -> [String: Any] {
-        var paras: [String: Any] = [
+        var fredholm: [String: Any] = [
             "able": HKConfig.app_version, // 应用的版本
-            "sole": Int(Date().timeIntervalSince1970 * 1000), // 日志发生的客户端时间，毫秒数
-            "figure": "\(Locale.current.languageCode ?? "zh")_\(Locale.current.regionCode ?? "CN")", // String locale = Locale.getDefault(); 拼接为：zh_CN的形式，下杠
-            "shebang": UIDevice.current.systemVersion, // 操作系统版本号
-//            "bayonet": MTNetworkManager.standerd.currentTypeString, // 网络类型：wifi，3g等，非必须，和产品确认是否需要分析网络类型相关的信息，此参数可能需要系统权限
-            "kosher": Locale.current.regionCode ?? "ZZ", // 操作系统中的国家简写，例如 CN，US等
-            "agave": "Apple", // 收集厂商，hauwei、opple
-            "ashram": HKTBAManager.SAFEBUNDLEID, // 当前的包名称，a.b.c
-            "editor": "", // 没有开启google广告服务的设备获取不到，但是必须要尝试获取，用于归因，原值，google广告id
-            "itll": HKConfig.share.getDistinctId(), // 用户排重字段，统计涉及到的排重用户数就是依据该字段，对接时需要和产品确认
-            "sneaky": HKConfig.idfv, // ios的idfv原值
-            "hobo": HKConfig.idfa, // idfa 原值（iOS）
-            "remorse": self.ip, // 客户端IP地址，获取的结果需要判断是否为合法的ip地址！！
-            "mongolia": "Apple", // 品牌
-//            "isis": "\(kScreenWidth)*\(kScreenHeight)", // 屏幕分辨率：宽*高， 例如：380*640
-            "chair": UIDevice.current.modelName, // 手机型号
-            "pershing": UUID().uuidString, // 日志唯一id，用于排重日志
             "lace": self.getCarrierName(), // 网络供应商名称
-//            "uniplex": UUID().uuidString, // 随机生成的uuid
-            "sen": self.timeZone, // 客户端时区
-            "allegate": "lopez" // 操作系统；映射关系：{“cabinet”: “android”, “lopez”: “ios”, “frontier”: “web”}
+            "ashram": HKTBAManager.SAFEBUNDLEID, // 当前的包名称，a.b.c
+            "agave": "Apple", // 收集厂商，hauwei、opple
+            "sneaky": HKConfig.idfv, // ios的idfv原值
         ]
+        
+        var caudal: [String: Any] = [
+            "figure": "\(Locale.current.languageCode ?? "zh")_\(Locale.current.regionCode ?? "CN")", // String locale = Locale.getDefault(); 拼接为：zh_CN的形式，下杠
+            "itll": HKConfig.share.getDistinctId(), // 用户排重字段，统计涉及到的排重用户数就是依据该字段，对接时需要和产品确认
+            "pershing": HKConfig.share.getDistinctId(), // 日志唯一id，用于排重日志
+            "sole": Int(Date().timeIntervalSince1970 * 1000), // 日志发生的客户端时间，毫秒数
+        ]
+        var choryza: [String: Any] = [
+            "allegate": "lopez", // 操作系统；映射关系：{“cabinet”: “android”, “lopez”: “ios”, “frontier”: “web”}
+            "chair": UIDevice.current.modelName, // 手机型号
+            "shebang": UIDevice.current.systemVersion // 操作系统版本号
+//            "bayonet": MTNetworkManager.standerd.currentTypeString, // 网络类型：wifi，3g等，非必须，和产品确认是否需要分析网络类型相关的信息，此参数可能需要系统权限
+//            "kosher": Locale.current.regionCode ?? "ZZ", // 操作系统中的国家简写，例如 CN，US等
+//            "editor": "", // 没有开启google广告服务的设备获取不到，但是必须要尝试获取，用于归因，原值，google广告id
+//            "hobo": HKConfig.idfa, // idfa 原值（iOS）
+//            "remorse": self.ip, // 客户端IP地址，获取的结果需要判断是否为合法的ip地址！！
+//            "mongolia": "Apple", // 品牌
+////            "isis": "\(kScreenWidth)*\(kScreenHeight)", // 屏幕分辨率：宽*高， 例如：380*640
+////            "uniplex": UUID().uuidString, // 随机生成的uuid
+//            "sen": self.timeZone, // 客户端时区
+        ]
+        var paras: [String: Any] = [:]
+        paras["fredholm"] = fredholm
+        paras["caudal"] = caudal
+        paras["choryza"] = choryza
+        
         switch type {
         case .install:
             let subparas: [String: Any] = [
@@ -216,7 +224,7 @@ class HKTBAManager: NSObject {
     }
     
     func setHktbaParams(type: HKTBAType) {
-        var tbas = self.tbaLogs
+        var tbas: [[String: Any]] = []
         tbas.append(self.getTabParameters(type: type))
         self.tbaLogs = tbas
         self.tbaRequest()
