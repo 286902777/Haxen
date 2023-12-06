@@ -11,6 +11,8 @@ import IQKeyboardManagerSwift
 import AppTrackingTransparency
 import Alamofire
 import SVProgressHUD
+import FirebaseCore
+//import FBSDKCoreKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -45,6 +47,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.reachabilityManager?.startListening(onQueue: DispatchQueue.main, onUpdatePerforming: { [weak self] (status) in
             self?.netStatus = status
         })
+        FirebaseApp.configure()
+//        ApplicationDelegate.shared.application(application,didFinishLaunchingWithOptions: launchOptions)
+//        Settings.shared.isAdvertiserTrackingEnabled = true
+//        Settings.shared.isAdvertiserIDCollectionEnabled = true
+//        Settings.shared.isAutoLogAppEventsEnabled = true
+//        Settings.shared.isCodelessDebugLogEnabled = false
         return true
     }
     /// 配置IQKeyboardManager

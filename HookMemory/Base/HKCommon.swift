@@ -53,7 +53,7 @@ var kTabBarHeight: CGFloat {
 
 var ScreenisFull = false
 
-let Noti_WindowInterface = NSNotification.Name(rawValue: "windowInterface")
+//let Noti_WindowInterface = NSNotification.Name(rawValue: "windowInterface")
 
 let Noti_PlaylistRefresh = NSNotification.Name(rawValue: "playlistRefresh")
 

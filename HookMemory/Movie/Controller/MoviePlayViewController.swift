@@ -15,6 +15,7 @@ class MoviePlayViewController: UIViewController {
     private var controller = HKPlayerControlView()
     private var player: HKPlayer!
     private var videoId: String = ""
+    private var videoUrl: String = ""
     private var ssnId: String = ""
     private var midSsnId: String = ""
     private var epsId: String = "" {
@@ -72,12 +73,13 @@ class MoviePlayViewController: UIViewController {
         }
     }
     
+    private var statusH = kStatusBarHeight
     private var countPlayTime: Int = 30
     private var timer: Timer?
     private var playLock: Bool = false
     private var epsView: HKPlayerSelectEpsView?
     private var captionView: HKPlayerCaptionFullSetView?
-
+    private var captionVC: HKPlayerCaptionSetView?
     init(model: MovieVideoModel, from: HKPlayerFrom) {
         self.model = model
         self.videoId = self.model.id
@@ -93,9 +95,9 @@ class MoviePlayViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        requestData()
-        setupHKPlayerManager()
         setUI()
+//        requestData()
+        setupHKPlayerManager()
         setResource()
         NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { _ in
             DispatchQueue.main.async { [weak self] in
@@ -130,8 +132,10 @@ class MoviePlayViewController: UIViewController {
                     ScreenisFull = true
                     self.onOrientationChanged(isLand: true)
                 } else if device.orientation == .portrait || device.orientation == .portraitUpsideDown {
-                    ScreenisFull = false
-                    self.onOrientationChanged(isLand: false)
+                    if self.playLock == false {
+                        ScreenisFull = false
+                        self.onOrientationChanged(isLand: false)
+                    }
                 }
             }
         }
@@ -164,15 +168,15 @@ class MoviePlayViewController: UIViewController {
         self.setCoverImage()
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        DispatchQueue.main.async {
-            if self.playLock == false {
-                self.player.setUpdateUI(self.player.isFullScreen)
-                self.playerTransed(isFull: self.player.isFullScreen)
-            }
-        }
-    }
+//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//        super.viewWillTransition(to: size, with: coordinator)
+//        DispatchQueue.main.async {
+//            if self.playLock == false {
+//                self.playerTransed(isFull: self.player.isFullScreen)
+//                self.player.setUpdateUI(self.player.isFullScreen)
+//            }
+//        }
+//    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -200,7 +204,7 @@ class MoviePlayViewController: UIViewController {
         player.sourceKey = self.model.id
         player.snp.makeConstraints { (make) in
             make.leading.trailing.equalToSuperview()
-            make.top.equalToSuperview().offset(kStatusBarHeight)
+            make.top.equalToSuperview().offset(statusH)
             make.height.equalTo(self.videoHeight)
         }
         
@@ -211,9 +215,15 @@ class MoviePlayViewController: UIViewController {
             make.height.equalTo(120)
         }
         
+        remView.clickBlock = { [weak self] in
+            guard let self = self else { return }
+            self.uploadRedmin()
+        }
         player.vc = self
         player.delegate = self
-        player.backBlock = { [unowned self] (isFullScreen) in
+        player.backBlock = { [weak self] isFullScreen in
+            guard let self = self else { return }
+            self.tableView.isHidden = isFullScreen
             if isFullScreen {
                 self.player.fullScreenButtonPressed()
             } else {
@@ -222,7 +232,12 @@ class MoviePlayViewController: UIViewController {
                 self.navigationController?.popViewController(animated: true)
             }
         }
-        
+        player.exitFullScreen = { [weak self] full in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.tableView.isHidden = full
+            }
+        }
         view.addSubview(self.tableView)
         tableView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
@@ -234,32 +249,98 @@ class MoviePlayViewController: UIViewController {
         self.view.layoutIfNeeded()
     }
     
-    func requestData() {
+    func setResource() {
+        self.catptionArr.removeAll()
+        controller.ccButton.isEnabled = false
+        self.controller.playRate = 1.0
+        self.player.playerLayer?.player?.rate = 1.0
+        self.remView.isHidden = true
+        self.player.isReminder = false
+        self.player.playerLayer?.prepareToDeinit()
+        self.controller.isReadyToPlayed = false
+        var asset: HKPlayerResource?
+        
         ProgressHUD.showLoading()
-        MovieAPI.share.movieInfo(ssn_id: self.ssnId, eps_id: self.epsId, id: self.videoId) {  [weak self] success, model in
+        let group = DispatchGroup()
+        let dispatchQueue = DispatchQueue.global()
+        group.enter()
+        dispatchQueue.async { [weak self] in
             guard let self = self else { return }
-            if success {
-                DispatchQueue.main.async {
+            MovieAPI.share.movieInfo(ssn_id: self.ssnId, eps_id: self.epsId, id: self.videoId) { success, model in
+                if success {
                     if let mod = model {
                         self.videoModel = mod
                         if self.model.isMovie == false {
                             self.videoModel.ssn.ssn_list.first(where: {$0.id == self.ssnId})?.isSelect = true
                             self.videoModel.ssn.epss.first(where: {$0.id == self.epsId})?.isSelect = true
                         }
-                        self.tableView.isHidden = false
-                        self.tableView.reloadData()
-                        for (index, item) in self.videoModel.ssn.epss.enumerated() {
-                            if item.isSelect {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
-                                    guard let self = self else { return }
-                                    self.tableView.scrollToRow(at: IndexPath(row: index, section: 1), at: .none, animated: false)
-                                }
-                            }
-                        }
-                    } else {
-                        ProgressHUD.dismiss()
-                        self.tableView.isHidden = true
                     }
+                    group.leave()
+                }
+            }
+        }
+        group.enter()
+        dispatchQueue.async {[weak self] in
+            guard let self = self else { return }
+            MovieAPI.share.getCaptions(id: self.model.isMovie ? self.videoId : self.epsId, type: self.model.isMovie ? 1 : 0) { success, list in
+                if let listArr = list {
+                    let m = MovieVideoModel()
+                    m.id = self.videoId
+                    m.ssn_id = self.ssnId
+                    m.eps_id = self.epsId
+                    var capArr:[MovieCaption] = []
+                    for (_, itemModel) in listArr.enumerated() {
+                        if let item = itemModel {
+                            let mod = MovieCaption()
+                            mod.captionId = item.id
+                            mod.display_name = item.display_name
+                            mod.short_name = item.short_name
+                            mod.name = item.name
+                            mod.original_address = item.original_address
+                            capArr.append(mod)
+                        }
+                    }
+                    m.captions = capArr
+                    HKCaptionManager.share.downLoadCaptions(m)
+                }
+                group.leave()
+            }
+        }
+        group.enter()
+        dispatchQueue.async {[weak self] in
+            guard let self = self else { return }
+            MovieAPI.share.getVideoLink(id: self.model.isMovie ? self.videoId : self.epsId, type: self.model.isMovie ? 1 : 0) { success, model in
+                ProgressHUD.dismiss()
+                if success, let mod = model, let link = mod.play_address.AESECB_Decode() {
+                    self.videoUrl = link
+                }
+                group.leave()
+            }
+        }
+        group.notify(queue: dispatchQueue){ [weak self] in
+            guard let self = self else { return }
+            ProgressHUD.dismiss()
+            DispatchQueue.main.async {
+                self.tableView.isHidden = false
+                self.tableView.reloadData()
+                for (index, item) in self.videoModel.ssn.epss.enumerated() {
+                    if item.isSelect {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            self.tableView.scrollToRow(at: IndexPath(row: index, section: 1), at: .top, animated: false)
+                        }
+                        break
+                    }
+                }
+                
+                if let url = URL(string: self.videoUrl) {
+                    self.remView.isHidden = true
+                    self.player.isReminder = false
+                    asset = HKPlayerResource(name: self.videoModel.data.title, definitions: [HKPlayerResourceConfig(url: url, definition: "480p")], cover: nil, subtitles: self.captions)
+                    self.player.setVideo(resource: asset!, sourceKey: self.videoId)
+                } else {
+                    self.tableView.isHidden = true
+                    self.remView.isHidden = false
+                    self.player.isReminder = true
                 }
             }
         }
@@ -272,61 +353,53 @@ class MoviePlayViewController: UIViewController {
         HKPlayerManager.share.topBarInCase = .always
     }
     
-    func setResource() {
-        self.catptionArr.removeAll()
-        controller.ccButton.isEnabled = false
-        
-        MovieAPI.share.getCaptions(id: self.model.isMovie ? self.videoId : self.epsId, type: self.model.isMovie ? 1 : 0) { [weak self] success, list in
-            guard let self = self else { return }
-            if let listArr = list {
-                let m = MovieVideoModel()
-                m.id = self.videoId
-                m.ssn_id = self.ssnId
-                m.eps_id = self.epsId
-                var capArr:[MovieCaption] = []
-                for (_, itemModel) in listArr.enumerated() {
-                    if let item = itemModel {
-                        let mod = MovieCaption()
-                        mod.captionId = item.id
-                        mod.display_name = item.display_name
-                        mod.short_name = item.short_name
-                        mod.name = item.name
-                        mod.original_address = item.original_address
-                        capArr.append(mod)
-                    }
-                }
-                m.captions = capArr
-                HKCaptionManager.share.downLoadCaptions(m)
-            }
-        }
-        
-        self.controller.playRate = 1.0
-        self.player.playerLayer?.player?.rate = 1.0
-        self.remView.isHidden = true
-        self.player.isReminder = false
-        self.player.playerLayer?.prepareToDeinit()
-        self.controller.isReadyToPlayed = false
-        var asset: HKPlayerResource?
-        MovieAPI.share.getVideoLink(id: self.model.isMovie ? self.videoId : self.epsId, type: self.model.isMovie ? 1 : 0) {[weak self] success, model in
-            guard let self = self else { return }
-            ProgressHUD.dismiss()
-            if success, let mod = model, let link = mod.play_address.AESECB_Decode(), let url = URL(string: link) {
+//    func setResource() {
+//        self.catptionArr.removeAll()
+//        controller.ccButton.isEnabled = false
+//        self.controller.playRate = 1.0
+//        self.player.playerLayer?.player?.rate = 1.0
+//        self.remView.isHidden = true
+//        self.player.isReminder = false
+//        self.player.playerLayer?.prepareToDeinit()
+//        self.controller.isReadyToPlayed = false
+//        var asset: HKPlayerResource?
+//        MovieAPI.share.getVideoLink(id: self.model.isMovie ? self.videoId : self.epsId, type: self.model.isMovie ? 1 : 0) {[weak self] success, model in
+//            guard let self = self else { return }
+//            ProgressHUD.dismiss()
+//            if success, let mod = model, let link = mod.play_address.AESECB_Decode(), let url = URL(string: link) {
+//                DispatchQueue.main.async {
+//                    self.remView.isHidden = true
+//                    self.player.isReminder = false
+//                    var name = self.model.title
+//                    if self.videoModel.data.title.count > 0 {
+//                        name = self.videoModel.data.title
+//                    }
+//                    asset = HKPlayerResource(name: name, definitions: [HKPlayerResourceConfig(url: url, definition: "480p")], cover: nil, subtitles: self.captions)
+//                    self.player.setVideo(resource: asset!, sourceKey: self.videoId)
+//                }
+//            } else {
+//                DispatchQueue.main.async {
+//                    self.remView.isHidden = false
+//                    self.player.isReminder = true
+//                }
+//            }
+//        }
+//    }
+    
+    func playerTransed(isFull: Bool) {
+        if let vc = self.captionVC, isFull {
+            vc.dismiss(animated: false) { [weak self] in
+                guard let self = self else { return }
                 DispatchQueue.main.async {
-                    self.remView.isHidden = true
-                    self.player.isReminder = false
-                    asset = HKPlayerResource(name: self.model.title, definitions: [HKPlayerResourceConfig(url: url, definition: "480p")], cover: nil, subtitles: self.captions)
-                    self.player.setVideo(resource: asset!, sourceKey: self.videoId)
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.remView.isHidden = false
-                    self.player.isReminder = true
+                    self.changeScreenInterfaceOrientation(isFull)
                 }
             }
+        } else {
+            self.changeScreenInterfaceOrientation(isFull)
         }
     }
     
-    func playerTransed(isFull: Bool) {
+    func changeScreenInterfaceOrientation(_ isFull: Bool) {
         self.player.snp.remakeConstraints { (make) in
             if isFull {
                 make.top.bottom.equalToSuperview()
@@ -334,7 +407,7 @@ class MoviePlayViewController: UIViewController {
                 make.trailing.equalTo(-72)
             } else {
                 make.leading.trailing.equalToSuperview()
-                make.top.equalToSuperview().offset(kStatusBarHeight)
+                make.top.equalToSuperview().offset(statusH)
                 make.height.equalTo(self.videoHeight)
             }
         }
@@ -358,6 +431,7 @@ class MoviePlayViewController: UIViewController {
                 UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
             }
         }
+
     }
     
     func setCoverImage() {
@@ -390,6 +464,7 @@ class MoviePlayViewController: UIViewController {
                 if index == self.videoModel.ssn.epss.count - 1 {
                     for (ssnIdx, mod) in self.videoModel.ssn.ssn_list.enumerated() {
                         if self.ssnId == mod.id {
+                            print(ssnIdx, self.ssnId, mod.id)
                             if let model = self.videoModel.ssn.ssn_list.safe(ssnIdx + 1) {
                                 self.ssnId = model.id
                                 MovieAPI.share.movieTVSSN(ssn_id: self.ssnId, id: self.videoId) { [weak self] success, ssnMod in
@@ -408,9 +483,9 @@ class MoviePlayViewController: UIViewController {
                                                 self.tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .none, animated: false)
                                             }
                                         }
-                                        return
                                     }
                                 }
+                                return
                             } else {
                                 if let mod = DBManager.share.selectVideoData(id: self.videoId, ssn_id: self.ssnId, eps_id: self.epsId) {
                                     mod.playedTime = 0
@@ -425,7 +500,6 @@ class MoviePlayViewController: UIViewController {
                 } else {
                     if let model = self.videoModel.ssn.epss.safe(index + 1) {
                         self.epsId = model.id
-                        self.requestData()
                         self.setResource()
                         return
                     }
@@ -448,8 +522,8 @@ class MoviePlayViewController: UIViewController {
     @objc func recordTime() {
         countPlayTime -= 1
         if countPlayTime == 0 {
-            self.remView.isHidden = false
-            self.player.isReminder = true
+//            self.remView.isHidden = false
+//            self.player.isReminder = true
             cancelTimer()
         }
     }
@@ -461,24 +535,31 @@ class MoviePlayViewController: UIViewController {
             timer = nil
         }
     }
+    
+    private func uploadRedmin() {
+        MovieAPI.share.uploadRedmin(id: self.videoId, ssn_id: self.ssnId, eps_id:  self.ssnId, isMoive: self.model.isMovie) { success in
+            if success {
+                ProgressHUD.showSuccess("Thank you! Your reminder has been recorded.")
+            }
+        }
+    }
 }
 
 extension MoviePlayViewController: HKPlayerDelegate {
     // Call when player orinet changed
-//    func player(player: HKPlayer, playerOrientChanged isFullscreen: Bool) {
-//        player.snp.remakeConstraints { (make) in
-//            if isFullscreen {
-//                make.top.equalTo(view.snp.top)
-//                make.leading.equalTo(view.snp.leading)
-//                make.trailing.equalTo(view.snp.trailing)
-//                make.height.equalTo(kScreenWidth)
-//            } else {
-//                make.leading.trailing.equalToSuperview()
-//                make.top.equalToSuperview().offset(kStatusBarHeight)
-//                make.height.equalTo(self.videoHeight)
-//            }
-//        }
-//    }
+    func player(player: HKPlayer, playerOrientChanged isFullscreen: Bool) {
+        player.snp.remakeConstraints { (make) in
+            if isFullscreen {
+                make.top.bottom.equalToSuperview()
+                make.leading.equalTo(72)
+                make.trailing.equalTo(-72)
+            } else {
+                make.leading.trailing.equalToSuperview()
+                make.top.equalToSuperview().offset(statusH)
+                make.height.equalTo(self.videoHeight)
+            }
+        }
+    }
     
     func player(player: HKPlayer, playerIsPlaying playing: Bool) {
         print("playing: \(playing)")
@@ -507,6 +588,9 @@ extension MoviePlayViewController: HKPlayerDelegate {
         model.ssn_id = self.ssnId
         model.eps_id = self.epsId
         model.totalTime = Double(totalTime)
+        model.title = self.videoModel.data.title
+        model.coverImageUrl = self.videoModel.data.cover
+        model.isMovie = self.model.isMovie
         if currentTime == totalTime {
             model.playedTime = 0
             model.playProgress = 0
@@ -528,8 +612,9 @@ extension MoviePlayViewController: HKPlayerDelegate {
             make.left.top.bottom.equalToSuperview()
             make.right.equalTo(-72)
         }
-        epsView?.setModel(self.videoId, self.videoModel.ssn) { [weak self] ssnId, epsId in
+        epsView?.setModel(self.videoId, self.videoModel.ssn) { [weak self] epsList, ssnId, epsId in
             guard let self = self else { return }
+            self.videoModel.ssn.epss = epsList
             self.ssnId = ssnId
             self.epsId = epsId
             self.setResource()
@@ -570,6 +655,7 @@ extension MoviePlayViewController: HKPlayerDelegate {
                 }
             }
             vc.modalPresentationStyle = .overFullScreen
+            self.captionVC = vc
             self.present(vc, animated: false)
         }
     }
@@ -619,7 +705,7 @@ extension MoviePlayViewController: UITableViewDelegate, UITableViewDataSource {
                                     self.model = m
                                     self.from = .player
                                     self.getSeekTime()
-                                    self.requestData()
+                                    self.setResource()
                                 }
                             }
                         }

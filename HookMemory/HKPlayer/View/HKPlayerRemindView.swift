@@ -13,6 +13,7 @@ class HKPlayerRemindView: UIView {
     
     @IBOutlet weak var remindButton: UIButton!
     
+    var clickBlock: (()->())?
     class func view() -> HKPlayerRemindView {
         let view = Bundle.main.loadNibNamed(String(describing: HKPlayerRemindView.self), owner: nil)?.first as! HKPlayerRemindView
         view.frame = CGRect(x: 0, y: 0, width: 280, height: 120)
@@ -22,6 +23,7 @@ class HKPlayerRemindView: UIView {
     }
     
     @IBAction func remindAction(_ sender: UIButton) {
-        ProgressHUD.showSuccess("Thank you! Your reminder has been recorded.")
+        self.clickBlock?()
     }
+    
 }

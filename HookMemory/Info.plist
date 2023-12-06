@@ -31,7 +31,20 @@
 			</array>
 		</dict>
 	</dict>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fbAPP-ID</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string></string>
+	<key>FacebookClientToken</key>
+	<string></string>
+	<key>FacebookDisplayName</key>
+	<string></string>
 </dict>
 </plist>

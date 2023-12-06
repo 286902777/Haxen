@@ -24,6 +24,10 @@
 			<integer>1</integer>
 		</dict>
 		<key>Firebase.xcscheme</key>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a4145a1739ee77d42cebb0e402de45dccd4cdda0
 		<dict>
 			<key>orderHint</key>
 			<integer>15</integer>
@@ -109,40 +113,36 @@
 			<integer>31</integer>
 		</dict>
 		<key>HandyJSON.xcscheme</key>
+=======
+>>>>>>> 7f18f9cc8cf16848a5c9488b67c61885660c652a
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
-		<key>IQKeyboardManagerSwift.xcscheme</key>
+		<key>FirebaseAnalytics.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
-		<key>Kingfisher-Kingfisher.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>5</integer>
-		</dict>
-		<key>Kingfisher.xcscheme</key>
+		<key>FirebaseCore.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
-		<key>MJRefresh.xcscheme</key>
+		<key>FirebaseCoreExtension.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>7</integer>
+			<integer>5</integer>
 		</dict>
+<<<<<<< HEAD
 		<key>Pods-HookMemory-HookMemoryUITests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -196,16 +196,174 @@
 			<integer>13</integer>
 		</dict>
 		<key>lottie-ios.xcscheme</key>
+=======
+		<key>FirebaseCoreInternal.xcscheme</key>
+>>>>>>> 7f18f9cc8cf16848a5c9488b67c61885660c652a
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>6</integer>
 		</dict>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a4145a1739ee77d42cebb0e402de45dccd4cdda0
 		<key>nanopb.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>32</integer>
+<<<<<<< HEAD
+=======
+=======
+		<key>FirebaseCrashlytics.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
+		<key>FirebaseInstallations.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
+		<key>FirebaseSessions.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
+		<key>GoogleAppMeasurement.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
+		<key>GoogleDataTransport.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>11</integer>
+		</dict>
+		<key>GoogleUtilities.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>12</integer>
+		</dict>
+		<key>HandyJSON.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>13</integer>
+		</dict>
+		<key>IQKeyboardManagerSwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>14</integer>
+		</dict>
+		<key>Kingfisher-Kingfisher.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>16</integer>
+		</dict>
+		<key>Kingfisher.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>15</integer>
+		</dict>
+		<key>MJRefresh.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>18</integer>
+		</dict>
+		<key>Pods-HookMemory-HookMemoryUITests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>21</integer>
+		</dict>
+		<key>Pods-HookMemory.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>20</integer>
+		</dict>
+		<key>Pods-HookMemoryTests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>22</integer>
+		</dict>
+		<key>PromisesObjC.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>23</integer>
+		</dict>
+		<key>PromisesSwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>24</integer>
+		</dict>
+		<key>SVProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>26</integer>
+		</dict>
+		<key>SnapKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>25</integer>
+		</dict>
+		<key>ZIPFoundation.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>27</integer>
+		</dict>
+		<key>lottie-ios.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>17</integer>
+		</dict>
+		<key>nanopb.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>19</integer>
+>>>>>>> 7f18f9cc8cf16848a5c9488b67c61885660c652a
+>>>>>>> a4145a1739ee77d42cebb0e402de45dccd4cdda0
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
