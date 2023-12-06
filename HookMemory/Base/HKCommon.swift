@@ -32,6 +32,8 @@ var kNavBarHeight:CGFloat {
     }
 }
 
+var isScreenFull = false
+
 /// 底部安全区高度
 var kBottomSafeAreaHeight:CGFloat {
     get {
@@ -58,6 +60,7 @@ var ScreenisFull = false
 let Noti_PlaylistRefresh = NSNotification.Name(rawValue: "playlistRefresh")
 
 let Noti_CaptionRefresh = NSNotification.Name(rawValue: "captionRefresh")
+let Noti_VipChange = NSNotification.Name(rawValue: "vipStatusChanged")
 
 extension UIFont {
     static func font(weigth: UIFont.Weight = .regular ,size: CGFloat) -> UIFont {

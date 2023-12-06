@@ -51,6 +51,7 @@
 		A79066972AF37B00006A3982 /* AboutUsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79066952AF37B00006A3982 /* AboutUsViewController.xib */; };
 		A790669A2AF37CF3006A3982 /* FeedBackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79066982AF37CF3006A3982 /* FeedBackViewController.swift */; };
 		A790669B2AF37CF3006A3982 /* FeedBackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79066992AF37CF3006A3982 /* FeedBackViewController.xib */; };
+		A799C30E2B1EFC6F00FB8E1B /* HKKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799C30D2B1EFC6F00FB8E1B /* HKKeys.swift */; };
 		A799FE812AF889B500840196 /* memoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799FE802AF889B500840196 /* memoryModel.swift */; };
 		A799FE832AF8C49C00840196 /* HKToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799FE822AF8C49C00840196 /* HKToast.swift */; };
 		A799FE852AF8F58100840196 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799FE842AF8F58100840196 /* UIImage+Extension.swift */; };
@@ -95,6 +96,13 @@
 		A79DE7682B15B1B80029A612 /* HKPlayerLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79DE7672B15B1B80029A612 /* HKPlayerLoadingView.swift */; };
 		A79DE76A2B15B1C90029A612 /* HKPlayerLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79DE7692B15B1C90029A612 /* HKPlayerLoadingView.xib */; };
 		A79DE76C2B15B4020029A612 /* playLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = A79DE76B2B15B4020029A612 /* playLoading.json */; };
+		A79E1ABA2B19879000088004 /* HKLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79E1AB92B19879000088004 /* HKLog.swift */; };
+		A79E1ABC2B198A0600088004 /* HKTBAManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79E1ABB2B198A0600088004 /* HKTBAManager.swift */; };
+		A79E1ABE2B19B46C00088004 /* HKRemoteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79E1ABD2B19B46C00088004 /* HKRemoteManager.swift */; };
+		A79E1AC22B19B4FF00088004 /* hk_ad_debug.json in Resources */ = {isa = PBXBuildFile; fileRef = A79E1AC02B19B4FE00088004 /* hk_ad_debug.json */; };
+		A79E1AC32B19B4FF00088004 /* hk_ad_release.json in Resources */ = {isa = PBXBuildFile; fileRef = A79E1AC12B19B4FF00088004 /* hk_ad_release.json */; };
+		A79E1AC52B19CCD500088004 /* HKADManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79E1AC42B19CCD500088004 /* HKADManager.swift */; };
+		A79E1AC72B19CF8900088004 /* HKUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79E1AC62B19CF8900088004 /* HKUserManager.swift */; };
 		A79EA6272B0EF93C0007104B /* MoviePlayLikeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79EA6252B0EF93C0007104B /* MoviePlayLikeCell.swift */; };
 		A79EA6282B0EF93C0007104B /* MoviePlayLikeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79EA6262B0EF93C0007104B /* MoviePlayLikeCell.xib */; };
 		A79EA62A2B0F27BD0007104B /* HKPlayLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79EA6292B0F27BD0007104B /* HKPlayLayout.swift */; };
@@ -215,6 +223,7 @@
 		A79066952AF37B00006A3982 /* AboutUsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutUsViewController.xib; sourceTree = "<group>"; };
 		A79066982AF37CF3006A3982 /* FeedBackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedBackViewController.swift; sourceTree = "<group>"; };
 		A79066992AF37CF3006A3982 /* FeedBackViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedBackViewController.xib; sourceTree = "<group>"; };
+		A799C30D2B1EFC6F00FB8E1B /* HKKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKKeys.swift; sourceTree = "<group>"; };
 		A799FE802AF889B500840196 /* memoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = memoryModel.swift; sourceTree = "<group>"; };
 		A799FE822AF8C49C00840196 /* HKToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKToast.swift; sourceTree = "<group>"; };
 		A799FE842AF8F58100840196 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
@@ -259,6 +268,13 @@
 		A79DE7672B15B1B80029A612 /* HKPlayerLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKPlayerLoadingView.swift; sourceTree = "<group>"; };
 		A79DE7692B15B1C90029A612 /* HKPlayerLoadingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HKPlayerLoadingView.xib; sourceTree = "<group>"; };
 		A79DE76B2B15B4020029A612 /* playLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = playLoading.json; sourceTree = "<group>"; };
+		A79E1AB92B19879000088004 /* HKLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKLog.swift; sourceTree = "<group>"; };
+		A79E1ABB2B198A0600088004 /* HKTBAManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKTBAManager.swift; sourceTree = "<group>"; };
+		A79E1ABD2B19B46C00088004 /* HKRemoteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKRemoteManager.swift; sourceTree = "<group>"; };
+		A79E1AC02B19B4FE00088004 /* hk_ad_debug.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hk_ad_debug.json; sourceTree = "<group>"; };
+		A79E1AC12B19B4FF00088004 /* hk_ad_release.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hk_ad_release.json; sourceTree = "<group>"; };
+		A79E1AC42B19CCD500088004 /* HKADManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKADManager.swift; sourceTree = "<group>"; };
+		A79E1AC62B19CF8900088004 /* HKUserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKUserManager.swift; sourceTree = "<group>"; };
 		A79EA6252B0EF93C0007104B /* MoviePlayLikeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviePlayLikeCell.swift; sourceTree = "<group>"; };
 		A79EA6262B0EF93C0007104B /* MoviePlayLikeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MoviePlayLikeCell.xib; sourceTree = "<group>"; };
 		A79EA6292B0F27BD0007104B /* HKPlayLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKPlayLayout.swift; sourceTree = "<group>"; };
@@ -402,12 +418,8 @@
 				A79D65E52AFB5D6E0094E411 /* Movie */,
 				A79BD74C2B07538800AD3508 /* HKPlayer */,
 				A77E07852B021ABD005A813C /* NetWork */,
+				A79E1ABF2B19B4BE00088004 /* Source */,
 				A79066312AF32CE4006A3982 /* Main.storyboard */,
-				A7A0AE9B2AFE27F000646494 /* FjallaOne-Regular.ttf */,
-				A7A0AE9C2AFE27F000646494 /* Hind-SemiBold.ttf */,
-				A7D3CAA12B17180E006AA727 /* GoogleService-Info.plist */,
-				A77E07762B01E91F005A813C /* loading.json */,
-				A79DE76B2B15B4020029A612 /* playLoading.json */,
 				A79066372AF32CE6006A3982 /* Assets.xcassets */,
 				A790663C2AF32CE6006A3982 /* Info.plist */,
 			);
@@ -484,6 +496,7 @@
 				A79066692AF32E07006A3982 /* HookNavigationBar.swift */,
 				A790666B2AF32E16006A3982 /* HookNavigationBar.xib */,
 				A790666F2AF331D6006A3982 /* HKCommon.swift */,
+				A799C30D2B1EFC6F00FB8E1B /* HKKeys.swift */,
 				A7B4E4E12B0B4E230061926C /* String+Extension.swift */,
 				A799FE842AF8F58100840196 /* UIImage+Extension.swift */,
 				A79B972A2B05FDB700B34210 /* Array+Extension.swift */,
@@ -491,6 +504,11 @@
 				A79F0F752B1090FC00C2729B /* UIView+Extension.swift */,
 				A72EB15C2AF47E3C00AF20C3 /* HKSheetController.swift */,
 				A799FE822AF8C49C00840196 /* HKToast.swift */,
+				A79E1AB92B19879000088004 /* HKLog.swift */,
+				A79E1ABB2B198A0600088004 /* HKTBAManager.swift */,
+				A79E1ABD2B19B46C00088004 /* HKRemoteManager.swift */,
+				A79E1AC42B19CCD500088004 /* HKADManager.swift */,
+				A79E1AC62B19CF8900088004 /* HKUserManager.swift */,
 				A79D65E32AFB551E0094E411 /* HKEmptyView.swift */,
 				A79D65EB2AFB66580094E411 /* HKRefresh.swift */,
 				A79D65EF2AFB70B30094E411 /* BaseModel.swift */,
@@ -633,6 +651,20 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		A79E1ABF2B19B4BE00088004 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				A79E1AC02B19B4FE00088004 /* hk_ad_debug.json */,
+				A79E1AC12B19B4FF00088004 /* hk_ad_release.json */,
+				A7A0AE9B2AFE27F000646494 /* FjallaOne-Regular.ttf */,
+				A7A0AE9C2AFE27F000646494 /* Hind-SemiBold.ttf */,
+				A7D3CAA12B17180E006AA727 /* GoogleService-Info.plist */,
+				A77E07762B01E91F005A813C /* loading.json */,
+				A79DE76B2B15B4020029A612 /* playLoading.json */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
 		A7A938EB2B036C9900232981 /* Photo */ = {
 			isa = PBXGroup;
 			children = (
@@ -685,6 +717,7 @@
 				A79066262AF32CE4006A3982 /* Resources */,
 				1E2D0BAA9C4D1599445527CB /* [CP] Embed Pods Frameworks */,
 				A7D3CA9C2B16CDAF006AA727 /* ShellScript */,
+				AD2B5AA0FC564629FD569A3C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -723,6 +756,7 @@
 				A79066482AF32CE6006A3982 /* Frameworks */,
 				A79066492AF32CE6006A3982 /* Resources */,
 				E2652BC2F7268D4A3D08895D /* [CP] Embed Pods Frameworks */,
+				0EBA37EC9E26C587195832FC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -788,6 +822,7 @@
 				A7C3F9DA2AFCA9F20094A15B /* FilterListCell.xib in Resources */,
 				A79ED77E2B11C1D6009DC462 /* HKPlayerLanguageFullView.xib in Resources */,
 				A79D66492B0DF2350069F359 /* MoviePlayHeadCell.xib in Resources */,
+				A79E1AC32B19B4FF00088004 /* hk_ad_release.json in Resources */,
 				A790666C2AF32E16006A3982 /* HookNavigationBar.xib in Resources */,
 				A7BC83DF2B04615B000912F1 /* LoadingViewController.xib in Resources */,
 				A7D3CAA22B17180E006AA727 /* GoogleService-Info.plist in Resources */,
@@ -796,6 +831,7 @@
 				A79D65FE2AFB83FB0094E411 /* SearchView.xib in Resources */,
 				A79ED7822B11CD3B009DC462 /* HKPlayerLightView.xib in Resources */,
 				A79DE76C2B15B4020029A612 /* playLoading.json in Resources */,
+				A79E1AC22B19B4FF00088004 /* hk_ad_debug.json in Resources */,
 				A79D66512B0DFDB00069F359 /* MoviePlayHeadInfoCell.xib in Resources */,
 				A79D66552B0DFF4A0069F359 /* MoviePlayHeadIconCell.xib in Resources */,
 				A7C3F9D62AFC83D20094A15B /* MovieCell.xib in Resources */,
@@ -835,6 +871,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0EBA37EC9E26C587195832FC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HookMemory-HookMemoryUITests/Pods-HookMemory-HookMemoryUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HookMemory-HookMemoryUITests/Pods-HookMemory-HookMemoryUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HookMemory-HookMemoryUITests/Pods-HookMemory-HookMemoryUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		1E2D0BAA9C4D1599445527CB /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -937,6 +990,23 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
+		AD2B5AA0FC564629FD569A3C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HookMemory/Pods-HookMemory-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HookMemory/Pods-HookMemory-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HookMemory/Pods-HookMemory-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		E2652BC2F7268D4A3D08895D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1029,14 +1099,18 @@
 				A72EB1602AF482A800AF20C3 /* HKSheetCell.swift in Sources */,
 				A79BD7542B0760E000AD3508 /* HKPlayerManager.swift in Sources */,
 				A79066362AF32CE4006A3982 /* HookMemory.xcdatamodeld in Sources */,
+				A79E1AC72B19CF8900088004 /* HKUserManager.swift in Sources */,
 				A79D65EE2AFB6F150094E411 /* NetManager.swift in Sources */,
 				A79066882AF34910006A3982 /* MemoryDB+CoreDataProperties.swift in Sources */,
 				A77F8CCD2AF4D0F90031FA77 /* photoVideoModel.swift in Sources */,
 				A77E07892B02294F005A813C /* MovieHomeModel.swift in Sources */,
+				A79E1ABA2B19879000088004 /* HKLog.swift in Sources */,
 				A799FE812AF889B500840196 /* memoryModel.swift in Sources */,
 				A79F0F832B10A54C00C2729B /* HKPlayerLanguageCell.swift in Sources */,
 				A79D66402B0DA0AF0069F359 /* HKPlayerSelectEpsCell.swift in Sources */,
+				A79E1ABC2B198A0600088004 /* HKTBAManager.swift in Sources */,
 				A79066702AF331D6006A3982 /* HKCommon.swift in Sources */,
+				A79E1ABE2B19B46C00088004 /* HKRemoteManager.swift in Sources */,
 				A79B7CA32B0C4F0900E6EB46 /* CaptionDB+CoreDataProperties.swift in Sources */,
 				A790662C2AF32CE4006A3982 /* AppDelegate.swift in Sources */,
 				A79EA6272B0EF93C0007104B /* MoviePlayLikeCell.swift in Sources */,
@@ -1045,6 +1119,7 @@
 				A79BD7502B0759DD00AD3508 /* HKPlayerLayerView.swift in Sources */,
 				A79B972B2B05FDB700B34210 /* Array+Extension.swift in Sources */,
 				A7C3F9D92AFCA9F20094A15B /* FilterListCell.swift in Sources */,
+				A799C30E2B1EFC6F00FB8E1B /* HKKeys.swift in Sources */,
 				A77F8CDF2AF4F82F0031FA77 /* DBManager.swift in Sources */,
 				A7B4E4E22B0B4E230061926C /* String+Extension.swift in Sources */,
 				A77425FC2AF3A6A8000B458B /* ListDetailViewController.swift in Sources */,
@@ -1053,6 +1128,7 @@
 				A79EA62A2B0F27BD0007104B /* HKPlayLayout.swift in Sources */,
 				A7A938E62B03060A00232981 /* MovieListViewController.swift in Sources */,
 				A79BD7582B0762C600AD3508 /* HKSubtitles.swift in Sources */,
+				A79E1AC52B19CCD500088004 /* HKADManager.swift in Sources */,
 				A79F0F7B2B109EBD00C2729B /* HKPlayerCaptionSetView.swift in Sources */,
 				A790662E2AF32CE4006A3982 /* SceneDelegate.swift in Sources */,
 				A77F8CD32AF4DC430031FA77 /* PhotoViewController.swift in Sources */,

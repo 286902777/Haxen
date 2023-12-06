@@ -12,6 +12,10 @@ import AppTrackingTransparency
 import Alamofire
 import SVProgressHUD
 import FirebaseCore
+import GoogleMobileAds
+import AppLovinSDK
+import StoreKit
+
 //import FBSDKCoreKit
 
 @main
@@ -48,6 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self?.netStatus = status
         })
         FirebaseApp.configure()
+        initGADMobileAds()
 //        ApplicationDelegate.shared.application(application,didFinishLaunchingWithOptions: launchOptions)
 //        Settings.shared.isAdvertiserTrackingEnabled = true
 //        Settings.shared.isAdvertiserIDCollectionEnabled = true
@@ -68,6 +73,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func initSVProgressHUD() {
         SVProgressHUD.setDefaultMaskType(.clear)
         SVProgressHUD.setMinimumSize(CGSizeMake(100, 100))
+    }
+    
+    func initGADMobileAds() {
+        if let count = UserDefaults.standard.value(forKey: HKCommon.appOpneCount) as? Int {
+            UserDefaults.standard.set(count + 1, forKey: HKCommon.appOpneCount)
+        } else {
+            UserDefaults.standard.set(1, forKey: HKCommon.appOpneCount)
+        }
+        HKADManager.share.initSet()
+        HKRemoteManager.share.initConfig()
+
+        GADMobileAds.sharedInstance().start { status in
+            
+            // Optional: Log each adapter's initialization latency.
+            let adapterStatuses = status.adapterStatusesByClassName
+            for adapter in adapterStatuses {
+                let adapterStatus = adapter.value
+                NSLog("[Ad] Adapter Name: %@, Description: %@, Latency: %f", adapter.key,
+                      adapterStatus.description, adapterStatus.latency)
+            }
+            
+            if !HKADManager.share.isInit {
+                HKADManager.share.preInit()
+            }
+        }
+        GADMobileAds.sharedInstance().applicationMuted = true
     }
     // MARK: UISceneSession Lifecycle
     

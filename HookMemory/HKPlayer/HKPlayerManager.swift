@@ -15,9 +15,11 @@ enum HKPlayerTopBarCase: Int {
 }
 
 enum HKPlayerFrom: Int {
-    case net = 0
+    case home = 0
     case search
-    case player 
+    case list = 5
+    case player
+    case explore
 }
 
 class HKPlayerManager {

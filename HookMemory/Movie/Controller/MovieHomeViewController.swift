@@ -92,6 +92,7 @@ class MovieHomeViewController: MovieBaseViewController {
     @objc func pushSearch() {
         let vc = MovieSearchViewController()
         vc.hidesBottomBarWhenPushed = true
+        vc.from = .home
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -104,6 +105,8 @@ extension MovieHomeViewController: UITableViewDelegate, UITableViewDataSource {
                 guard let self = self else { return }
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
+                    HKLog.hk_home_cl(kid: "4", c_id: "", c_name: "", ctype: "", secname: model.data.first?.name ?? "", secid: model.data.first?.id ?? "")
+
                     let vc = MovieListViewController()
                     if let mod = model.data.first {
                         vc.titleName = mod.name
@@ -115,9 +118,9 @@ extension MovieHomeViewController: UITableViewDelegate, UITableViewDataSource {
             }, clickBlock: { movieModel in
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
-//                    movieModel.id = "53865"
+                    HKLog.hk_home_cl(kid: movieModel.isMovie ? "1" : "2", c_id: movieModel.id, c_name: movieModel.title, ctype: "1", secname: model.data.first?.name ?? "", secid: model.data.first?.id ?? "")
                     DBManager.share.updateVideoData(movieModel)
-                    HKPlayerManager.share.gotoPlayer(controller: self, id: movieModel.id, from: .net)
+                    HKPlayerManager.share.gotoPlayer(controller: self, id: movieModel.id, from: .home)
                 }
             })
         }

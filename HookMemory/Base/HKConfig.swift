@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 import AdSupport
+import Alamofire
+import GoogleMobileAds
 
 class HKConfig{
     static let share = HKConfig()
@@ -15,36 +17,59 @@ class HKConfig{
         case home = 0
         case movie
     }
+    
+    static let idfa = ASIdentifierManager.shared().advertisingIdentifier.uuidString
+    static let idfv = UIDevice.current.identifierForVendor?.uuidString ?? ""
+    static let app_version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+    
     private let Host: String = "https://sleeve.haxen24.com/thurman/ware"
     private let bundle_id: String = "com.haxenplatform.live"
     
+    var isLoadingVC = true
+    
+    var isForUser = UserDefaults.standard.bool(forKey: HKCommon.isForUser) {
+        didSet {
+            if isForUser == true {
+                UserDefaults.standard.set(isForUser, forKey: HKCommon.isForUser)
+                if !isLoadingVC {
+                    self.setRoot(.movie)
+                }
+            }
+        }
+    }
+    
     func appRequest() {
-        self.setRoot(.movie)
-
-//        if HKConfig.share.getPermission() {
-//            HKConfig.share.setRoot(.movie)
-//        } else {
-//            request { [weak self] info in
-//                guard let self = self else { return }
-//                if let result = info, result == "thymus" {
-//                    HKConfig.share.setPermission(true)
-//                    self.setRoot(.movie)
-//                } else {
-//                    self.setRoot(.home)
-//                }
-//            }
-//        }
+#if DEBUG
+        setRoot(.movie)
+        
+#else
+        if HKConfig.share.getPermission() {
+            HKConfig.share.setRoot(.movie)
+        } else {
+            request { [weak self] info in
+                guard let self = self else { return }
+                if let result = info, result == "thymus" {
+                    HKConfig.share.setPermission(true)
+                    self.setRoot(.movie)
+                } else {
+                    self.setRoot(.home)
+                }
+            }
+        }
+#endif
+        
     }
     
     func setRoot(_ type: rootType) {
+        self.isLoadingVC = false
         DispatchQueue.main.async {
             let vc = HomeViewController()
             let nav = UINavigationController(rootViewController: vc)
             let tabbar = HKTabBarViewController()
-            if type == .home {
-                HKConfig.share.currentWindow()?.rootViewController = nav
-            } else {
+            if type == .movie {
                 HKConfig.share.currentWindow()?.rootViewController = tabbar
+            } else {
+                HKConfig.share.currentWindow()?.rootViewController = nav
             }
         }
     }
@@ -59,7 +84,7 @@ class HKConfig{
         let android_id = ""
         let os = "ios"
         let idfa = ASIdentifierManager.shared().advertisingIdentifier.uuidString
-        let app_version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        let app_version = HKConfig.app_version
         
         let paraString = "?itll=\(distinct_id)&sole=\(client_ts)&chair=\(device_model)&ashram=\(bundle_id)&shebang=\(os_version)&sneaky=\(idfv)&editor=\(gaid)&anger=\(android_id)&allegate=\(os)&hobo=\(idfa)&able=\(app_version)"
         let url = Host + paraString
@@ -118,12 +143,14 @@ class HKConfig{
                 if let navVC = window.rootViewController as? UINavigationController {
                     return navVC.visibleViewController
                 }
-                
                 if let tabVC = window.rootViewController as? UITabBarController {
                     return tabVC.selectedViewController
                 }
                 if let presentVC = window.rootViewController?.presentedViewController {
                     return presentVC
+                }
+                if let vc = window.rootViewController {
+                    return vc
                 }
             }
             return nil
@@ -141,6 +168,62 @@ class HKConfig{
                 }
             }
             return false
+        }
+    }
+    
+    enum netStatusType: Int {
+        case unknown = 0
+        case notNet
+        case wifi
+        case cellular
+    }
+    
+    var netStatus: netStatusType {
+        get {
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                switch appDelegate.netStatus {
+                case .reachable(.cellular):
+                    return .cellular
+                case .reachable(.ethernetOrWiFi):
+                    return .wifi
+                case .notReachable:
+                    return .notNet
+                default:
+                    return .unknown
+                }
+            }
+            return .unknown
+        }
+    }
+    
+    class func showInterAD(type: HKADType, placement: HKADLogENUM, complete: @escaping(Bool) -> Void) {
+        HKADManager.share.hk_showFullAd(type: type, placement: placement) { result, ad in
+            DispatchQueue.main.async {
+                if result, let vc = HKConfig.share.currentVC {
+                    if let ad = ad as? GADInterstitialAd {
+                        ad.present(fromRootViewController: vc)
+                        complete(true)
+                    } else if let ad = ad as? GADAppOpenAd {
+                        ad.present(fromRootViewController: vc)
+                        complete(true)
+                    } else if let ad = ad as? GADRewardedAd {
+                        ad.present(fromRootViewController: vc, userDidEarnRewardHandler: {
+                            toast("Reward received!")
+                        })
+                        complete(true)
+                    } else if let ad = ad as? GADRewardedInterstitialAd {
+                        ad.present(fromRootViewController: vc, userDidEarnRewardHandler: {
+                            toast("Reward received!")
+                        })
+                        complete(true)
+                    } else {
+                        complete(true)
+                    }
+                    
+                } else {
+                    complete(false)
+                }
+            }
         }
     }
 }

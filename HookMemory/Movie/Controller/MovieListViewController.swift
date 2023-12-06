@@ -55,6 +55,7 @@ class MovieListViewController: MovieBaseViewController {
     }
     override func rightAction() {
         let vc = MovieSearchViewController()
+        vc.from = .list
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -117,7 +118,7 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let model = self.dataArr.safe(indexPath.item) {
             DBManager.share.updateVideoData(model)
-            HKPlayerManager.share.gotoPlayer(controller: self, id: model.id, from: .net)
+            HKPlayerManager.share.gotoPlayer(controller: self, id: model.id, from: .list)
         }
     }
     

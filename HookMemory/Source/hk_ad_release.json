@@ -1,0 +1,31 @@
+{
+    "hk_totalShowCount": 150,
+    "hk_sameInterval": 60,
+    "hk_differentInterval": 60,
+    "hk_openInterval": 10,
+    "hk_play_point_time": 540,
+    "hk_open": [
+        {
+            "id": "b1f4ff8d8faf4df0",
+            "level": 1,
+            "type": "interstitial",
+            "source": "max"
+        }
+    ],
+    "hk_play": [
+        {
+            "id": "b981e5fb424ebb27",
+            "level": 1,
+            "type": "rewarded",
+            "source": "max"
+        }
+    ],
+    "hk_landscape": [
+        {
+            "id": "ca-app-pub-4266657890099596~2214297508",
+            "level": 3,
+            "type": "interstitial",
+            "source": "admob"
+        }
+    ]
+}

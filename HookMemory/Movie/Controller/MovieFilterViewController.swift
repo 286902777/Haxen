@@ -166,6 +166,7 @@ class MovieFilterViewController: MovieBaseViewController {
         for items in self.filterArr {
             for (index, item) in items.enumerated() {
                 if index > 0, item.isSelect == true {
+                    HKLog.hk_explore_cl(kid: "\(index)")
                     arr.append(item.title)
                 }
             }
@@ -210,6 +211,7 @@ class MovieFilterViewController: MovieBaseViewController {
     @objc func pushSearch() {
         let vc = MovieSearchViewController()
         vc.hidesBottomBarWhenPushed = true
+        vc.from = .explore
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -234,7 +236,7 @@ extension MovieFilterViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let model = self.dataArr.safe(indexPath.item) {
             DBManager.share.updateVideoData(model)
-            HKPlayerManager.share.gotoPlayer(controller: self, id: model.id, from: .net)
+            HKPlayerManager.share.gotoPlayer(controller: self, id: model.id, from: .explore)
         }
     }
     

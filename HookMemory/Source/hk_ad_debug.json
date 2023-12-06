@@ -1,0 +1,37 @@
+{
+    "hk_totalShowCount": 150,
+    "hk_sameInterval": 30,
+    "hk_differentInterval": 30,
+    "hk_openInterval": 10,
+    "hk_play_point_time": 120,
+    "hk_open": [
+        {
+            "id": "ca-app-pub-3940256099942544/4411468910",
+            "level": 3,
+            "type": "interstitial",
+            "source": "admob"
+        }
+    ],
+    "hk_play": [
+        {
+            "id": "ca-app-pub-3940256099942544/1712485313",
+            "level": 5,
+            "type": "rewarded",
+            "source": "admob"
+        }
+    ],
+    "hk_landscape": [
+        {
+            "id": "ca-app-pub-3940256099942544/5135589807",
+            "level": 2,
+            "type": "rewarded",
+            "source": "admob"
+        },
+        {
+            "id": "ca-app-pub-3940256099942544/4411468910",
+            "level": 1,
+            "type": "interstitial",
+            "source": "admob"
+        }
+    ]
+}

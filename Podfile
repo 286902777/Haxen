@@ -17,10 +17,46 @@ target 'HookMemory' do
   pod 'CryptoSwift'
   pod 'ZIPFoundation'
 
-  pod 'FBSDKCoreKit'
+  # pod 'FBSDKCoreKit'
   
   pod 'Firebase/Analytics'
   pod 'FirebaseCrashlytics'
+  pod 'FirebasePerformance'
+  pod 'FirebaseRemoteConfig'
+
+  pod 'Google-Mobile-Ads-SDK'
+
+  pod 'GoogleMobileAdsMediationAdColony'
+  pod 'GoogleMobileAdsMediationAppLovin'
+  pod 'GoogleMobileAdsMediationChartboost'
+  pod 'GoogleMobileAdsMediationFyber'
+  pod 'GoogleMobileAdsMediationInMobi'
+  pod 'GoogleMobileAdsMediationIronSource'
+  pod 'GoogleMobileAdsMediationVungle'
+#  pod 'GoogleMobileAdsMediationFacebook'
+  pod 'GoogleMobileAdsMediationMintegral'
+  pod 'GoogleMobileAdsMediationPangle'
+  pod 'GoogleMobileAdsMediationTapjoy'
+  pod 'GoogleMobileAdsMediationUnity'
+
+  pod 'ReklamupAdmobAdapter', '~> 1.0'
+  
+  pod 'AppLovinSDK', '~> 11.11.2'
+  
+  pod 'AppLovinMediationGoogleAdapter'
+  pod 'AppLovinMediationAdColonyAdapter'
+  pod 'AppLovinMediationChartboostAdapter'
+  pod 'AppLovinMediationFyberAdapter'
+  pod 'AppLovinMediationInMobiAdapter'
+  pod 'AppLovinMediationIronSourceAdapter'
+  pod 'AppLovinMediationVungleAdapter'
+#  pod 'AppLovinMediationFacebookAdapter'
+  pod 'AppLovinMediationMintegralAdapter'
+  pod 'AppLovinMediationByteDanceAdapter'
+  pod 'AppLovinMediationSmaatoAdapter'
+  pod 'AppLovinMediationTapjoyAdapter'
+  pod 'AppLovinMediationUnityAdsAdapter'
+  pod 'AppLovinMediationVerveAdapter'
 
   target 'HookMemoryTests' do
     inherit! :search_paths

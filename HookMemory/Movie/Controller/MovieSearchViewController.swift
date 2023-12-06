@@ -8,6 +8,11 @@
 import UIKit
 
 class MovieSearchViewController: MovieBaseViewController {
+    enum searchFrom: Int {
+        case home = 1
+        case explore
+        case list
+    }
     let hostUrl = "https://suggestqueries.google.com/complete/search?client=youtube&q="
     let movieSearchCellIdentifier = "MovieSearchCellIdentifier"
     let movieCellIdentifier = "MovieCellIdentifier"
@@ -15,6 +20,7 @@ class MovieSearchViewController: MovieBaseViewController {
     var dataArr: [MovieDataInfoModel] = []
     private var page: Int = 1
     private var key: String = ""
+    var from: searchFrom = .home
     let cellW = floor((kScreenWidth - 48) / 3)
     lazy var tableView: UITableView = {
         let table = UITableView.init(frame: .zero, style: .plain)
@@ -82,6 +88,7 @@ class MovieSearchViewController: MovieBaseViewController {
         setSearchBar()
         setUI()
         addRefresh()
+        HKLog.hk_home_cl(kid: "2", c_id: "", c_name: "", ctype: "", secname: "", secid: "")
     }
     
     func setSearchBar() {
@@ -160,7 +167,7 @@ class MovieSearchViewController: MovieBaseViewController {
     private func loadMoreData() {
         self.textField.resignFirstResponder()
         ProgressHUD.showLoading()
-        MovieAPI.share.movieSearch(keyword: self.key, page: self.page) { [weak self] success, model in
+        MovieAPI.share.movieSearch(keyword: self.key, from: from, page: self.page) { [weak self] success, model in
             guard let self = self else { return }
             ProgressHUD.dismiss()
             if !success {

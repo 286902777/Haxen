@@ -58,8 +58,8 @@ extension MovieSettingViewController: UITableViewDelegate, UITableViewDataSource
         if indexPath.row == dataArr.count - 1 {
             cell.arrowV.isHidden = true
             cell.subTitleL.isHidden = false
-            if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-                cell.subTitleL.text = "v\(version)"
+            if HKConfig.app_version.isEmpty == false {
+                cell.subTitleL.text = "v\(HKConfig.app_version)"
             }
         } else {
             cell.arrowV.isHidden = false

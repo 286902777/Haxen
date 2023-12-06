@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <device id="retina6_72" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
@@ -10,27 +10,42 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoadingViewController" customModule="Haxen" customModuleProvider="target">
             <connections>
+                <outlet property="progressView" destination="HxF-sl-Xp0" id="oZH-yO-6Qq"/>
                 <outlet property="view" destination="Nlb-ck-Ieh" id="ER5-Es-jhP"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="Nlb-ck-Ieh">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LOGO-512" translatesAutoresizingMaskIntoConstraints="NO" id="tGO-mt-DGi">
-                    <rect key="frame" x="163.66666666666666" y="220" width="87" height="87"/>
+                    <rect key="frame" x="171.66666666666666" y="259" width="86.999999999999972" height="87"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="87" id="McK-u4-VyU"/>
                         <constraint firstAttribute="height" constant="87" id="QEu-hI-IoR"/>
                     </constraints>
                 </imageView>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroudImage" translatesAutoresizingMaskIntoConstraints="NO" id="iFW-Lx-Xk1">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                    <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Haxen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWW-0n-6KO">
-                    <rect key="frame" x="176" y="339" width="62.333333333333343" height="26.333333333333314"/>
+                    <rect key="frame" x="184" y="378" width="62.333333333333343" height="26.333333333333314"/>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="22"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HxF-sl-Xp0">
+                    <rect key="frame" x="88" y="828" width="254" height="4"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.24513711734693877" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="4" id="DLT-3W-sXC"/>
+                    </constraints>
+                </progressView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="resource loading…" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ntA-We-HZt">
+                    <rect key="frame" x="155.66666666666666" y="795" width="118.99999999999997" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -39,9 +54,14 @@
             <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="iFW-Lx-Xk1" firstAttribute="trailing" secondItem="Nlb-ck-Ieh" secondAttribute="trailing" id="Hpo-27-Gdc"/>
+                <constraint firstItem="iqc-l2-C62" firstAttribute="trailing" secondItem="HxF-sl-Xp0" secondAttribute="trailing" constant="88" id="KDI-Sv-Md6"/>
                 <constraint firstAttribute="bottom" secondItem="iFW-Lx-Xk1" secondAttribute="bottom" id="NzH-Dq-ASd"/>
+                <constraint firstItem="HxF-sl-Xp0" firstAttribute="top" secondItem="ntA-We-HZt" secondAttribute="bottom" constant="16" id="O95-Yd-UOX"/>
                 <constraint firstItem="iFW-Lx-Xk1" firstAttribute="top" secondItem="Nlb-ck-Ieh" secondAttribute="top" id="Ozf-d7-bRB"/>
                 <constraint firstItem="tGO-mt-DGi" firstAttribute="top" secondItem="iqc-l2-C62" secondAttribute="top" constant="200" id="Qoa-bB-hEy"/>
+                <constraint firstItem="HxF-sl-Xp0" firstAttribute="leading" secondItem="iqc-l2-C62" secondAttribute="leading" constant="88" id="X7p-BE-KaQ"/>
+                <constraint firstAttribute="bottom" secondItem="HxF-sl-Xp0" secondAttribute="bottom" constant="100" id="dYJ-m0-Bkr"/>
+                <constraint firstItem="ntA-We-HZt" firstAttribute="centerX" secondItem="Nlb-ck-Ieh" secondAttribute="centerX" id="g5h-ZV-cBe"/>
                 <constraint firstItem="tGO-mt-DGi" firstAttribute="centerX" secondItem="Nlb-ck-Ieh" secondAttribute="centerX" id="jOm-SN-IgC"/>
                 <constraint firstItem="TWW-0n-6KO" firstAttribute="centerX" secondItem="Nlb-ck-Ieh" secondAttribute="centerX" id="mvr-Rz-wrn"/>
                 <constraint firstItem="iFW-Lx-Xk1" firstAttribute="leading" secondItem="Nlb-ck-Ieh" secondAttribute="leading" id="pMP-gA-1DO"/>

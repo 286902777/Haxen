@@ -23,8 +23,9 @@ class AboutUsViewController: BaseViewController {
         if let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String {
             nameL.text = appName
         }
-        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-            versionL.text = "v\(version)"
+    
+        if HKConfig.app_version.isEmpty == false {
+            versionL.text = "v\(HKConfig.app_version)"
         }
     }
 }

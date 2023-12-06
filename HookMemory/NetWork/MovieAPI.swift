@@ -41,6 +41,11 @@ class MovieAPI {
     func movieHomeList(_ completion: @escaping (_ success: Bool, _ list: [MovieHomeModel?]?) -> ()) {
         NetManager.request(url: MovieNetAPI.movieHomeApi.rawValue, method: .post, parameters: para, modelType: MovieHomeModel.self) { responseModel in
             if let list = responseModel.models as [MovieHomeModel?]? {
+                if responseModel.status == .success {
+                    HKLog.hk_home_sh(loadsuccess: "1", errorinfo: "")
+                } else {
+                    HKLog.hk_home_sh(loadsuccess: "4", errorinfo: responseModel.errorMessage)
+                }
                 completion(responseModel.status == .success, list)
             }
         }
@@ -58,7 +63,7 @@ class MovieAPI {
         }
     }
     
-    func movieSearch(keyword: String, page: Int = 1, _ completion: @escaping (_ success: Bool, _ model: MovieSearchModel) -> ()) {
+    func movieSearch(keyword: String, from: MovieSearchViewController.searchFrom, page: Int = 1, _ completion: @escaping (_ success: Bool, _ model: MovieSearchModel) -> ()) {
         para["keyword"] = keyword
         para["v_type"] = "\(0)"
         para["page"] = "\(page)"
@@ -66,6 +71,11 @@ class MovieAPI {
 
         NetManager.request(url: MovieNetAPI.movieSearchApi.rawValue, method: .post, parameters: para, modelType: MovieSearchModel.self) { responseModel in
             if let mod = responseModel.model {
+                if responseModel.status == .success {
+                    HKLog.hk_search_result_sh(keyword: keyword, errorinf: "", source: "\(from.rawValue)")
+                } else {
+                    HKLog.hk_search_result_sh(keyword: keyword, errorinf: responseModel.errorMessage, source: "\(from.rawValue)")
+                }
                 completion(responseModel.status == .success, mod)
             }
         }
@@ -81,6 +91,11 @@ class MovieAPI {
         para["page_size"] = "\(self.pageSize)"
         NetManager.request(url: MovieNetAPI.movieFilterApi.rawValue, method: .post, parameters: para, modelType: MovieFilterModel.self) { responseModel in
             if let mod = responseModel.model {
+                if responseModel.status == .success {
+                    HKLog.hk_explore_sh(loadsuccess: "1", errorinfo: "")
+                } else {
+                    HKLog.hk_explore_sh(loadsuccess: "4", errorinfo: responseModel.errorMessage)
+                }
                 completion(responseModel.status == .success, mod)
             }
         }

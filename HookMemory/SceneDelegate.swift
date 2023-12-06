@@ -9,7 +9,8 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
-    
+    var first = true
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScenc = (scene as? UIWindowScene) else { return }
         let vc = LoadingViewController()
@@ -36,8 +37,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func sceneWillEnterForeground(_ scene: UIScene) {
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
+        HKTBAManager.share.setHktbaParams(type: .session)
+        if !first {
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
+                if HKConfig.share.currentVC?.isKind(of: MoviePlayViewController.self) == false {
+                    HKADManager.share.hk_loadFullAd(type: .open, placement: .open)
+                    HKConfig.showInterAD(type: .open, placement: .open) { _ in
+                        
+                    }
+                }
+            }
+        } else {
+            first = false
+        }
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {
