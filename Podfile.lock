@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.8.1)
+  - AppLovinSDK (11.11.4)
   - CryptoSwift (1.8.0)
   - Firebase/Analytics (10.18.0):
     - Firebase/Core
@@ -75,6 +76,9 @@ PODS:
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesSwift (~> 2.1)
   - FirebaseSharedSwift (10.18.0)
+  - Google-Mobile-Ads-SDK (10.13.0):
+    - GoogleAppMeasurement (< 11.0, >= 7.0)
+    - GoogleUserMessagingPlatform (>= 1.1)
   - GoogleAppMeasurement (10.18.0):
     - GoogleAppMeasurement/AdIdSupport (= 10.18.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
@@ -99,6 +103,7 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUserMessagingPlatform (2.1.0)
   - GoogleUtilities/AppDelegateSwizzler (7.12.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -140,11 +145,13 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - AppLovinSDK (~> 11.11.2)
   - CryptoSwift
   - Firebase/Analytics
   - FirebaseCrashlytics
   - FirebasePerformance
   - FirebaseRemoteConfig
+  - Google-Mobile-Ads-SDK
   - HandyJSON
   - IQKeyboardManagerSwift
   - Kingfisher
@@ -157,6 +164,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - AppLovinSDK
     - CryptoSwift
     - Firebase
     - FirebaseABTesting
@@ -170,8 +178,10 @@ SPEC REPOS:
     - FirebaseRemoteConfig
     - FirebaseSessions
     - FirebaseSharedSwift
+    - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
     - GoogleDataTransport
+    - GoogleUserMessagingPlatform
     - GoogleUtilities
     - HandyJSON
     - IQKeyboardManagerSwift
@@ -187,6 +197,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
+  AppLovinSDK: 5c667a790725d9529c01c3f3acf12ab195865fbb
   CryptoSwift: 52aaf3fce7337552863b1d952e408085f0e65030
   Firebase: 414ad272f8d02dfbf12662a9d43f4bba9bec2a06
   FirebaseABTesting: d8b10ff4c6d1a9d6b11f02a08463ad5fd9fc6b1b
@@ -200,8 +211,10 @@ SPEC CHECKSUMS:
   FirebaseRemoteConfig: bbd42790a4e84fde6aab7eae810b608e7b5c0bf6
   FirebaseSessions: f90fe9212ee2818641eda051c0835c9c4e30d9ae
   FirebaseSharedSwift: 62e248642c0582324d0390706cadd314687c116b
+  Google-Mobile-Ads-SDK: 517003a1a2430005da3e85df4d061cd7de107a5a
   GoogleAppMeasurement: 70ce9aa438cff1cfb31ea3e660bcc67734cb716e
   GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
+  GoogleUserMessagingPlatform: dce302b8f1b84d6e945812ee7a15c3f65a102cbf
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   IQKeyboardManagerSwift: 12d89768845bb77b55cc092ecc2b1f9370f06b76
@@ -215,6 +228,6 @@ SPEC CHECKSUMS:
   SVProgressHUD: 4837c74bdfe2e51e8821c397825996a8d7de6e22
   ZIPFoundation: d170fa8e270b2a32bef9dcdcabff5b8f1a5deced
 
-PODFILE CHECKSUM: cefc6447e6f0432ffc9142dff1caf40dfee7ee6e
+PODFILE CHECKSUM: 5dad8f4b49c6c0e03d359cafa1cd326d265d371b
 
 COCOAPODS: 1.14.2

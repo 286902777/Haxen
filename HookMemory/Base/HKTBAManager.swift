@@ -27,9 +27,9 @@ class HKTBAManager: NSObject {
     
     static let SAFEBUNDLEID = "com.haxenplatform.live"
     
-    var ip: String = UserDefaults.standard.value(forKey: HKCommon.last_ip) as? String ?? "" {
+    var ip: String = UserDefaults.standard.value(forKey: HKKeys.last_ip) as? String ?? "" {
         didSet {
-            UserDefaults.standard.set(ip, forKey: HKCommon.last_ip)
+            UserDefaults.standard.set(ip, forKey: HKKeys.last_ip)
         }
     }
     var country_code: String = Locale.current.regionCode ?? "ZZ" {
@@ -39,9 +39,9 @@ class HKTBAManager: NSObject {
             }
         }
     }
-    var ip_country_code: String = UserDefaults.standard.value(forKey: HKCommon.last_ip_country_code) as? String ?? "" {
+    var ip_country_code: String = UserDefaults.standard.value(forKey: HKKeys.last_ip_country_code) as? String ?? "" {
         didSet {
-            UserDefaults.standard.set(ip_country_code, forKey: HKCommon.last_ip_country_code)
+            UserDefaults.standard.set(ip_country_code, forKey: HKKeys.last_ip_country_code)
         }
     }
     var region_code: String = Locale.current.regionCode ?? "ZZ"
@@ -57,9 +57,9 @@ class HKTBAManager: NSObject {
     var adSubParam: [String: Any] = [:]
     var eventParam: [String: Any] = [:]
     
-    var tbaLogs: [[String: Any]] = UserDefaults.standard.value(forKey: HKCommon.tbaLogs) == nil ? [] : UserDefaults.standard.value(forKey: HKCommon.tbaLogs) as! [[String: Any]] {
+    var tbaLogs: [[String: Any]] = UserDefaults.standard.value(forKey: HKKeys.tbaLogs) == nil ? [] : UserDefaults.standard.value(forKey: HKKeys.tbaLogs) as! [[String: Any]] {
         didSet {
-            UserDefaults.standard.set(tbaLogs, forKey: HKCommon.tbaLogs)
+            UserDefaults.standard.set(tbaLogs, forKey: HKKeys.tbaLogs)
             HKLog.log("HKCommon.tbaLogs: \(tbaLogs.count) \(tbaLogs)")
         }
     }
@@ -74,9 +74,9 @@ class HKTBAManager: NSObject {
         cacheTimer?.schedule(deadline: .now() + 10, repeating: 10)
         cacheTimer?.resume()
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            if !UserDefaults.standard.bool(forKey: HKCommon.tbaInstall) {
+            if !UserDefaults.standard.bool(forKey: HKKeys.tbaInstall) {
                 self.setHktbaParams(type: .install)
-                UserDefaults.standard.set(true, forKey: HKCommon.tbaInstall)
+                UserDefaults.standard.set(true, forKey: HKKeys.tbaInstall)
             }
         }
         

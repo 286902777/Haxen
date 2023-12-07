@@ -27,10 +27,10 @@ class HKConfig{
     
     var isLoadingVC = true
     
-    var isForUser = UserDefaults.standard.bool(forKey: HKCommon.isForUser) {
+    var isForUser = UserDefaults.standard.bool(forKey: HKKeys.isForUser) {
         didSet {
             if isForUser == true {
-                UserDefaults.standard.set(isForUser, forKey: HKCommon.isForUser)
+                UserDefaults.standard.set(isForUser, forKey: HKKeys.isForUser)
                 if !isLoadingVC {
                     self.setRoot(.movie)
                 }
@@ -41,7 +41,6 @@ class HKConfig{
     func appRequest() {
 #if DEBUG
         setRoot(.movie)
-        
 #else
         if HKConfig.share.getPermission() {
             HKConfig.share.setRoot(.movie)

@@ -535,23 +535,22 @@ class HKPlayer: UIView {
 //        }
     }
     
-//    func showPlayingFullAd(isPlay: Bool = true, placement: MTADLogENUM) {
-//        DispatchQueue.main.async {
-//            MTFunctions.showInterstitialAD(type: self.isFullScreen ? .other : .play, placement: placement) { [weak self] result in
-//                if result {
-//                    self?.tempIsPlaying = isPlay ? true : (self?.isPlaying ?? false)
-//                    self?.pause()
-//                }
-//            }
-//            MTMobileAdManager.standred.tempDismissComplete = {
-//                if self.tempIsPlaying == true {
-//                    self.play()
-//                }
-//                MTMobileAdManager.standred.tempDismissComplete = nil
-//            }
-//            
-//        }
-//    }
+    func showPlayingAd(isPlay: Bool = true, placement: HKADLogENUM) {
+        DispatchQueue.main.async {
+            HKConfig.showInterAD(type: self.isFullScreen ? .other : .play, placement: placement) { [weak self] result in
+                if result {
+                    self?.tempIsPlaying = isPlay ? true : (self?.isPlaying ?? false)
+                    self?.pause()
+                }
+            }
+            HKADManager.share.tempDismissComplete = {
+                if self.tempIsPlaying == true {
+                    self.play()
+                }
+                HKADManager.share.tempDismissComplete = nil
+            }
+        }
+    }
 }
 
 extension HKPlayer: HKPlayerLayerViewDelegate {
@@ -629,15 +628,8 @@ extension HKPlayer: HKPlayerLayerViewDelegate {
         controlView.totalDuration = totalDuration
         playTimeDidChange?(currentTime, totalTime)
         
-        DispatchQueue.main.async {
-//            if let video = MTSourceManager.getVideoWithKey(self.sourceKey) {
-//                MTDataManager.changeProgressAndPlayedTime(video: video, time: currentTime, progress: Double(currentTime) / Double(totalTime))
-//            }
-//            
-//            if self.isPlaying, !self.isSliderSliding, Int(currentTime) % MTMobileAdManager.standred.play_point_time == 0, Int(currentTime) / MTMobileAdManager.standred.play_point_time != 0 {
-//                self.showPlayingFullAd(placement: .play)
-//            }
-            
+        if self.isPlaying, !self.isSliderSliding, Int(currentTime) % HKADManager.share.play_time == 0, Int(currentTime) / HKADManager.share.play_time != 0 {
+            self.showPlayingAd(placement: .play)
         }
     }
 }

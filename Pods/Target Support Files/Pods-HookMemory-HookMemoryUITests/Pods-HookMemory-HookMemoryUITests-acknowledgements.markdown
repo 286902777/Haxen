@@ -24,6 +24,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
+## AppLovinSDK
+
+
+Copyright 2023 AppLovin Corp. All rights reserved.
+
+The AppLovin SDK is available under a commercial license (https://www.applovin.com/eula).
+
+
+
 ## CryptoSwift
 
 Copyright (C) 2014-3099 Marcin Krzyżanowski <marcin.krzyzanowski@gmail.com>
@@ -2547,6 +2556,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    limitations under the License.
 
 
+## Google-Mobile-Ads-SDK
+
+Copyright 2023 Google
+
 ## GoogleAppMeasurement
 
 Copyright 2022 Google
@@ -2756,6 +2769,10 @@ Copyright 2022 Google
    See the License for the specific language governing permissions and
    limitations under the License.
 
+
+## GoogleUserMessagingPlatform
+
+Copyright 2023 Google
 
 ## GoogleUtilities
 

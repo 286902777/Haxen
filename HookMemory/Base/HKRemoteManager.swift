@@ -15,14 +15,12 @@ class HKRemoteManager: NSObject {
     var config = RemoteConfig.remoteConfig()
     
     var retryCount = 0
-    
-    let advertiseKey = "advertiseKey"
-    
+        
     func initConfig() {
         // ad setting
         var admob = ""
-        if let adJson = UserDefaults.standard.value(forKey: advertiseKey) as? String, adJson.count > 0 {
-            admob = UserDefaults.standard.value(forKey: advertiseKey) as! String
+        if let adJson = UserDefaults.standard.value(forKey: HKKeys.advertiseKey) as? String, adJson.count > 0 {
+            admob = UserDefaults.standard.value(forKey: HKKeys.advertiseKey) as! String
         } else {
 #if DEBUG
             let filePath = Bundle.main.path(forResource: "hk_ad_debug", ofType: "json")!
@@ -64,21 +62,16 @@ class HKRemoteManager: NSObject {
                 return
             }
             HKLog.log("HKRemote config successfully activated!")
-            DispatchQueue.main.async {
-                if let jsonString = self.config["ad_json_ios"].stringValue {
-                    if jsonString != UserDefaults.standard.value(forKey: self.advertiseKey) as? String {
-                        UserDefaults.standard.set(jsonString, forKey: self.advertiseKey)
-                        let jsonData = Data(base64Encoded: jsonString) ?? Data()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 12) {
-//                            do {
-//                                MTMobileAdManager.standred.adInfo = try JSONDecoder().decode(MTADTypeModel.self, from: jsonData)
-//                            } catch {
-//
-//                            }
+            if let jsonString = self.config["ad_json_ios"].stringValue {
+                if jsonString != UserDefaults.standard.value(forKey: HKKeys.advertiseKey) as? String {
+                    UserDefaults.standard.set(jsonString, forKey: HKKeys.advertiseKey)
+                    let jsonData = Data(base64Encoded: jsonString) ?? Data()
+                    if let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any] {
+                        if let model = HKADTypeModel.deserialize(from: json) {
+                            HKADManager.share.hkAdInfo = model
                         }
                     }
                 }
-                
             }
         }
     }

@@ -64,7 +64,11 @@ class HomeViewController: BaseViewController {
         cusBar.middleBtn.setImage(UIImage(named: "schedule"), for: .normal)
         cusBar.NaviBarBlock = { [weak self] index in
             guard let self = self else { return }
-            self.addTracking()
+            DispatchQueue.main.async {
+                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                    appDelegate.setTrackingAuth()
+                }
+            }
             switch index {
             case 1:
                 let vc = SettingViewController()
@@ -326,14 +330,6 @@ class HomeViewController: BaseViewController {
             alert.addAction(cancel)
             alert.addAction(ok)
             self.present(alert, animated: true)
-        }
-    }
-    
-    func addTracking() {
-        if #available(iOS 14, *) {
-            ATTrackingManager.requestTrackingAuthorization { status in
-                
-            }
         }
     }
 }

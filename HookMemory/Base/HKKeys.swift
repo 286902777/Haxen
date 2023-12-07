@@ -7,7 +7,7 @@
 
 import Foundation
 
-class HKCommon {
+class HKKeys {
     static let isForUser = "isForUser"
     static let tbaLogs = "tbaLogs"
     static let tbaInstall = "tbaInstall"
@@ -20,4 +20,5 @@ class HKCommon {
     static let appOpneCount = "appOpneCount"
     static let last_ip = "last_ip"
     static let last_ip_country_code = "last_ip_country_code"
+    static let advertiseKey = "advertiseKey"
 }

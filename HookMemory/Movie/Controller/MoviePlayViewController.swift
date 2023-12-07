@@ -606,6 +606,7 @@ extension MoviePlayViewController: HKPlayerDelegate {
             model.playedTime = Double(currentTime)
             model.playProgress = Double(currentTime) / Double(totalTime)
         }
+        
         self.currentTime = currentTime
         DBManager.share.updateVideoPlayData(model)
     }

@@ -6,15 +6,15 @@
     "hk_play_point_time": 540,
     "hk_open": [
         {
-            "id": "b1f4ff8d8faf4df0",
+            "id": "ca-app-pub-4266657890099596/1941059637",
             "level": 1,
             "type": "interstitial",
-            "source": "max"
+            "source": "admob"
         }
     ],
     "hk_play": [
         {
-            "id": "b981e5fb424ebb27",
+            "id": "f1a651a0d92f2aa7",
             "level": 1,
             "type": "rewarded",
             "source": "max"
@@ -22,7 +22,7 @@
     ],
     "hk_landscape": [
         {
-            "id": "ca-app-pub-4266657890099596~2214297508",
+            "id": "ca-app-pub-4266657890099596/1941059637",
             "level": 3,
             "type": "interstitial",
             "source": "admob"

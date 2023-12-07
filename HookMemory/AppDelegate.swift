@@ -41,13 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         initIQKeyBoard()
         initSVProgressHUD()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            if #available(iOS 14, *) {
-                ATTrackingManager.requestTrackingAuthorization { status in
-                    
-                }
-            }
-        }
+        setTrackingAuth()
         self.reachabilityManager?.startListening(onQueue: DispatchQueue.main, onUpdatePerforming: { [weak self] (status) in
             self?.netStatus = status
         })
@@ -59,6 +53,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        Settings.shared.isAutoLogAppEventsEnabled = true
 //        Settings.shared.isCodelessDebugLogEnabled = false
         return true
+    }
+    /// TrackingAuth
+    func setTrackingAuth() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            if #available(iOS 14, *) {
+                ATTrackingManager.requestTrackingAuthorization { status in
+//                    Settings.shared.isAdvertiserTrackingEnabled = true
+                }
+            }
+        }
     }
     /// 配置IQKeyboardManager
     func initIQKeyBoard() {
@@ -76,14 +80,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func initGADMobileAds() {
-        if let count = UserDefaults.standard.value(forKey: HKCommon.appOpneCount) as? Int {
-            UserDefaults.standard.set(count + 1, forKey: HKCommon.appOpneCount)
+        if let count = UserDefaults.standard.value(forKey: HKKeys.appOpneCount) as? Int {
+            UserDefaults.standard.set(count + 1, forKey: HKKeys.appOpneCount)
         } else {
-            UserDefaults.standard.set(1, forKey: HKCommon.appOpneCount)
+            UserDefaults.standard.set(1, forKey: HKKeys.appOpneCount)
         }
+        HKRemoteManager.share.initConfig()
         HKADManager.share.initSet()
         HKTBAManager.share.initSet()
-        HKRemoteManager.share.initConfig()
 
         GADMobileAds.sharedInstance().start { status in
             

@@ -44,6 +44,19 @@ class HKADItem: BaseModel {
     var type: HKADIDType = .interstitial
     var source: HKADSource = .admob
     var open_time: Int? = 0
+    
+    override func mapping(mapper: HelpingMapper) {
+        super.mapping(mapper: mapper)
+        // 指定 type 字段用这个方法去解析
+        mapper.specify(property: &type) { (rawString) -> (HKADIDType) in
+            let t = HKADIDType(rawValue: rawString.lowercased())
+            return t ?? .interstitial
+        }
+        mapper.specify(property: &source) { (rawString) -> (HKADSource) in
+            let t = HKADSource(rawValue: rawString.lowercased())
+            return t ?? .admob
+        }
+    }
 }
 
 /// 广告列表
@@ -101,7 +114,7 @@ class HKADManager: NSObject {
     /// 显示和点击次数
     var adCounts: HKADCounts?
     
-    var play_point_time: Int = 600
+    var play_time: Int = 600
     
     var coolLoadSuccess = false
     var isShowCoolAd = false
@@ -135,7 +148,7 @@ class HKADManager: NSObject {
             self.sameInterval = self.hkAdInfo.hk_sameInterval
             self.differentInterval = self.hkAdInfo.hk_differentInterval
             self.openInterval = self.hkAdInfo.hk_openInterval
-            self.play_point_time = self.hkAdInfo.hk_play_point_time
+            self.play_time = self.hkAdInfo.hk_play_point_time
         }
     }
     
@@ -155,13 +168,28 @@ class HKADManager: NSObject {
         self.dataArr.append(model)
     }
     func initSet() {
-        let filePath = Bundle.main.path(forResource: "hk_ad_debug", ofType: "json")!
-        let fileData = try! Data(contentsOf: URL(fileURLWithPath: filePath))
-        if let json = try? JSONSerialization.jsonObject(with: fileData) as? [String: Any] {
-            if let model = HKADTypeModel.deserialize(from: json) {
-                hkAdInfo = model
+        if let s = UserDefaults.standard.value(forKey: HKKeys.advertiseKey) as? String {
+            let jsonString = UserDefaults.standard.value(forKey: HKKeys.advertiseKey) as! String
+            let jsonData = Data(base64Encoded: jsonString) ?? Data()
+            if let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any] {
+                if let model = HKADTypeModel.deserialize(from: json) {
+                    hkAdInfo = model
+                }
+            }
+        } else {
+#if DEBUG
+            let filePath = Bundle.main.path(forResource: "hk_ad_debug", ofType: "json")!
+#else
+            let filePath = Bundle.main.path(forResource: "hk_ad_release", ofType: "json")!
+#endif
+            let fileData = try! Data(contentsOf: URL(fileURLWithPath: filePath))
+            if let json = try? JSONSerialization.jsonObject(with: fileData) as? [String: Any] {
+                if let model = HKADTypeModel.deserialize(from: json) {
+                    hkAdInfo = model
+                }
             }
         }
+        
         // setup counts
         setupAdmobCounts()
         
@@ -214,7 +242,7 @@ extension HKADManager {
         
         self.interstitialType = type
         
-        if let item = self.dataArr.first(where: {$0.type == type}), let opentime = UserDefaults.standard.value(forKey: HKCommon.appOpneCount) as? Int {
+        if let item = self.dataArr.first(where: {$0.type == type}), let opentime = UserDefaults.standard.value(forKey: HKKeys.appOpneCount) as? Int {
             if let model = item.item.safe(index) {
                 if model.open_time ?? 0 < opentime {
                     switch model.type {
@@ -754,7 +782,7 @@ extension HKADManager: MAAdViewAdDelegate {
                     cache.level = model.level
                     cache.source = model.source
                     cache.type = type
-                    cache.ad = ad
+                    cache.ad = mod.ad
                     cache.id_type = model.type
                     self.addCacheByType(type: type, model: cache)
                 }

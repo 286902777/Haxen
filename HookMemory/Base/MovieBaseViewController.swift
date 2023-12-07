@@ -19,7 +19,9 @@ class MovieBaseViewController: UIViewController {
         view.backgroundColor = UIColor.hex("#141414")
         addBackImage()
         addNavBar()
-        addTracking()
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            appDelegate.setTrackingAuth()
+        }
         NotificationCenter.default.addObserver(self, selector: #selector(netWorkChange), name: Notification.Name("netStatus"), object: nil)
     }
 
@@ -46,16 +48,6 @@ class MovieBaseViewController: UIViewController {
     
     func noNetAction() {
         
-    }
-    
-    func addTracking() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            if #available(iOS 14, *) {
-                ATTrackingManager.requestTrackingAuthorization { status in
-                    
-                }
-            }
-        }
     }
 
     func addBackImage() {
