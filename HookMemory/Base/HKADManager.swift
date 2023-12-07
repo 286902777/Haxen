@@ -95,9 +95,9 @@ class HKADManager: NSObject {
         didSet {
             DispatchQueue.main.async {
                 if self.cacheCount % 2 == 0 {
-                    self.refreshTotalAdCache()
+                    self.refreshAdCache()
                     HKLog.log("[AD] 检查高价层广告缓存信息")
-                    guard let _ = self.getCacheByType(type: .high) else {
+                    guard let _ = self.getCacheWithType(type: .high) else {
                         HKLog.log("[AD] 高价层无广告,加载高价层广告")
                         self.hk_loadFullAd(type: .high, placement: .high)
                         return
@@ -107,10 +107,6 @@ class HKADManager: NSObject {
         }
     }
     
-    /// 广告type
-    var type: HKADType = .open
-    
-    var rootViewController: UIViewController!
     /// 显示和点击次数
     var adCounts: HKADCounts?
     
@@ -154,7 +150,7 @@ class HKADManager: NSObject {
     
     var tempDismissComplete: (() -> Void)?
     
-    var interstitialType: HKADType = .open
+    var type: HKADType = .open
     
     var openLoadingSuccessComplete: (() -> Void)?
     
@@ -168,8 +164,7 @@ class HKADManager: NSObject {
         self.dataArr.append(model)
     }
     func initSet() {
-        if let s = UserDefaults.standard.value(forKey: HKKeys.advertiseKey) as? String {
-            let jsonString = UserDefaults.standard.value(forKey: HKKeys.advertiseKey) as! String
+        if let jsonString = UserDefaults.standard.value(forKey: HKKeys.advertiseKey) as? String {
             let jsonData = Data(base64Encoded: jsonString) ?? Data()
             if let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any] {
                 if let model = HKADTypeModel.deserialize(from: json) {
@@ -211,7 +206,7 @@ class HKADManager: NSObject {
         }
     }
     
-    func preInit() {
+    func adInit() {
         if isInit {
             return
         }
@@ -240,7 +235,7 @@ extension HKADManager {
             }
         }
         
-        self.interstitialType = type
+        self.type = type
         
         if let item = self.dataArr.first(where: {$0.type == type}), let opentime = UserDefaults.standard.value(forKey: HKKeys.appOpneCount) as? Int {
             if let model = item.item.safe(index) {
@@ -267,10 +262,7 @@ extension HKADManager {
             } else {
                 return
             }
-            
-            
         }
-        
     }
     
     func hk_showFullAd(type: HKADType, placement: HKADLogENUM, complete: @escaping(Bool, GADFullScreenPresentingAd?) -> Void) {
@@ -278,18 +270,15 @@ extension HKADManager {
             complete(false, nil)
             return
         }
-        
         if !HKConfig.share.isNet {
             complete(false, nil)
             return
         }
-        
         // 是否可显示
         if canShowAd() == false {
             complete(false, nil)
             return
         }
-        
         let time = Date().timeIntervalSince1970
         if let m = self.dataArr.first(where: {$0.type == type}) {
             if Int(ceil(time - self.openTime)) < self.sameInterval || Int(ceil(time - self.otherTime)) < self.differentInterval || Int(ceil(time - self.playTime)) < self.differentInterval || Int(ceil(time - self.offlineTime)) < self.differentInterval {
@@ -299,44 +288,28 @@ extension HKADManager {
             }
             m.placement = placement
         }
-        
-        
         // 是否有缓存
-        
         HKLog.log("[AD] 无高价层广告, 按原有加载逻辑进行")
-        if let arr = self.getCacheByType(type: type), arr.count > 0 {
-            self.interstitialType = type
+        if let arr = self.getCacheWithType(type: type), arr.count > 0 {
+            self.type = type
             if let c = arr.first {
                 if c.source == .admob {
                     if let ad = c.ad as? GADInterstitialAd {
-                        if placement != .cool {
-                            
-                        }
                         ad.fullScreenContentDelegate = self
                         complete(true, ad)
                     } else if let ad = c.ad as? GADAppOpenAd {
-                        if placement != .cool {
-                            
-                        }
                         ad.fullScreenContentDelegate = self
                         complete(true, ad)
                     } else if let ad = c.ad as? GADRewardedAd {
-                        if placement != .cool {
-                        }
                         ad.fullScreenContentDelegate = self
                         complete(true, ad)
                     } else if let ad = c.ad as? GADRewardedInterstitialAd {
-                        if placement != .cool {
-                            
-                        }
                         ad.fullScreenContentDelegate = self
                         complete(true, ad)
                     } else {
-                        if placement != .cool {
-                        }
-                        self.removeCachefirst(type: type)
+                        self.removeFirstCache(type: type)
                         self.hk_loadFullAd(type: type, placement: placement)
-                        self.interstitialType = .open
+                        self.type = .open
                         complete(false, nil)
                     }
                 } else if c.source == .max {
@@ -350,17 +323,17 @@ extension HKADManager {
                         (c.ad as? MARewardedInterstitialAd)?.show()
                         complete(true, nil)
                     } else {
-                        self.removeCachefirst(type: type)
+                        self.removeFirstCache(type: type)
                         self.hk_loadFullAd(type: type, placement: placement)
-                        self.interstitialType = .open
+                        self.type = .open
                         complete(false, nil)
                     }
                 }
             }
         } else {
-            self.removeCachefirst(type: type)
+            self.removeFirstCache(type: type)
             self.hk_loadFullAd(type: type, placement: placement)
-            self.interstitialType = .open
+            self.type = .open
             complete(false, nil)
         }
     }
@@ -371,20 +344,16 @@ extension HKADManager {
     func hk_loadInterstitialAd(type: HKADType, index: Int, item: HKADItem, placement: HKADLogENUM) {
         let id = item.id
         if item.source == .admob {
-            
             let request = GADRequest()
             GADInterstitialAd.load(withAdUnitID: id, request: request) { [weak self] ad, error in
                 guard let self = self else { return }
                 if let m = self.dataArr.first(where:{$0.type == type}) {
                     m.adIsLoding = false
                 }
-                
                 guard error == nil else {
                     HKLog.log("[AD] 广告加载失败 type: \(type.rawValue) 优先级: \(index + 1), id: \(id)")
                     self.hk_adFail(placement: placement, code: error.debugDescription)
-                    
                     self.hk_loadFullAd(type: type, index: index + 1, placement: placement)
-                    
                     return
                 }
                 
@@ -398,7 +367,7 @@ extension HKADManager {
                     cache.id_type = item.type
                     
                     /// 加入缓存
-                    self.addCacheByType(type: type, model: cache)
+                    self.addCacheWithType(type: type, model: cache)
                     HKLog.log("[AD] 广告加载成功 type: \(type.rawValue) 优先级: \(index + 1), id: \(id)")
                     
                     if type == .open {
@@ -411,7 +380,6 @@ extension HKADManager {
                     ad.paidEventHandler = { value in
                         let nvalue = value.value
                         let currencyCode = value.currencyCode
-                        
                         HKLog.hk_ad_impression_revenue(value: nvalue.doubleValue, currency: currencyCode, adFormat: "INTERSTITIAL", adSource: ad.responseInfo.loadedAdNetworkResponseInfo?.adNetworkClassName ?? "", adPlatform: "admob", adUnitName: item.id , precision: "\(value.precision.rawValue)", placement: type.rawValue)
                     }
                     
@@ -462,9 +430,8 @@ extension HKADManager {
                     cache.source = item.source
                     cache.ad = ad
                     cache.id_type = item.type
-                    
                     /// 加入缓存
-                    self.addCacheByType(type: type, model: cache)
+                    self.addCacheWithType(type: type, model: cache)
                     HKLog.log("[AD] 广告加载成功 type: \(type.rawValue) 优先级: \(index + 1), id: \(id)")
                     
                     if type == .open {
@@ -530,7 +497,7 @@ extension HKADManager {
                     cache.id_type = item.type
                     
                     /// 加入缓存
-                    self.addCacheByType(type: type, model: cache)
+                    self.addCacheWithType(type: type, model: cache)
                     HKLog.log("[AD] 广告加载成功 type: \(type.rawValue) 优先级: \(index + 1), id: \(id)")
                     
                     if type == .open {
@@ -610,7 +577,7 @@ extension HKADManager {
                     }
                     
                     /// 加入缓存
-                    self.addCacheByType(type: type, model: cache)
+                    self.addCacheWithType(type: type, model: cache)
                     HKLog.log("[AD] 广告加载成功 type: \(type.rawValue) 优先级: \(index + 1), id: \(id)")
                     switch type {
                     case .open:
@@ -651,10 +618,10 @@ extension HKADManager: GADFullScreenContentDelegate {
         HKLog.log("[AD] Ad did fail to present full screen content.")
         
         if ad is GADAppOpenAd {
-            if self.interstitialType == .open {
+            if self.type == .open {
                 if let m = self.dataArr.first(where: {$0.type == .open}) {
                     m.adIsLoding = false
-                    self.removeCachefirst(type: m.type)
+                    self.removeFirstCache(type: m.type)
                     self.hk_loadFullAd(type: m.type, placement: m.placement)
                     if self.tempDismissComplete != nil {
                         self.tempDismissComplete!()
@@ -668,7 +635,7 @@ extension HKADManager: GADFullScreenContentDelegate {
             if let m = self.dataArr.first(where: {$0.type == type}) {
                 if let mod = m.item.first(where: {$0.id == interstitialAd?.adUnitID || $0.id == rewardAd?.adUnitID || $0.id == rewardInterstitialAd?.adUnitID}) {
                     m.adIsLoding = false
-                    self.removeCachefirst(type: m.type)
+                    self.removeFirstCache(type: m.type)
                     self.hk_loadFullAd(type: m.type, placement: m.placement)
                     if self.tempDismissComplete != nil {
                         self.tempDismissComplete!()
@@ -684,7 +651,7 @@ extension HKADManager: GADFullScreenContentDelegate {
     func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         UIApplication.shared.isStatusBarHidden = true
         if ad is GADAppOpenAd {
-            if self.interstitialType == .open {
+            if self.type == .open {
                 self.addShowCount(type: .open)
             }
         } else {
@@ -706,8 +673,8 @@ extension HKADManager: GADFullScreenContentDelegate {
         
         if ad is GADAppOpenAd {
             self.openTime = Date().timeIntervalSince1970
-            if self.interstitialType == .open {
-                self.removeCachefirst(type: .open)
+            if self.type == .open {
+                self.removeFirstCache(type: .open)
                 self.hk_loadFullAd(type: .open, placement: .open_show)
                 if self.tempDismissComplete != nil {
                     self.tempDismissComplete!()
@@ -718,8 +685,8 @@ extension HKADManager: GADFullScreenContentDelegate {
             let rewardAd = ad as? GADRewardedAd
             let rewardInterstitialAd = ad as? GADRewardedInterstitialAd
             if let m = self.dataArr.first(where: {$0.type == type}) {
-                if let mod = m.item.first(where: {$0.id == interstitialAd?.adUnitID || $0.id == rewardAd?.adUnitID || $0.id == rewardInterstitialAd?.adUnitID}), self.interstitialType == m.type {
-                    self.removeCachefirst(type: m.type)
+                if let mod = m.item.first(where: {$0.id == interstitialAd?.adUnitID || $0.id == rewardAd?.adUnitID || $0.id == rewardInterstitialAd?.adUnitID}), self.type == m.type {
+                    self.removeFirstCache(type: m.type)
                     m.adIsLoding = false
                     m.adShowing = false
                     self.setTime(m.type)
@@ -738,7 +705,7 @@ extension HKADManager: GADFullScreenContentDelegate {
     func adDidRecordClick(_ ad: GADFullScreenPresentingAd) {
         
         if ad is GADAppOpenAd {
-            if self.interstitialType == .open {
+            if self.type == .open {
                 self.addClickCount(type: .open)
             }
         } else {
@@ -747,7 +714,7 @@ extension HKADManager: GADFullScreenContentDelegate {
             let rewardInterstitialAd = ad as? GADRewardedInterstitialAd
             for (_, mod) in self.dataArr.enumerated() {
                 if let _ = mod.item.first(where: {$0.id == interstitialAd?.adUnitID || $0.id == rewardAd?.adUnitID || $0.id == rewardInterstitialAd?.adUnitID}) {
-                    self.addClickCount(type: self.interstitialType)
+                    self.addClickCount(type: self.type)
                 }
             }
         }
@@ -784,7 +751,7 @@ extension HKADManager: MAAdViewAdDelegate {
                     cache.type = type
                     cache.ad = mod.ad
                     cache.id_type = model.type
-                    self.addCacheByType(type: type, model: cache)
+                    self.addCacheWithType(type: type, model: cache)
                 }
             }
         }
@@ -797,7 +764,7 @@ extension HKADManager: MAAdViewAdDelegate {
     func didFailToLoadAd(forAdUnitIdentifier adUnitIdentifier: String, withError error: MAError) {
         HKLog.log("[Ad] didFailToLoadAd: adUnitIdentifier: \(adUnitIdentifier), error: \(error.mediatedNetworkErrorCode) \(error.message)")
         for (_, mod) in self.dataArr.enumerated() {
-            if let m = mod.item.first(where: {$0.id == adUnitIdentifier}) {
+            if let _ = mod.item.first(where: {$0.id == adUnitIdentifier}) {
                 HKLog.log("[Ad] 广告加载失败 type: \(HKADType.play.rawValue) 优先级: \(mod.index + 1), placementid: \(adUnitIdentifier)")
                 self.hk_adFail(placement: mod.placement, code: "\(error.code.rawValue)")
                 mod.adIsLoding = false
@@ -809,7 +776,7 @@ extension HKADManager: MAAdViewAdDelegate {
     func didDisplay(_ ad: MAAd) {
         HKLog.log("[Ad] didDisplay")
         for (_, mod) in self.dataArr.enumerated() {
-            if let _ = mod.item.first(where: {$0.id == ad.adUnitIdentifier}), mod.type == self.interstitialType {
+            if let _ = mod.item.first(where: {$0.id == ad.adUnitIdentifier}), mod.type == self.type {
                 self.addShowCount(type: mod.type)
                 mod.adShowing = true
                 break
@@ -822,8 +789,8 @@ extension HKADManager: MAAdViewAdDelegate {
         HKLog.log("[Ad] didHide")
         UIApplication.shared.isStatusBarHidden = false
         for (_, mod) in self.dataArr.enumerated() {
-            if let _ = mod.item.first(where: {$0.id == ad.adUnitIdentifier}), mod.type == self.interstitialType {
-                self.removeCachefirst(type: mod.type)
+            if let _ = mod.item.first(where: {$0.id == ad.adUnitIdentifier}), mod.type == self.type {
+                self.removeFirstCache(type: mod.type)
                 mod.adIsLoding = false
                 mod.adShowing = false
                 self.setTime(mod.type)
@@ -841,8 +808,8 @@ extension HKADManager: MAAdViewAdDelegate {
     func didClick(_ ad: MAAd) {
         HKLog.log("[Ad] didClick")
         for (_, mod) in self.dataArr.enumerated() {
-            if let _ = mod.item.first(where: {$0.id == ad.adUnitIdentifier}), mod.type == self.interstitialType {
-                self.addClickCount(type: self.interstitialType)
+            if let _ = mod.item.first(where: {$0.id == ad.adUnitIdentifier}), mod.type == self.type {
+                self.addClickCount(type: self.type)
             }
         }
     }
@@ -851,9 +818,9 @@ extension HKADManager: MAAdViewAdDelegate {
         HKLog.log("[Ad] didFailtoDisplay, error: \(error)")
         if error.code.rawValue != -23 {
             for (_, mod) in self.dataArr.enumerated() {
-                if let _ = mod.item.first(where: {$0.id == ad.adUnitIdentifier}), mod.type == self.interstitialType {
+                if let _ = mod.item.first(where: {$0.id == ad.adUnitIdentifier}), mod.type == self.type {
                     mod.adIsLoding = false
-                    self.removeCachefirst(type: mod.type)
+                    self.removeFirstCache(type: mod.type)
                     self.hk_loadFullAd(type: mod.type, placement: mod.placement)
                     if self.tempDismissComplete != nil {
                         self.tempDismissComplete!()
@@ -923,7 +890,7 @@ extension HKADManager {
                     cache.source = m.source
                     cache.type = type
                     cache.id_type = m.type
-                    self.addCacheByType(type: type, model: cache)
+                    self.addCacheWithType(type: type, model: cache)
                 }
             }
         }
@@ -937,7 +904,7 @@ extension HKADManager {
     func HKAdLoadFailWithError(adUnitId: String, code: String) {
         for (_, mod) in self.dataArr.enumerated() {
             if let _ = mod.item.first(where: {$0.id == adUnitId}),
-               self.interstitialType == mod.type {
+               self.type == mod.type {
                 self.hk_adFail(placement: mod.placement, code: code)
                 mod.adIsLoding = false
                 self.hk_loadFullAd(type: mod.type, index: mod.index + 1, placement: mod.placement)
@@ -948,7 +915,7 @@ extension HKADManager {
     func HKAdImpression(adUnitId: String) {
         for (_, mod) in self.dataArr.enumerated() {
             if let _ = mod.item.first(where: {$0.id == adUnitId}),
-               self.interstitialType == mod.type {
+               self.type == mod.type {
                 self.addShowCount(type: mod.type)
                 if mod.type == .play {
                     mod.adShowing = true
@@ -961,8 +928,8 @@ extension HKADManager {
     func HKAdImpressionFailWithError(adUnitId: String, code: String) {
         for (_, mod) in self.dataArr.enumerated() {
             if let _ = mod.item.first(where: {$0.id == adUnitId}),
-               self.interstitialType == mod.type {
-                self.removeCachefirst(type: mod.type)
+               self.type == mod.type {
+                self.removeFirstCache(type: mod.type)
                 self.hk_loadFullAd(type: mod.type, placement: mod.placement)
             }
         }
@@ -971,7 +938,7 @@ extension HKADManager {
     func HKAdClicked(adUnitId: String) {
         for (_, mod) in self.dataArr.enumerated() {
             if let _ = mod.item.first(where: {$0.id == adUnitId}),
-               self.interstitialType == mod.type {
+               self.type == mod.type {
                 self.addClickCount(type: mod.type)
             }
         }
@@ -980,8 +947,8 @@ extension HKADManager {
     func HKAdDismissed(adUnitId: String) {
         for (_, mod) in self.dataArr.enumerated() {
             if let _ = mod.item.first(where: {$0.id == adUnitId}),
-               self.interstitialType == mod.type {
-                self.removeCachefirst(type: mod.type)
+               self.type == mod.type {
+                self.removeFirstCache(type: mod.type)
                 self.hk_loadFullAd(type: mod.type, placement: mod.placement)
             }
         }
@@ -994,7 +961,7 @@ extension HKADManager {
 // MARK: - 缓存相关
 extension HKADManager {
     /// 更新缓存 缓存时长3000s
-    func refreshTotalAdCache() {
+    func refreshAdCache() {
         let now = Date().timeIntervalSince1970
         self.cacheArr.forEach { m in
             m.cache = m.cache.filter({
@@ -1009,14 +976,14 @@ extension HKADManager {
         }
     }
     /// 获取缓存数组
-    func getCacheByType(type: HKADType) -> [HKADCache]? {
+    func getCacheWithType(type: HKADType) -> [HKADCache]? {
         if let m = self.cacheArr.first(where: {$0.type == type}) {
             return m.cache
         }
         return nil
     }
     /// 加入缓存
-    func addCacheByType(type: HKADType, model: HKADCache) {
+    func addCacheWithType(type: HKADType, model: HKADCache) {
         if let m = self.cacheArr.first(where: {$0.type == type}) {
             m.cache.append(model)
             m.cache = m.cache.sorted(by: {$0.level > $1.level})
@@ -1028,7 +995,7 @@ extension HKADManager {
         }
     }
     /// 清除单个缓存
-    func removeCachefirst(type: HKADType) {
+    func removeFirstCache(type: HKADType) {
         if let m = self.cacheArr.first(where: {$0.type == type}) {
             m.cache.removeAll()
             if let mod = self.dataArr.first(where: {$0.type == type}) {
@@ -1046,10 +1013,6 @@ extension HKADManager {
     /// 是否可显示广告
     func canShowAd() -> Bool {
         self.setupAdmobCounts()
-        //        guard HKCommons.standerd.admob != nil else {
-        //            HKLog.log("[AD] 无广告配置文件")
-        //            return false
-        //        }
         if adCounts!.totalShowCount >= hkAdInfo.hk_totalShowCount {
             HKLog.log("[AD] total 展示次数上限")
         }

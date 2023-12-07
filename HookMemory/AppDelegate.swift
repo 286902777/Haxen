@@ -100,7 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
             if !HKADManager.share.isInit {
-                HKADManager.share.preInit()
+                HKADManager.share.adInit()
             }
         }
         GADMobileAds.sharedInstance().applicationMuted = true
