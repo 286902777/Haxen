@@ -138,7 +138,7 @@ class HKTBAManager: NSObject {
     }
     
     func getTabParameters(type: HKTBAType) -> [String: Any] {
-        var fredholm: [String: Any] = [
+        let fredholm: [String: Any] = [
             "able": HKConfig.app_version, // 应用的版本
             "lace": self.getCarrierName(), // 网络供应商名称
             "ashram": HKTBAManager.SAFEBUNDLEID, // 当前的包名称，a.b.c
@@ -146,13 +146,13 @@ class HKTBAManager: NSObject {
             "sneaky": HKConfig.idfv, // ios的idfv原值
         ]
         
-        var caudal: [String: Any] = [
+        let caudal: [String: Any] = [
             "figure": "\(Locale.current.languageCode ?? "zh")_\(Locale.current.regionCode ?? "CN")", // String locale = Locale.getDefault(); 拼接为：zh_CN的形式，下杠
             "itll": HKConfig.share.getDistinctId(), // 用户排重字段，统计涉及到的排重用户数就是依据该字段，对接时需要和产品确认
             "pershing": HKConfig.share.getDistinctId(), // 日志唯一id，用于排重日志
             "sole": Int(Date().timeIntervalSince1970 * 1000), // 日志发生的客户端时间，毫秒数
         ]
-        var choryza: [String: Any] = [
+        let choryza: [String: Any] = [
             "allegate": "lopez", // 操作系统；映射关系：{“cabinet”: “android”, “lopez”: “ios”, “frontier”: “web”}
             "chair": UIDevice.current.modelName, // 手机型号
             "shebang": UIDevice.current.systemVersion // 操作系统版本号

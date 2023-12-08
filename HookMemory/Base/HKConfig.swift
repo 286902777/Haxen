@@ -136,24 +136,45 @@ class HKConfig{
         return window
     }
     
-    var currentVC: UIViewController? {
-        get {
-            if let window = HKConfig.share.currentWindow() {
-                if let navVC = window.rootViewController as? UINavigationController {
-                    return navVC.visibleViewController
-                }
-                if let tabVC = window.rootViewController as? UITabBarController {
-                    return tabVC.selectedViewController
-                }
-                if let presentVC = window.rootViewController?.presentedViewController {
-                    return presentVC
-                }
-                if let vc = window.rootViewController {
-                    return vc
-                }
-            }
-            return nil
+//    var currentVC: UIViewController? {
+//        get {
+//            if let window = HKConfig.share.currentWindow() {
+//                if let navVC = window.rootViewController as? UINavigationController {
+//                    return navVC.visibleViewController
+//                }
+//                if let tabVC = window.rootViewController as? UITabBarController {
+//                    return tabVC.selectedViewController
+//                }
+//                if let presentVC = window.rootViewController?.presentedViewController {
+//                    return presentVC
+//                }
+//                if let vc = window.rootViewController {
+//                    return vc
+//                }
+//            }
+//            return nil
+//        }
+//    }
+    
+    class func currentVC(controller: UIViewController? = nil) -> UIViewController? {
+        var controller = controller
+        if controller == nil {
+            guard let window = HKConfig.share.currentWindow() else { return nil }
+            controller = window.rootViewController
         }
+        
+        if let navigationController = controller as? UINavigationController {
+            return currentVC(controller: navigationController.visibleViewController)
+        }
+        if let tabController = controller as? UITabBarController {
+            if let selected = tabController.selectedViewController {
+                return currentVC(controller: selected)
+            }
+        }
+        if let presented = controller?.presentedViewController {
+            return currentVC(controller: presented)
+        }
+        return controller
     }
     
     var isNet: Bool {
@@ -198,7 +219,7 @@ class HKConfig{
     class func showInterAD(type: HKADType, placement: HKADLogENUM, complete: @escaping(Bool) -> Void) {
         HKADManager.share.hk_showFullAd(type: type, placement: placement) { result, ad in
             DispatchQueue.main.async {
-                if result, let vc = HKConfig.share.currentVC {
+                if result, let vc = HKConfig.currentVC() {
                     if let ad = ad as? GADInterstitialAd {
                         ad.present(fromRootViewController: vc)
                         complete(true)
@@ -207,12 +228,12 @@ class HKConfig{
                         complete(true)
                     } else if let ad = ad as? GADRewardedAd {
                         ad.present(fromRootViewController: vc, userDidEarnRewardHandler: {
-//                            toast("Reward received!")
+                            toast("Reward received!")
                         })
                         complete(true)
                     } else if let ad = ad as? GADRewardedInterstitialAd {
                         ad.present(fromRootViewController: vc, userDidEarnRewardHandler: {
-//                            toast("Reward received!")
+                            toast("Reward received!")
                         })
                         complete(true)
                     } else {

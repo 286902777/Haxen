@@ -281,12 +281,34 @@ extension HKADManager {
         }
         let time = Date().timeIntervalSince1970
         if let m = self.dataArr.first(where: {$0.type == type}) {
-            if Int(ceil(time - self.openTime)) < self.sameInterval || Int(ceil(time - self.otherTime)) < self.differentInterval || Int(ceil(time - self.playTime)) < self.differentInterval || Int(ceil(time - self.offlineTime)) < self.differentInterval {
-                HKLog.log("[AD] 同场景间隔时间小于\(self.sameInterval) 或者 不同场景间隔时间小于\(self.differentInterval) 或者 开屏与插屏间隔时间小于\(self.openInterval)")
-                complete(false, nil)
-                return
+            switch type {
+            case .open:
+                if Int(ceil(time - self.openTime)) < self.sameInterval || Int(ceil(time - self.otherTime)) < self.differentInterval || Int(ceil(time - self.playTime)) < self.differentInterval || Int(ceil(time - self.offlineTime)) < self.differentInterval {
+                    HKLog.log("[AD] 同场景间隔时间小于\(self.sameInterval) 或者 不同场景间隔时间小于\(self.differentInterval) 或者 开屏与插屏间隔时间小于\(self.openInterval)")
+                    complete(false, nil)
+                    return
+                }
+            case .play:
+                if Int(ceil(time - self.openTime)) < self.openInterval || Int(ceil(time - self.otherTime)) < self.differentInterval || Int(ceil(time - self.playTime)) < self.sameInterval || Int(ceil(time - self.offlineTime)) < self.differentInterval {
+                    HKLog.log("[AD] 同场景间隔时间小于\(self.sameInterval) 或者 不同场景间隔时间小于\(self.differentInterval) 或者 开屏与插屏间隔时间小于\(self.openInterval)")
+                    complete(false, nil)
+                    return
+                }
+            case .other:
+                if Int(ceil(time - self.openTime)) < self.openInterval || Int(ceil(time - self.playTime)) < self.differentInterval || Int(ceil(time - self.otherTime)) < self.sameInterval || Int(ceil(time - self.offlineTime)) < self.differentInterval {
+                    HKLog.log("[AD] 同场景间隔时间小于\(self.sameInterval) 或者 不同场景间隔时间小于\(self.differentInterval) 或者 开屏与插屏间隔时间小于\(self.openInterval)")
+                    complete(false, nil)
+                    return
+                }
+            case .off:
+                if Int(ceil(time - self.openTime)) < self.openInterval || Int(ceil(time - self.playTime)) < self.differentInterval || Int(ceil(time - self.otherTime)) < self.differentInterval || Int(ceil(time - self.offlineTime)) < self.sameInterval {
+                    HKLog.log("[AD] 同场景间隔时间小于\(self.sameInterval) 或者 不同场景间隔时间小于\(self.differentInterval) 或者 开屏与插屏间隔时间小于\(self.openInterval)")
+                    complete(false, nil)
+                    return
+                }
+            default:
+                break
             }
-            m.placement = placement
         }
         // 是否有缓存
         HKLog.log("[AD] 无高价层广告, 按原有加载逻辑进行")
@@ -382,7 +404,6 @@ extension HKADManager {
                         let currencyCode = value.currencyCode
                         HKLog.hk_ad_impression_revenue(value: nvalue.doubleValue, currency: currencyCode, adFormat: "INTERSTITIAL", adSource: ad.responseInfo.loadedAdNetworkResponseInfo?.adNetworkClassName ?? "", adPlatform: "admob", adUnitName: item.id , precision: "\(value.precision.rawValue)", placement: type.rawValue)
                     }
-                    
                 } else {
                     HKLog.log("[AD] 广告加载失败 type: \(type.rawValue) 优先级: \(index + 1), id: \(id)")
                     self.hk_adFail(placement: placement, code: error.debugDescription)
@@ -392,10 +413,19 @@ extension HKADManager {
             }
         } else if item.source == .max {
             if let m = self.dataArr.first(where: {$0.type == type}) {
-                m.ad = MAInterstitialAd(adUnitIdentifier: item.id)
-                (m.ad as? MAInterstitialAd)?.delegate = self
-                (m.ad as? MAInterstitialAd)?.revenueDelegate = self
-                (m.ad as? MAInterstitialAd)?.load()
+                let cache = HKADCache()
+                cache.id = item.id
+                cache.level = item.level
+                cache.type = type
+                cache.source = item.source
+                cache.ad = m.ad
+                cache.id_type = item.type
+                cache.ad = MAInterstitialAd(adUnitIdentifier: item.id)
+                (cache.ad as? MAInterstitialAd)?.delegate = self
+                (cache.ad as? MAInterstitialAd)?.revenueDelegate = self
+                (cache.ad as? MAInterstitialAd)?.load()
+                /// 加入缓存
+                self.addCacheWithType(type: type, model: cache)
             }
         }
     }
@@ -633,7 +663,7 @@ extension HKADManager: GADFullScreenContentDelegate {
             let rewardAd = ad as? GADRewardedAd
             let rewardInterstitialAd = ad as? GADRewardedInterstitialAd
             if let m = self.dataArr.first(where: {$0.type == type}) {
-                if let mod = m.item.first(where: {$0.id == interstitialAd?.adUnitID || $0.id == rewardAd?.adUnitID || $0.id == rewardInterstitialAd?.adUnitID}) {
+                if let _ = m.item.first(where: {$0.id == interstitialAd?.adUnitID || $0.id == rewardAd?.adUnitID || $0.id == rewardInterstitialAd?.adUnitID}) {
                     m.adIsLoding = false
                     self.removeFirstCache(type: m.type)
                     self.hk_loadFullAd(type: m.type, placement: m.placement)
@@ -659,7 +689,7 @@ extension HKADManager: GADFullScreenContentDelegate {
             let rewardAd = ad as? GADRewardedAd
             let rewardInterstitialAd = ad as? GADRewardedInterstitialAd
             if let m = self.dataArr.first(where: {$0.type == type}) {
-                if let mod = m.item.first(where: {$0.id == interstitialAd?.adUnitID || $0.id == rewardAd?.adUnitID || $0.id == rewardInterstitialAd?.adUnitID}) {
+                if let _ = m.item.first(where: {$0.id == interstitialAd?.adUnitID || $0.id == rewardAd?.adUnitID || $0.id == rewardInterstitialAd?.adUnitID}) {
                     self.addShowCount(type: m.type)
                     m.adShowing = true
                 }
@@ -685,7 +715,7 @@ extension HKADManager: GADFullScreenContentDelegate {
             let rewardAd = ad as? GADRewardedAd
             let rewardInterstitialAd = ad as? GADRewardedInterstitialAd
             if let m = self.dataArr.first(where: {$0.type == type}) {
-                if let mod = m.item.first(where: {$0.id == interstitialAd?.adUnitID || $0.id == rewardAd?.adUnitID || $0.id == rewardInterstitialAd?.adUnitID}), self.type == m.type {
+                if let _ = m.item.first(where: {$0.id == interstitialAd?.adUnitID || $0.id == rewardAd?.adUnitID || $0.id == rewardInterstitialAd?.adUnitID}), self.type == m.type {
                     self.removeFirstCache(type: m.type)
                     m.adIsLoding = false
                     m.adShowing = false
@@ -798,6 +828,7 @@ extension HKADManager: MAAdViewAdDelegate {
                 if self.tempDismissComplete != nil {
                     self.tempDismissComplete!()
                 }
+                break
             }
         }
         if HKConfig.share.isLoadingVC {
@@ -810,6 +841,7 @@ extension HKADManager: MAAdViewAdDelegate {
         for (_, mod) in self.dataArr.enumerated() {
             if let _ = mod.item.first(where: {$0.id == ad.adUnitIdentifier}), mod.type == self.type {
                 self.addClickCount(type: self.type)
+                break
             }
         }
     }
@@ -825,6 +857,7 @@ extension HKADManager: MAAdViewAdDelegate {
                     if self.tempDismissComplete != nil {
                         self.tempDismissComplete!()
                     }
+                    break
                 }
             }
         }
@@ -950,8 +983,10 @@ extension HKADManager {
                self.type == mod.type {
                 self.removeFirstCache(type: mod.type)
                 self.hk_loadFullAd(type: mod.type, placement: mod.placement)
+                break
             }
         }
+        self.setTime(self.type)
     }
     
     func HKTradECPM(_ hkAdInfo: [AnyHashable : Any], type: HKADType) {
@@ -966,11 +1001,9 @@ extension HKADManager {
         self.cacheArr.forEach { m in
             m.cache = m.cache.filter({
                 if $0.id_type == .open {
-                    $0.time < 14000
-                } else if $0.id_type == .native {
-                    now - $0.time < 3000
+                    now - $0.time < 14000
                 } else {
-                    $0.time < 3000
+                    now - $0.time < 3000
                 }
             })
         }

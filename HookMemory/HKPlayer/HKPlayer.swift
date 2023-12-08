@@ -536,19 +536,21 @@ class HKPlayer: UIView {
     }
     
     func showPlayingAd(isPlay: Bool = true, placement: HKADLogENUM) {
-        DispatchQueue.main.async {
-            HKConfig.showInterAD(type: self.isFullScreen ? .other : .play, placement: placement) { [weak self] result in
+        HKConfig.showInterAD(type: self.isFullScreen ? .other : .play, placement: placement) { [weak self] result in
+            DispatchQueue.main.async {
                 if result {
                     self?.tempIsPlaying = isPlay ? true : (self?.isPlaying ?? false)
                     self?.pause()
                 }
             }
-            HKADManager.share.tempDismissComplete = {
-                if self.tempIsPlaying == true {
-                    self.play()
+        }
+        HKADManager.share.tempDismissComplete = { [weak self] in
+            DispatchQueue.main.async {
+                if self?.tempIsPlaying == true {
+                    self?.play()
                 }
-                HKADManager.share.tempDismissComplete = nil
             }
+            HKADManager.share.tempDismissComplete = nil
         }
     }
 }

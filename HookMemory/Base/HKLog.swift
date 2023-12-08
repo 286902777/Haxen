@@ -18,7 +18,6 @@ class HKLog: NSObject {
 }
 
 extension HKLog {
-    
     class func logEvent(_ name: String, parameters: [String: Any]?) {
         #if DEBUG
 
@@ -38,12 +37,12 @@ extension HKLog {
  
     class func hk_home_sh(loadsuccess: String, errorinfo: String) {
         HKLog.log("[LOG]: 电影首页展示 拉取内容时上报一次即可，不用每次展示都上报 home_sh loadsuccess: \(loadsuccess), errorinfo: \(errorinfo)")
-        HKLog.logEvent("home_sh", parameters: ["loadsuccess": loadsuccess, "errorinfo": errorinfo])
+        HKLog.logEvent("home_sh_ios", parameters: ["loadsuccess": loadsuccess, "errorinfo": errorinfo])
     }
     
     class func hk_home_cl(kid: String, c_id: String, c_name: String, ctype: String, secname: String, secid: String) {
         HKLog.log("[LOG]: 电影首页点击 home_cl kid: \(kid), c_id: \(c_id), c_name: \(c_name), ctype: \(ctype), secname: \(secname), secid: \(secid)")
-        HKLog.logEvent("home_cl", parameters: ["kid": kid, "c_id": c_id, "c_name": c_name, "ctype": ctype, "secname": secname, "secid": secid])
+        HKLog.logEvent("home_cl_ios", parameters: ["kid": kid, "c_id": c_id, "c_name": c_name, "ctype": ctype, "secname": secname, "secid": secid])
     }
     
     class func hk_explore_sh(loadsuccess: String, errorinfo: String) {

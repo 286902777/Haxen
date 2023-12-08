@@ -21,4 +21,10 @@ class HKKeys {
     static let last_ip = "last_ip"
     static let last_ip_country_code = "last_ip_country_code"
     static let advertiseKey = "advertiseKey"
+    
+    /// user
+    static let isVip = "isVip"
+    static let expires_date_ms = "expires_date_ms"
+    static let product_id = "product_id"
+    static let auto_renew_status = "auto_renew_status"
 }

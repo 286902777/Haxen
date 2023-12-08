@@ -40,7 +40,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         HKTBAManager.share.setHktbaParams(type: .session)
         if !first {
             DispatchQueue.main.asyncAfter(deadline: .now()) {
-                if HKConfig.share.currentVC?.isKind(of: MoviePlayViewController.self) == false {
+                if HKConfig.currentVC()?.isKind(of: MoviePlayViewController.self) == false {
                     HKADManager.share.hk_loadFullAd(type: .open, placement: .open)
                     HKConfig.showInterAD(type: .open, placement: .open) { _ in
                         

@@ -170,13 +170,16 @@ class MoviePlayViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         ProgressHUD.dismiss()
-        if let appdelegate = UIApplication.shared.delegate as? AppDelegate  {
-            appdelegate.allowRotate = false
-            appdelegate.screenLock = false
+        if self.navigationController == nil {
+            if let appdelegate = UIApplication.shared.delegate as? AppDelegate  {
+                appdelegate.allowRotate = false
+                appdelegate.screenLock = false
+            }
+            self.player.playerLayer?.prepareToDeinit()
+            self.controller.isReadyToPlayed = false
         }
-        self.player.playerLayer?.prepareToDeinit()
-        self.controller.isReadyToPlayed = false
     }
+    
     deinit {
         cancelTimer()
         NotificationCenter.default.removeObserver(self)
@@ -250,7 +253,9 @@ class MoviePlayViewController: UIViewController {
                 self?.isPlayAd = true
             }
         }
-
+        
+        getVideoCaption()
+        
         ProgressHUD.showLoading()
         let group = DispatchGroup()
         let dispatchQueue = DispatchQueue.global()
@@ -268,33 +273,6 @@ class MoviePlayViewController: UIViewController {
                     }
                     group.leave()
                 }
-            }
-        }
-        group.enter()
-        dispatchQueue.async {[weak self] in
-            guard let self = self else { return }
-            MovieAPI.share.getCaptions(id: self.model.isMovie ? self.videoId : self.epsId, type: self.model.isMovie ? 1 : 0) { success, list in
-                if let listArr = list {
-                    let m = MovieVideoModel()
-                    m.id = self.videoId
-                    m.ssn_id = self.ssnId
-                    m.eps_id = self.epsId
-                    var capArr:[MovieCaption] = []
-                    for (_, itemModel) in listArr.enumerated() {
-                        if let item = itemModel {
-                            let mod = MovieCaption()
-                            mod.captionId = item.id
-                            mod.display_name = item.display_name
-                            mod.short_name = item.short_name
-                            mod.name = item.name
-                            mod.original_address = item.original_address
-                            capArr.append(mod)
-                        }
-                    }
-                    m.captions = capArr
-                    HKCaptionManager.share.downLoadCaptions(m)
-                }
-                group.leave()
             }
         }
         group.enter()
@@ -325,11 +303,11 @@ class MoviePlayViewController: UIViewController {
                 if let url = URL(string: self.videoUrl) {
                     self.remView.isHidden = true
                     self.player.isReminder = false
+                    asset = HKPlayerResource(name: self.videoModel.data.title, definitions: [HKPlayerResourceConfig(url: url, definition: "480p")], cover: nil, subtitles: self.captions)
+
                     if self.isPlayAd == false {
                         let name = self.videoModel.ssn.ssn_list.first(where: {$0.isSelect == true})?.title
                         HKLog.hk_movie_play_sh(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: name ?? "", source: "\(self.from.rawValue)", movie_type: self.model.isMovie ? "1" : "2")
-
-                        asset = HKPlayerResource(name: self.videoModel.data.title, definitions: [HKPlayerResourceConfig(url: url, definition: "480p")], cover: nil, subtitles: self.captions)
                         self.player.setVideo(resource: asset!, sourceKey: self.videoId)
                     }
                 } else {
@@ -353,6 +331,30 @@ class MoviePlayViewController: UIViewController {
         }
     }
     
+    private func getVideoCaption() {
+        MovieAPI.share.getCaptions(id: self.model.isMovie ? self.videoId : self.epsId, type: self.model.isMovie ? 1 : 0) { success, list in
+            if let listArr = list {
+                let m = MovieVideoModel()
+                m.id = self.videoId
+                m.ssn_id = self.ssnId
+                m.eps_id = self.epsId
+                var capArr:[MovieCaption] = []
+                for (_, itemModel) in listArr.enumerated() {
+                    if let item = itemModel {
+                        let mod = MovieCaption()
+                        mod.captionId = item.id
+                        mod.display_name = item.display_name
+                        mod.short_name = item.short_name
+                        mod.name = item.name
+                        mod.original_address = item.original_address
+                        capArr.append(mod)
+                    }
+                }
+                m.captions = capArr
+                HKCaptionManager.share.downLoadCaptions(m)
+            }
+        }
+    }
     func setupHKPlayerManager() {
         HKPlayerManager.share.allowLog = false
         HKPlayerManager.share.autoPlay = true

@@ -14,7 +14,7 @@ class HKRemoteManager: NSObject {
     
     var config = RemoteConfig.remoteConfig()
     
-    var retryCount = 0
+    var retrys = 0
         
     func initConfig() {
         // ad setting
@@ -42,9 +42,9 @@ class HKRemoteManager: NSObject {
         config.fetch { status, error in
             guard error == nil else {
                 HKLog.log("HKRemote config error: \(error?.localizedDescription ?? "No error available.")")
-                if self.retryCount == 0 {
+                if self.retrys == 0 {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-                        self.retryCount += 1
+                        self.retrys += 1
                         self.fetchConfigData()
                     }
                 }

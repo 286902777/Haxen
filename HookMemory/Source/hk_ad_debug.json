@@ -1,15 +1,15 @@
 {
     "hk_totalShowCount": 150,
-    "hk_sameInterval": 30,
+    "hk_sameInterval": 60,
     "hk_differentInterval": 30,
     "hk_openInterval": 10,
     "hk_play_point_time": 120,
     "hk_open": [
         {
-            "id": "ca-app-pub-3940256099942544/4411468910",
+            "id": "14b19c231f30e08b",
             "level": 3,
             "type": "interstitial",
-            "source": "admob"
+            "source": "max"
         }
     ],
     "hk_play": [
