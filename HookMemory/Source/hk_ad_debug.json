@@ -6,18 +6,18 @@
     "hk_play_point_time": 120,
     "hk_open": [
         {
-            "id": "14b19c231f30e08b",
+            "id": "1ff4d0a101522ccc",
             "level": 3,
             "type": "interstitial",
-            "source": "max"
+            "source": "Max"
         }
     ],
     "hk_play": [
         {
-            "id": "ca-app-pub-3940256099942544/1712485313",
+            "id": "d57618380e038629",
             "level": 5,
             "type": "reWarded",
-            "source": "Admob"
+            "source": "max"
         }
     ],
     "hk_landscape": [

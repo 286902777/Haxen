@@ -13,6 +13,7 @@ class MovieCell: UICollectionViewCell {
     
     @IBOutlet weak var contentL: UILabel!
     
+    @IBOutlet weak var progressV: UIProgressView!
     @IBOutlet weak var scoreL: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,7 +22,9 @@ class MovieCell: UICollectionViewCell {
         scoreL.font = UIFont(name: "Fjalla One Regular", size: 20)
     }
 
-    func setModel(model: MovieDataInfoModel) {
+    func setModel(model: MovieDataInfoModel, _ isHistory: Bool = false) {
+        self.progressV.isHidden = !isHistory
+        self.progressV.progress = Float(model.playProgress)
         self.scoreL.text = model.rate
         self.contentL.text = model.title
         self.imageV.setImage(with: model.cover)

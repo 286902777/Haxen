@@ -379,11 +379,26 @@ class DBManager {
         } catch { }
     }
     
-    func deleteData(model: MovieVideoModel) {
+    func deleteVideoData(model: MovieDataInfoModel) {
         let context:NSManagedObjectContext = DBManager.share.mainQueueContext
-        if let mod: VideoDB = findVideoDataWithModel(id: model.id, ssn_id: model.ssn_id, eps_id: model.eps_id)  {
-            context.delete(mod)
+
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "VideoDB")
+        fetchRequest.sortDescriptors = [NSSortDescriptor.init(key: "updateTime", ascending: false)]
+        fetchRequest.predicate = NSPredicate(format: "id=%@", model.id)
+
+        do {
+            let searchResults = try context.fetch(fetchRequest)
+            if searchResults.count > 0 {
+                for (_, item) in searchResults.enumerated() {
+                    if let mod = item as? VideoDB {
+                        context.delete(mod)
+                    }
+                }
+            }
+        } catch  {
+            print(error)
         }
+  
         if context.hasChanges {
             do {
                 print("删除成功")

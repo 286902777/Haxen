@@ -14,8 +14,7 @@ class MovieHistoryView: UIView {
     var clickDeleteBlock: (() -> ())?
 
     let cellIdentifier = "MoviePlayHeadCategoryCell"
-    private var isShow: Bool = false
-    private var dataArr: [String] = []
+
     private var histroyArr: [MovieHistoryModel] = []
     
     private lazy var layout: HKPlayLayout = {
@@ -40,52 +39,37 @@ class MovieHistoryView: UIView {
     }
     
     func upDateHistory() {
-        if let arr = UserDefaults.standard.object(forKey: HKKeys.history) as? [String] {
-            self.dataArr = arr
-        }
-        var count = self.dataArr.count
-        var isTwo: Bool = false
-        let data = self.setShowBtn(self.dataArr)
-        if data.1 {
-            isTwo = true
-        }
-        if isShow == false {
-            count = data.0
-        }
-        let minW: CGFloat = 40
         self.histroyArr.removeAll()
-        for i in 0 ... count {
-            let model = MovieHistoryModel()
-            if i == count {
-                if isTwo {
-                    model.type = self.isShow ? .dismiss : .show
-                    self.histroyArr.append(model)
-                }
-            } else {
-                model.text = self.dataArr.safe(i) ?? ""
-                model.width = max(minW, ceil(model.text.getStrW(strFont: .font(size: 12), h: 16) + 16))
+        let minW: CGFloat = 40
+        if let arr = UserDefaults.standard.object(forKey: HKKeys.history) as? [String] {
+            for i in 0 ..< arr.count {
+                let model = MovieHistoryModel()
+                model.text = arr.safe(i) ?? ""
+                model.width = max(minW, ceil(model.text.getStrW(strFont: .font(size: 14), h: 20) + 32))
                 self.histroyArr.append(model)
             }
         }
+       
+       
         self.collectionView.reloadData()
     }
     
     func setShowBtn(_ arr: [String]) -> (Int, Bool) {
         let marge: CGFloat = 16
-        let space: CGFloat = 8
-        let lineH: CGFloat = 8
-        let btnH: CGFloat = 24
+        let space: CGFloat = 12
+        let lineH: CGFloat = 16
+        let btnH: CGFloat = 40
         var width: CGFloat = 0
         var hight: CGFloat = 0
         let minW: CGFloat = 40
         for i in 0 ..< arr.count {
             if let t = arr.safe(i) {
-                let w = ceil(t.getStrW(strFont: .font(size: 12), h: 16) + space * 2)
+                let w = ceil(t.getStrW(strFont: .font(size: 16), h: 20) + marge * 2)
                 width = width + max(w, minW) + space
                 if width > kScreenWidth - 2 * marge {
                     width = max(w, minW)
                     if hight > btnH {
-                        let count = (width - kScreenWidth - 2 * marge) < (minW + marge) ? i - 1 : i
+                        let count = (width - kScreenWidth - 2 * marge) < (minW + space) ? i - 1 : i
                         return (count, true)
                     } else {
                         hight = btnH + lineH
@@ -116,17 +100,12 @@ extension MovieHistoryView: UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let model = self.histroyArr.safe(indexPath.item) {
-            if model.type == .text {
-                self.clickBlock?(model.text)
-            } else {
-                self.isShow = model.type == .show
-                self.upDateHistory()
-            }
+            self.clickBlock?(model.text)
         }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if let model = self.histroyArr.safe(indexPath.item) {
-            return CGSize(width: model.width, height: 24)
+            return CGSize(width: model.width, height: 40)
         }
         return CGSize(width: 0, height: 0)
     }
@@ -135,13 +114,13 @@ extension MovieHistoryView: UICollectionViewDelegate, UICollectionViewDataSource
 extension MovieHistoryView: HKPlayLayoutDelegate {
     func playLayoutSizeForItem(atIndexPath indexPath: IndexPath) -> CGSize {
         if let model = self.histroyArr.safe(indexPath.item) {
-            return CGSize(width: model.width, height: 24)
+            return CGSize(width: model.width, height: 40)
         }
         return CGSize(width: 0, height: 0)
     }
     
     func playLayoutLineHeight() -> CGFloat {
-        24
+        40
     }
     
     func playLayoutLineWidth() -> CGFloat {
@@ -149,11 +128,11 @@ extension MovieHistoryView: HKPlayLayoutDelegate {
     }
     
     func playLayoutSpacingBetweenItems(inSection section: Int) -> CGFloat {
-        8
+        12
     }
     
     func playLayoutSpacingBetweenLines(inSection section: Int) -> CGFloat {
-        8
+        16
     }
     
     func playLayoutLineInsetLeft(inSection section: Int) -> CGFloat {
@@ -169,5 +148,4 @@ class MovieHistoryModel: BaseModel {
     }
     var text: String = ""
     var width: CGFloat = 40
-    var type: historyType = .text
 }

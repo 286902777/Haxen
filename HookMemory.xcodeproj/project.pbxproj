@@ -138,6 +138,12 @@
 		A7B4E4E72B0B692A0061926C /* HKPlayerRemindView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7B4E4E52B0B692A0061926C /* HKPlayerRemindView.xib */; };
 		A7B86B252B269F7000670D6A /* MovieAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B86B232B269F7000670D6A /* MovieAlertController.swift */; };
 		A7B86B262B269F7000670D6A /* MovieAlertController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7B86B242B269F7000670D6A /* MovieAlertController.xib */; };
+		A7B86B292B26E7A400670D6A /* MovieSelectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7B86B272B26E7A400670D6A /* MovieSelectCell.xib */; };
+		A7B86B2A2B26E7A400670D6A /* MovieSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B86B282B26E7A400670D6A /* MovieSelectCell.swift */; };
+		A7B86B2D2B26EB3F00670D6A /* MovieHistorySelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B86B2B2B26EB3F00670D6A /* MovieHistorySelectController.swift */; };
+		A7B86B302B26EC5B00670D6A /* MovieHistorySelectController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7B86B2F2B26EC5B00670D6A /* MovieHistorySelectController.xib */; };
+		A7B86B342B2700BB00670D6A /* MovieHistoryBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B86B332B2700BB00670D6A /* MovieHistoryBottomView.swift */; };
+		A7B86B362B2700C100670D6A /* MovieHistoryBottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7B86B352B2700C100670D6A /* MovieHistoryBottomView.xib */; };
 		A7BC83DE2B04615B000912F1 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BC83DC2B04615B000912F1 /* LoadingViewController.swift */; };
 		A7BC83DF2B04615B000912F1 /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7BC83DD2B04615B000912F1 /* LoadingViewController.xib */; };
 		A7BC83E12B0490E1000912F1 /* HKConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BC83E02B0490E1000912F1 /* HKConfig.swift */; };
@@ -315,6 +321,12 @@
 		A7B4E4E52B0B692A0061926C /* HKPlayerRemindView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HKPlayerRemindView.xib; sourceTree = "<group>"; };
 		A7B86B232B269F7000670D6A /* MovieAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAlertController.swift; sourceTree = "<group>"; };
 		A7B86B242B269F7000670D6A /* MovieAlertController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieAlertController.xib; sourceTree = "<group>"; };
+		A7B86B272B26E7A400670D6A /* MovieSelectCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MovieSelectCell.xib; sourceTree = "<group>"; };
+		A7B86B282B26E7A400670D6A /* MovieSelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieSelectCell.swift; sourceTree = "<group>"; };
+		A7B86B2B2B26EB3F00670D6A /* MovieHistorySelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieHistorySelectController.swift; sourceTree = "<group>"; };
+		A7B86B2F2B26EC5B00670D6A /* MovieHistorySelectController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MovieHistorySelectController.xib; sourceTree = "<group>"; };
+		A7B86B332B2700BB00670D6A /* MovieHistoryBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieHistoryBottomView.swift; sourceTree = "<group>"; };
+		A7B86B352B2700C100670D6A /* MovieHistoryBottomView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieHistoryBottomView.xib; sourceTree = "<group>"; };
 		A7BC83DC2B04615B000912F1 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		A7BC83DD2B04615B000912F1 /* LoadingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingViewController.xib; sourceTree = "<group>"; };
 		A7BC83E02B0490E1000912F1 /* HKConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKConfig.swift; sourceTree = "<group>"; };
@@ -630,6 +642,8 @@
 				A7C3F9CE2AFC7F520094A15B /* FilterCell.xib */,
 				A7C3F9D32AFC83D20094A15B /* MovieCell.swift */,
 				A7C3F9D42AFC83D20094A15B /* MovieCell.xib */,
+				A7B86B282B26E7A400670D6A /* MovieSelectCell.swift */,
+				A7B86B272B26E7A400670D6A /* MovieSelectCell.xib */,
 				A7C3F9DD2AFCADAB0094A15B /* MovieSearchCell.swift */,
 				A79D66462B0DF2350069F359 /* MoviePlayHeadCell.swift */,
 				A79D66472B0DF2350069F359 /* MoviePlayHeadCell.xib */,
@@ -647,6 +661,10 @@
 				A79DFC0B2B22B5C500368B72 /* MovieHistoryView.xib */,
 				A7B86B232B269F7000670D6A /* MovieAlertController.swift */,
 				A7B86B242B269F7000670D6A /* MovieAlertController.xib */,
+				A7B86B2B2B26EB3F00670D6A /* MovieHistorySelectController.swift */,
+				A7B86B2F2B26EC5B00670D6A /* MovieHistorySelectController.xib */,
+				A7B86B332B2700BB00670D6A /* MovieHistoryBottomView.swift */,
+				A7B86B352B2700C100670D6A /* MovieHistoryBottomView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -836,6 +854,7 @@
 				A79F0F7C2B109EBD00C2729B /* HKPlayerCaptionSetView.xib in Resources */,
 				A7C3F9DA2AFCA9F20094A15B /* FilterListCell.xib in Resources */,
 				A79ED77E2B11C1D6009DC462 /* HKPlayerLanguageFullView.xib in Resources */,
+				A7B86B362B2700C100670D6A /* MovieHistoryBottomView.xib in Resources */,
 				A79D66492B0DF2350069F359 /* MoviePlayHeadCell.xib in Resources */,
 				A79DFC0C2B22B5C500368B72 /* MovieHistoryView.xib in Resources */,
 				A79E1AC32B19B4FF00088004 /* hk_ad_release.json in Resources */,
@@ -843,6 +862,7 @@
 				A7BC83DF2B04615B000912F1 /* LoadingViewController.xib in Resources */,
 				A7D3CAA22B17180E006AA727 /* GoogleService-Info.plist in Resources */,
 				A72EB1612AF482A800AF20C3 /* HKSheetCell.xib in Resources */,
+				A7B86B302B26EC5B00670D6A /* MovieHistorySelectController.xib in Resources */,
 				A79066382AF32CE6006A3982 /* Assets.xcassets in Resources */,
 				A79D65FE2AFB83FB0094E411 /* SearchView.xib in Resources */,
 				A79ED7822B11CD3B009DC462 /* HKPlayerLightView.xib in Resources */,
@@ -867,6 +887,7 @@
 				A79F0F842B10A54C00C2729B /* HKPlayerLanguageCell.xib in Resources */,
 				A79D66452B0DA0C70069F359 /* HKPlayerSelectSsnCell.xib in Resources */,
 				A7B4E4E72B0B692A0061926C /* HKPlayerRemindView.xib in Resources */,
+				A7B86B292B26E7A400670D6A /* MovieSelectCell.xib in Resources */,
 				A79D664D2B0DFC130069F359 /* MoviePlayHeadCategoryCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1064,6 +1085,7 @@
 				A79DE7682B15B1B80029A612 /* HKPlayerLoadingView.swift in Sources */,
 				A79ED77C2B11C1CA009DC462 /* HKPlayerLanguageFullView.swift in Sources */,
 				A79066652AF32D79006A3982 /* CustomLayout.swift in Sources */,
+				A7B86B2A2B26E7A400670D6A /* MovieSelectCell.swift in Sources */,
 				A7C3F9DE2AFCADAB0094A15B /* MovieSearchCell.swift in Sources */,
 				A72EB15D2AF47E3C00AF20C3 /* HKSheetController.swift in Sources */,
 				A7B4E4DD2B0AF66F0061926C /* VideoDB+CoreDataClass.swift in Sources */,
@@ -1076,6 +1098,7 @@
 				A77E07842B021009005A813C /* WebViewController.swift in Sources */,
 				A7BC83E32B04B5C4000912F1 /* ProgressHUD.swift in Sources */,
 				A79D65F22AFB77350094E411 /* HKTabBarViewController.swift in Sources */,
+				A7B86B342B2700BB00670D6A /* MovieHistoryBottomView.swift in Sources */,
 				A790668A2AF3699C006A3982 /* ListViewController.swift in Sources */,
 				A79D65FC2AFB83EF0094E411 /* SearchView.swift in Sources */,
 				A79D65F92AFB81810094E411 /* MovieListCell.swift in Sources */,
@@ -1113,6 +1136,7 @@
 				A7C3F9E42AFCDEFC0094A15B /* MovieFilterModel.swift in Sources */,
 				A79D663B2B0D9E5B0069F359 /* HKPlayerSelectEpsView.swift in Sources */,
 				A77F8CD12AF4D9990031FA77 /* ListDetailCell.swift in Sources */,
+				A7B86B2D2B26EB3F00670D6A /* MovieHistorySelectController.swift in Sources */,
 				A79D66002AFB8D1D0094E411 /* FilterView.swift in Sources */,
 				A79BD74E2B0758D800AD3508 /* HKPlayer.swift in Sources */,
 				A79DFC0A2B22B5B800368B72 /* MovieHistoryView.swift in Sources */,

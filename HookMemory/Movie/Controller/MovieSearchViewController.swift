@@ -286,7 +286,12 @@ class MovieSearchViewController: MovieBaseViewController {
             self.historyView.clickDeleteBlock = {[weak self] in
                 guard let self = self else { return }
                 DispatchQueue.main.async {
-                    let vc = MovieAlertController.init("title", "lsdkflsdjf")
+                    let vc = MovieAlertController.init("Delete", "Do you want to delete the history record?")
+                    vc.clickBlock = {
+                        UserDefaults.standard.set([], forKey: HKKeys.history)
+                        UserDefaults.standard.synchronize()
+                        self.historyView.removeFromSuperview()
+                    }
                     self.present(vc, animated: false)
                 }
             }

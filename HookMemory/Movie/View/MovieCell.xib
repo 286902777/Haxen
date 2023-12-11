@@ -45,6 +45,14 @@
                         <color key="textColor" red="1" green="0.25490196078431371" blue="0.19215686274509802" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jgA-kP-niF">
+                        <rect key="frame" x="4" y="143" width="126" height="4"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="4" id="uTo-b9-YMS"/>
+                        </constraints>
+                        <color key="progressTintColor" red="1" green="0.25490196079999999" blue="0.19215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="trackTintColor" red="1" green="1" blue="1" alpha="0.49803358843537415" colorSpace="custom" customColorSpace="sRGB"/>
+                    </progressView>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
@@ -52,17 +60,21 @@
                 <constraint firstAttribute="bottom" secondItem="OUm-QT-rpB" secondAttribute="bottom" id="1j7-Tg-k1o"/>
                 <constraint firstItem="CWQ-LI-INB" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="2HA-a0-fZK"/>
                 <constraint firstAttribute="trailing" secondItem="VIJ-1h-tXg" secondAttribute="trailing" id="4vY-Nd-xif"/>
+                <constraint firstItem="jgA-kP-niF" firstAttribute="trailing" secondItem="VIJ-1h-tXg" secondAttribute="trailing" constant="-4" id="4y0-F1-oyq"/>
+                <constraint firstItem="jgA-kP-niF" firstAttribute="bottom" secondItem="VIJ-1h-tXg" secondAttribute="bottom" constant="-4" id="C5v-jJ-1RN"/>
                 <constraint firstItem="VIJ-1h-tXg" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="FK5-Ew-11u"/>
                 <constraint firstItem="VIJ-1h-tXg" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="JuW-8Z-hJ1"/>
                 <constraint firstItem="CWQ-LI-INB" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="Sc0-6t-3po"/>
                 <constraint firstItem="OUm-QT-rpB" firstAttribute="top" secondItem="VIJ-1h-tXg" secondAttribute="bottom" constant="4" id="hwY-D2-8G4"/>
                 <constraint firstItem="OUm-QT-rpB" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="mXC-oy-cUS"/>
+                <constraint firstItem="jgA-kP-niF" firstAttribute="leading" secondItem="VIJ-1h-tXg" secondAttribute="leading" constant="4" id="mqw-PW-SpC"/>
                 <constraint firstAttribute="trailing" secondItem="OUm-QT-rpB" secondAttribute="trailing" id="vHE-XN-NrU"/>
             </constraints>
             <size key="customSize" width="134" height="195"/>
             <connections>
                 <outlet property="contentL" destination="DGe-bt-tRn" id="RVT-ee-ham"/>
                 <outlet property="imageV" destination="VIJ-1h-tXg" id="mTi-yg-So6"/>
+                <outlet property="progressV" destination="jgA-kP-niF" id="C5A-Nm-jXo"/>
                 <outlet property="scoreL" destination="CWQ-LI-INB" id="mHg-Tc-rXw"/>
             </connections>
             <point key="canvasLocation" x="-505.34351145038164" y="69.366197183098592"/>

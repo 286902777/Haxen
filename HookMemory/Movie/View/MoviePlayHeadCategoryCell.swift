@@ -18,14 +18,8 @@ class MoviePlayHeadCategoryCell: UICollectionViewCell {
     }
     
     func setHistoryModel(_ model: MovieHistoryModel) {
-        if model.type == .text {
-            nameL.text = model.text
-            nameL.isHidden = false
-            imgV.isHidden = true
-        } else {
-            imgV.isHidden = false
-            nameL.isHidden = true
-            imgV.image = IMG(model.type == .show ? "play_more_down" : "play_more_right")
-        }
+        self.layer.cornerRadius = 8
+        self.nameL.font = .font(size: 14)
+        nameL.text = model.text
     }
 }

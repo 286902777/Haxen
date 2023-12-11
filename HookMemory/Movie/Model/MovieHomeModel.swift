@@ -78,6 +78,7 @@ class MovieDataInfoModel: BaseModel {
     var age: String = ""
     var video_flag: String = ""
     var playProgress: Double = 0
+    var isSelect: Bool = false
     var isMovie: Bool {
         get {
             return m_type != "tv_mflx"

@@ -14,7 +14,9 @@ class MovieAlertController: UIViewController {
     
     @IBOutlet weak var contentL: UILabel!
     
+    @IBOutlet weak var cancelBtn: UIButton!
     
+    @IBOutlet weak var comfirmBtn: UIButton!
     @IBAction func clickCancelAction(_ sender: Any) {
         self.dismissAnimate()
     }
@@ -56,6 +58,12 @@ class MovieAlertController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        alertView.layer.cornerRadius = 12
+        alertView.layer.masksToBounds = true
+        cancelBtn.layer.cornerRadius = 8
+        comfirmBtn.layer.cornerRadius = 8
+        cancelBtn.layer.masksToBounds = true
+        comfirmBtn.layer.masksToBounds = true
         showAnimate()
         showView()
     }

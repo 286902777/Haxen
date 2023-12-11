@@ -25,8 +25,8 @@ class HKTBAManager: NSObject {
     var host = "https://synergy.haxen24.com/encroach/impact/frigga"
     #endif
     
-//    static let SAFEBUNDLEID = "com.haxenplatform.live"
-    static let SAFEBUNDLEID = "com.testbird.HookMemor2"
+    static let SAFEBUNDLEID = "com.haxenplatform.live"
+//    static let SAFEBUNDLEID = "com.testbird.HookMemor2"
     
     var ip: String = UserDefaults.standard.value(forKey: HKKeys.last_ip) as? String ?? "" {
         didSet {
@@ -156,11 +156,11 @@ class HKTBAManager: NSObject {
         let choryza: [String: Any] = [
             "allegate": "lopez", // 操作系统；映射关系：{“cabinet”: “android”, “lopez”: “ios”, “frontier”: “web”}
             "chair": UIDevice.current.modelName, // 手机型号
-            "shebang": UIDevice.current.systemVersion // 操作系统版本号
+            "shebang": UIDevice.current.systemVersion, // 操作系统版本号
 //            "bayonet": MTNetworkManager.standerd.currentTypeString, // 网络类型：wifi，3g等，非必须，和产品确认是否需要分析网络类型相关的信息，此参数可能需要系统权限
 //            "kosher": Locale.current.regionCode ?? "ZZ", // 操作系统中的国家简写，例如 CN，US等
 //            "editor": "", // 没有开启google广告服务的设备获取不到，但是必须要尝试获取，用于归因，原值，google广告id
-//            "hobo": HKConfig.idfa, // idfa 原值（iOS）
+            "hobo": HKConfig.idfa, // idfa 原值（iOS）
 //            "remorse": self.ip, // 客户端IP地址，获取的结果需要判断是否为合法的ip地址！！
 //            "mongolia": "Apple", // 品牌
 ////            "isis": "\(kScreenWidth)*\(kScreenHeight)", // 屏幕分辨率：宽*高， 例如：380*640

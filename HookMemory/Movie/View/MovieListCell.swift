@@ -21,6 +21,7 @@ class MovieListCell: UITableViewCell {
     
     @IBOutlet weak var moreBtn: UIButton!
     
+    private var history: Bool = false
     override func awakeFromNib() {
         super.awakeFromNib()
         titleL.font = UIFont(name: "Hind SemiBold", size: 22)
@@ -39,10 +40,11 @@ class MovieListCell: UITableViewCell {
         self.clickMoreHandle?()
     }
     
-    func setModel(model: MovieHomeModel, clickMoreBlock: clickMoreBlock?, clickBlock: clickBlock?) {
+    func setModel( model: MovieHomeModel, clickMoreBlock: clickMoreBlock?, clickBlock: clickBlock?) {
         self.clickMoreHandle = clickMoreBlock
         self.clickHandle = clickBlock
         if let mod = model.data.first {
+            self.history = (mod.name == "History" && mod.id.isEmpty)
             self.titleL.text = mod.name
             self.list = mod.m20
             self.collectionView.reloadData()
@@ -58,7 +60,7 @@ extension MovieListCell: UICollectionViewDelegateFlowLayout, UICollectionViewDel
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! MovieCell
         if let model = self.list.safe(indexPath.item) {
-            cell.setModel(model: model)
+            cell.setModel(model: model, self.history)
         }
         return cell
     }

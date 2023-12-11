@@ -8,12 +8,14 @@
 import UIKit
 
 class MovieHistoryListViewController: MovieBaseViewController {
-    let movieCellIdentifier = "MovieCellIdentifier"
+    let movieCellIdentifier = "MovieSelectCellIdentifier"
     let cellW = floor((kScreenWidth - 48) / 3)
     var titleName: String = ""
     var listId: String = ""
     var dataArr: [MovieDataInfoModel] = []
     private var page: Int = 1
+    private var isSelect: Bool = false
+
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout:layout)
@@ -22,11 +24,12 @@ class MovieHistoryListViewController: MovieBaseViewController {
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.contentInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-        collectionView.register(UINib(nibName: String(describing: MovieCell.self), bundle: nil), forCellWithReuseIdentifier: movieCellIdentifier)
+        collectionView.register(UINib(nibName: String(describing: MovieSelectCell.self), bundle: nil), forCellWithReuseIdentifier: movieCellIdentifier)
         collectionView.contentInsetAdjustmentBehavior = .never
         return collectionView
     }()
  
+    private var bottomView: MovieHistoryBottomView = MovieHistoryBottomView.view()
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -34,19 +37,53 @@ class MovieHistoryListViewController: MovieBaseViewController {
     }
     
     func setUI() {
-        cusBar.titleL.text = self.titleName
-        cusBar.rightBtn.setImage(IMG("movie_search"), for: .normal)
+        cusBar.titleL.text = "Recently Played"
+        cusBar.rightBtn.setImage(IMG("movie_edit"), for: .normal)
+        view.addSubview(bottomView)
         view.addSubview(collectionView)
+        bottomView.frame = CGRect(x: 0, y: kScreenHeight, width: 0, height: 0)
+        self.bottomView.isHidden = true
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(cusBar.snp.bottom)
-            make.left.bottom.right.equalToSuperview()
+            make.bottom.equalTo(bottomView.snp.top)
+            make.left.right.equalToSuperview()
         }
     }
     
     override func rightAction() {
-        let vc = MovieSearchViewController()
-        vc.from = .list
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.isSelect = true
+        self.bottomView.isHidden = false
+        self.collectionView.reloadData()
+        bottomView.frame = CGRect(x: 0, y: kScreenHeight - 98 - kBottomSafeAreaHeight, width: kScreenWidth, height: 98 + kBottomSafeAreaHeight)
+        self.bottomView.show()
+        self.bottomView.clickSelectBlock = { [weak self] select in
+            guard let self = self else { return }
+            let _ = self.dataArr.map({$0.isSelect = select})
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
+        self.bottomView.clickBlock = { [weak self] index in
+            guard let self = self else { return }
+            if index == 1 {
+                let _ = self.dataArr.map({$0.isSelect = false})
+                self.isSelect = false
+                DispatchQueue.main.async {
+                    self.bottomView.frame = CGRect(x: 0, y: kScreenHeight, width: 0, height: 0)
+                    self.bottomView.isHidden = true
+                    self.collectionView.reloadData()
+                }
+            } else {
+                let selectArr = self.dataArr.filter({$0.isSelect == true})
+                for (_, m) in selectArr.enumerated() {
+                    DBManager.share.deleteVideoData(model: m)
+                }
+                self.dataArr = self.dataArr.filter({$0.isSelect == false})
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            }
+        }
     }
     
     func initData() {
@@ -65,9 +102,32 @@ extension MovieHistoryListViewController: UICollectionViewDelegate, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: movieCellIdentifier, for: indexPath) as! MovieCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: movieCellIdentifier, for: indexPath) as! MovieSelectCell
         if let model = self.dataArr.safe(indexPath.item) {
-            cell.setModel(model: model)
+            cell.setModel(isSelect: self.isSelect, model: model) {[weak self] in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    let vc = MovieHistorySelectController()
+                    vc.clickBlock = { index in
+                        if index == 0 {
+                            DBManager.share.updateVideoData(model)
+                            HKPlayerManager.share.gotoPlayer(controller: self, id: model.id, from: .home)
+                        } else {
+                            DBManager.share.deleteVideoData(model: model)
+                            self.dataArr.remove(at: indexPath.item)
+                            self.collectionView.reloadData()
+                        }
+                    }
+                    vc.modalPresentationStyle = .overFullScreen
+                    self.present(vc, animated: false)
+                }
+            } _: { [weak self] in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    model.isSelect = !model.isSelect
+                    self.bottomView.selectBtn.isSelected = self.dataArr.filter({$0.isSelect == false}).count == 0
+                }
+            }
         }
         return cell
     }

@@ -25,7 +25,31 @@ class MovieHomeViewController: MovieBaseViewController {
         table.contentInsetAdjustmentBehavior = .never
         return table
     }()
-   
+    
+    private var isNeedRefresh: Bool = false
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if isNeedRefresh {
+            refreshHistoryData()
+        }
+    }
+    func refreshHistoryData() {
+        let arr = DBManager.share.selectHistoryVideoDatas()
+        if let m = self.dataArr.first, let name = m?.data.first?.name, name == "History" {
+            dataArr.removeFirst()
+        }
+        if arr.count > 0 {
+            let model = MovieHomeModel()
+            let data = MovieHomeDataModel()
+            data.name = "History"
+            data.m20 = arr
+            model.data.append(data)
+            self.dataArr.insert(model, at: 0)
+        }
+        self.tableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUI()
@@ -48,7 +72,9 @@ class MovieHomeViewController: MovieBaseViewController {
     
     func getDBData() {
         let arr = DBManager.share.selectHistoryVideoDatas()
-        dataArr.removeFirst()
+        if self.dataArr.count > 0 {
+            dataArr.removeFirst()
+        }
         if arr.count > 0 {
             let model = MovieHomeModel()
             let data = MovieHomeDataModel()
@@ -73,6 +99,7 @@ class MovieHomeViewController: MovieBaseViewController {
     }
     
     func initData() {
+        self.isNeedRefresh = false
         if HKConfig.share.isNet == false {
             self.tableView.mj_header?.endRefreshing()
             self.showEmpty(.noNet, self.tableView)
@@ -94,6 +121,7 @@ class MovieHomeViewController: MovieBaseViewController {
                     self.getDBData()
                 }
             }
+            self.isNeedRefresh = true
             self.tableView.mj_header?.endRefreshing()
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
