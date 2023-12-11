@@ -25,7 +25,8 @@ class HKTBAManager: NSObject {
     var host = "https://synergy.haxen24.com/encroach/impact/frigga"
     #endif
     
-    static let SAFEBUNDLEID = "com.haxenplatform.live"
+//    static let SAFEBUNDLEID = "com.haxenplatform.live"
+    static let SAFEBUNDLEID = "com.testbird.HookMemor2"
     
     var ip: String = UserDefaults.standard.value(forKey: HKKeys.last_ip) as? String ?? "" {
         didSet {

@@ -43,6 +43,7 @@ class MovieSearchViewController: MovieBaseViewController {
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout:layout)
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.isHidden = true
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.contentInset = UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)
@@ -57,6 +58,9 @@ class MovieSearchViewController: MovieBaseViewController {
         view.layer.masksToBounds = true
         return view
     }()
+    
+    var historyView: MovieHistoryView = MovieHistoryView.view()
+    
     lazy var textField: UITextField = {
         let view = UITextField()
         view.textColor = UIColor.hex("#141414")
@@ -122,6 +126,7 @@ class MovieSearchViewController: MovieBaseViewController {
     }
     
     func setUI() {
+        self.addHistoryView()
         view.addSubview(tableView)
         view.addSubview(collectionView)
         tableView.snp.makeConstraints { make in
@@ -150,6 +155,7 @@ class MovieSearchViewController: MovieBaseViewController {
         if self.key.count == 0 {
             return
         }
+        self.addHistoryText(self.key)
         self.page = 1
         self.dataArr.removeAll()
         DispatchQueue.main.async { [weak self] in
@@ -218,6 +224,7 @@ class MovieSearchViewController: MovieBaseViewController {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 self.tableView.isHidden = false
+                self.removeHistoryView()
                 self.collectionView.isHidden = true
                 self.tableView.reloadData()
             }
@@ -261,12 +268,55 @@ class MovieSearchViewController: MovieBaseViewController {
             }
         }
     }
+    
+    //MARK: - histroy
+    func addHistoryView() {
+        if let arr = UserDefaults.standard.object(forKey: HKKeys.history) as? [String], arr.count > 0 {
+            view.addSubview(self.historyView)
+            self.historyView.snp.makeConstraints { make in
+                make.top.equalTo(cusBar.snp.bottom)
+                make.bottom.equalTo(view.safeAreaLayoutGuide)
+                make.left.right.equalToSuperview()
+            }
+            self.historyView.clickBlock = { [weak self] text in
+                guard let self = self else { return }
+                self.removeHistoryView()
+                self.searchText(text)
+            }
+            self.historyView.clickDeleteBlock = {[weak self] in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    let vc = MovieAlertController.init("title", "lsdkflsdjf")
+                    self.present(vc, animated: false)
+                }
+            }
+        }
+    }
+    
+    func removeHistoryView() {
+        self.historyView.removeFromSuperview()
+    }
+    
+    func addHistoryText(_ text: String) {
+        if let arr = UserDefaults.standard.object(forKey: HKKeys.history) as? [String] {
+            var list = arr.filter({$0 != text})
+            list.insert(text, at: 0)
+            UserDefaults.standard.set(list, forKey: HKKeys.history)
+            UserDefaults.standard.synchronize()
+        } else {
+            UserDefaults.standard.set([text], forKey: HKKeys.history)
+            UserDefaults.standard.synchronize()
+        }
+        self.historyView.upDateHistory()
+    }
 }
 
 extension MovieSearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:MovieSearchCell = tableView.dequeueReusableCell(withIdentifier: movieSearchCellIdentifier) as! MovieSearchCell
-        cell.setModel(self.searchKeys[indexPath.row])
+        if let model = self.searchKeys.safe(indexPath.row) {
+            cell.setModel(model)
+        }
         return cell
     }
     

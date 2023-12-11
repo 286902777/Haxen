@@ -96,6 +96,9 @@
 		A79DE7682B15B1B80029A612 /* HKPlayerLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79DE7672B15B1B80029A612 /* HKPlayerLoadingView.swift */; };
 		A79DE76A2B15B1C90029A612 /* HKPlayerLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79DE7692B15B1C90029A612 /* HKPlayerLoadingView.xib */; };
 		A79DE76C2B15B4020029A612 /* playLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = A79DE76B2B15B4020029A612 /* playLoading.json */; };
+		A79DFC0A2B22B5B800368B72 /* MovieHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79DFC092B22B5B800368B72 /* MovieHistoryView.swift */; };
+		A79DFC0C2B22B5C500368B72 /* MovieHistoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79DFC0B2B22B5C500368B72 /* MovieHistoryView.xib */; };
+		A79DFC102B231BB800368B72 /* MovieHistoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79DFC0F2B231BB800368B72 /* MovieHistoryListViewController.swift */; };
 		A79E1ABA2B19879000088004 /* HKLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79E1AB92B19879000088004 /* HKLog.swift */; };
 		A79E1ABC2B198A0600088004 /* HKTBAManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79E1ABB2B198A0600088004 /* HKTBAManager.swift */; };
 		A79E1ABE2B19B46C00088004 /* HKRemoteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79E1ABD2B19B46C00088004 /* HKRemoteManager.swift */; };
@@ -133,6 +136,8 @@
 		A7B4E4E22B0B4E230061926C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B4E4E12B0B4E230061926C /* String+Extension.swift */; };
 		A7B4E4E62B0B692A0061926C /* HKPlayerRemindView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B4E4E42B0B692A0061926C /* HKPlayerRemindView.swift */; };
 		A7B4E4E72B0B692A0061926C /* HKPlayerRemindView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7B4E4E52B0B692A0061926C /* HKPlayerRemindView.xib */; };
+		A7B86B252B269F7000670D6A /* MovieAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B86B232B269F7000670D6A /* MovieAlertController.swift */; };
+		A7B86B262B269F7000670D6A /* MovieAlertController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7B86B242B269F7000670D6A /* MovieAlertController.xib */; };
 		A7BC83DE2B04615B000912F1 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BC83DC2B04615B000912F1 /* LoadingViewController.swift */; };
 		A7BC83DF2B04615B000912F1 /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7BC83DD2B04615B000912F1 /* LoadingViewController.xib */; };
 		A7BC83E12B0490E1000912F1 /* HKConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BC83E02B0490E1000912F1 /* HKConfig.swift */; };
@@ -268,6 +273,9 @@
 		A79DE7672B15B1B80029A612 /* HKPlayerLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKPlayerLoadingView.swift; sourceTree = "<group>"; };
 		A79DE7692B15B1C90029A612 /* HKPlayerLoadingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HKPlayerLoadingView.xib; sourceTree = "<group>"; };
 		A79DE76B2B15B4020029A612 /* playLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = playLoading.json; sourceTree = "<group>"; };
+		A79DFC092B22B5B800368B72 /* MovieHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieHistoryView.swift; sourceTree = "<group>"; };
+		A79DFC0B2B22B5C500368B72 /* MovieHistoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieHistoryView.xib; sourceTree = "<group>"; };
+		A79DFC0F2B231BB800368B72 /* MovieHistoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieHistoryListViewController.swift; sourceTree = "<group>"; };
 		A79E1AB92B19879000088004 /* HKLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKLog.swift; sourceTree = "<group>"; };
 		A79E1ABB2B198A0600088004 /* HKTBAManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKTBAManager.swift; sourceTree = "<group>"; };
 		A79E1ABD2B19B46C00088004 /* HKRemoteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKRemoteManager.swift; sourceTree = "<group>"; };
@@ -305,6 +313,8 @@
 		A7B4E4E12B0B4E230061926C /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		A7B4E4E42B0B692A0061926C /* HKPlayerRemindView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKPlayerRemindView.swift; sourceTree = "<group>"; };
 		A7B4E4E52B0B692A0061926C /* HKPlayerRemindView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HKPlayerRemindView.xib; sourceTree = "<group>"; };
+		A7B86B232B269F7000670D6A /* MovieAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAlertController.swift; sourceTree = "<group>"; };
+		A7B86B242B269F7000670D6A /* MovieAlertController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieAlertController.xib; sourceTree = "<group>"; };
 		A7BC83DC2B04615B000912F1 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		A7BC83DD2B04615B000912F1 /* LoadingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingViewController.xib; sourceTree = "<group>"; };
 		A7BC83E02B0490E1000912F1 /* HKConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKConfig.swift; sourceTree = "<group>"; };
@@ -633,6 +643,10 @@
 				A79EA6262B0EF93C0007104B /* MoviePlayLikeCell.xib */,
 				A79EA6292B0F27BD0007104B /* HKPlayLayout.swift */,
 				A79EA62B2B0F2DB50007104B /* MoviePlaySsnHeadView.swift */,
+				A79DFC092B22B5B800368B72 /* MovieHistoryView.swift */,
+				A79DFC0B2B22B5C500368B72 /* MovieHistoryView.xib */,
+				A7B86B232B269F7000670D6A /* MovieAlertController.swift */,
+				A7B86B242B269F7000670D6A /* MovieAlertController.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -645,6 +659,7 @@
 				A7C3F9DB2AFCAD480094A15B /* MovieSearchViewController.swift */,
 				A7A0AE932AFE1FDD00646494 /* MovieSettingViewController.swift */,
 				A7A938E52B03060A00232981 /* MovieListViewController.swift */,
+				A79DFC0F2B231BB800368B72 /* MovieHistoryListViewController.swift */,
 				A77E07832B021009005A813C /* WebViewController.swift */,
 				A79BD75B2B07739B00AD3508 /* MoviePlayViewController.swift */,
 			);
@@ -822,6 +837,7 @@
 				A7C3F9DA2AFCA9F20094A15B /* FilterListCell.xib in Resources */,
 				A79ED77E2B11C1D6009DC462 /* HKPlayerLanguageFullView.xib in Resources */,
 				A79D66492B0DF2350069F359 /* MoviePlayHeadCell.xib in Resources */,
+				A79DFC0C2B22B5C500368B72 /* MovieHistoryView.xib in Resources */,
 				A79E1AC32B19B4FF00088004 /* hk_ad_release.json in Resources */,
 				A790666C2AF32E16006A3982 /* HookNavigationBar.xib in Resources */,
 				A7BC83DF2B04615B000912F1 /* LoadingViewController.xib in Resources */,
@@ -844,6 +860,7 @@
 				A79D663D2B0D9E680069F359 /* HKPlayerSelectEpsView.xib in Resources */,
 				A790669B2AF37CF3006A3982 /* FeedBackViewController.xib in Resources */,
 				A7C3F9D02AFC7F520094A15B /* FilterCell.xib in Resources */,
+				A7B86B262B269F7000670D6A /* MovieAlertController.xib in Resources */,
 				A79DE76A2B15B1C90029A612 /* HKPlayerLoadingView.xib in Resources */,
 				A77E07772B01E91F005A813C /* loading.json in Resources */,
 				A79ED77A2B11A12B009DC462 /* HKPlayerCaptionFullSetView.xib in Resources */,
@@ -1051,6 +1068,7 @@
 				A72EB15D2AF47E3C00AF20C3 /* HKSheetController.swift in Sources */,
 				A7B4E4DD2B0AF66F0061926C /* VideoDB+CoreDataClass.swift in Sources */,
 				A7C3F9DC2AFCAD480094A15B /* MovieSearchViewController.swift in Sources */,
+				A7B86B252B269F7000670D6A /* MovieAlertController.swift in Sources */,
 				A7BC83DE2B04615B000912F1 /* LoadingViewController.swift in Sources */,
 				A7A938E82B03096800232981 /* MovieMroeModel.swift in Sources */,
 				A799FE832AF8C49C00840196 /* HKToast.swift in Sources */,
@@ -1074,6 +1092,7 @@
 				A79B7CA22B0C4F0900E6EB46 /* CaptionDB+CoreDataClass.swift in Sources */,
 				A79BD7522B075E8D00AD3508 /* HKPlayerControlView.swift in Sources */,
 				A79BD75A2B07657700AD3508 /* HKTimeSlider.swift in Sources */,
+				A79DFC102B231BB800368B72 /* MovieHistoryListViewController.swift in Sources */,
 				A7B4E4DA2B0AF21D0061926C /* MovieVideoModel.swift in Sources */,
 				A79066642AF32D79006A3982 /* CustomViewCell.swift in Sources */,
 				A79066912AF37498006A3982 /* SettingViewController.swift in Sources */,
@@ -1096,6 +1115,7 @@
 				A77F8CD12AF4D9990031FA77 /* ListDetailCell.swift in Sources */,
 				A79D66002AFB8D1D0094E411 /* FilterView.swift in Sources */,
 				A79BD74E2B0758D800AD3508 /* HKPlayer.swift in Sources */,
+				A79DFC0A2B22B5B800368B72 /* MovieHistoryView.swift in Sources */,
 				A72EB1602AF482A800AF20C3 /* HKSheetCell.swift in Sources */,
 				A79BD7542B0760E000AD3508 /* HKPlayerManager.swift in Sources */,
 				A79066362AF32CE4006A3982 /* HookMemory.xcdatamodeld in Sources */,

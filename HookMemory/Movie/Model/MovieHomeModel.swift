@@ -66,6 +66,7 @@ class MovieDataInfoModel: BaseModel {
     var eps_cnts: String = ""
     var ssn_id: String = ""
     var eps_list: [String] = []
+    var eps_id: String = ""
     var country: String = ""
     var ss_eps: String = ""
     var new_flag: String = ""
@@ -76,6 +77,7 @@ class MovieDataInfoModel: BaseModel {
     var ep: String = ""
     var age: String = ""
     var video_flag: String = ""
+    var playProgress: Double = 0
     var isMovie: Bool {
         get {
             return m_type != "tv_mflx"

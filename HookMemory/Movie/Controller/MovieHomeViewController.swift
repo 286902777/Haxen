@@ -46,6 +46,19 @@ class MovieHomeViewController: MovieBaseViewController {
         self.tableView.reloadData()
     }
     
+    func getDBData() {
+        let arr = DBManager.share.selectHistoryVideoDatas()
+        dataArr.removeFirst()
+        if arr.count > 0 {
+            let model = MovieHomeModel()
+            let data = MovieHomeDataModel()
+            data.name = "History"
+            data.m20 = arr
+            model.data.append(data)
+            self.dataArr.insert(model, at: 0)
+        }
+    }
+    
     func addRefresh() {
         let header = RefreshGifHeader { [weak self] in
             guard let self = self else { return }
@@ -78,7 +91,7 @@ class MovieHomeViewController: MovieBaseViewController {
                 self.dismissEmpty(self.tableView)
                 if let listArr = list, listArr.count > 0 {
                     self.dataArr = listArr
-                    self.dataArr.removeFirst()
+                    self.getDBData()
                 }
             }
             self.tableView.mj_header?.endRefreshing()
@@ -107,13 +120,20 @@ extension MovieHomeViewController: UITableViewDelegate, UITableViewDataSource {
                     guard let self = self else { return }
                     HKLog.hk_home_cl(kid: "4", c_id: "", c_name: "", ctype: "", secname: model.data.first?.name ?? "", secid: model.data.first?.id ?? "")
 
-                    let vc = MovieListViewController()
                     if let mod = model.data.first {
-                        vc.titleName = mod.name
-                        vc.listId = mod.id
+                        if mod.name == "History", mod.id.isEmpty {
+                            let vc = MovieHistoryListViewController()
+                            vc.titleName = mod.name
+                            vc.hidesBottomBarWhenPushed = true
+                            self.navigationController?.pushViewController(vc, animated: true)
+                        } else {
+                            let vc = MovieListViewController()
+                            vc.titleName = mod.name
+                            vc.listId = mod.id
+                            vc.hidesBottomBarWhenPushed = true
+                            self.navigationController?.pushViewController(vc, animated: true)
+                        }
                     }
-                    vc.hidesBottomBarWhenPushed = true
-                    self.navigationController?.pushViewController(vc, animated: true)
                 }
             }, clickBlock: { movieModel in
                 DispatchQueue.main.async { [weak self] in

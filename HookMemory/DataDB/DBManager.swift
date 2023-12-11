@@ -469,43 +469,30 @@ class DBManager {
         }
     }
     
-    func selectVideoDatas() ->Array<MovieVideoModel> {
+    func selectHistoryVideoDatas() ->Array<MovieDataInfoModel> {
         let context:NSManagedObjectContext = DBManager.share.mainQueueContext
         let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "VideoDB")
         fetchRequest.sortDescriptors = [NSSortDescriptor.init(key: "updateTime", ascending: false)]
 
-        var dataArray = Array<MovieVideoModel>()
+        var dataArray = Array<MovieDataInfoModel>()
         do {
             let searchResults = try context.fetch(fetchRequest)
             if searchResults.count > 0 {
                 dataArray.removeAll()
                 for model in searchResults {
                     if let mod = model as? VideoDB {
-                        let m = MovieVideoModel()
+                        if let _ = dataArray.first(where: {$0.id == mod.id}) {
+                            continue
+                        }
+                        let m = MovieDataInfoModel()
                         m.id = mod.id ?? ""
-                        m.isImport = mod.isImport
-                        m.isMovie = mod.isMovie
                         m.title = mod.title ?? ""
-                        m.videoInfo = mod.videoInfo ?? ""
-                        m.country = mod.country ?? ""
-                        m.ssn_eps = mod.ssn_eps ?? ""
+                        m.m_type = mod.isMovie ? "" : "tv_mflx"
                         m.ssn_id = mod.ssn_id ?? ""
                         m.eps_id = mod.eps_id ?? ""
-                        m.eps_name = mod.eps_name ?? ""
-                        m.ssn_name = mod.ssn_name ?? ""
-                        m.eps_num = Int(mod.eps_num)
-                        m.rate = mod.rate ?? ""
-                        m.url = mod.url ?? ""
-                        m.path = mod.path ?? ""
-                        m.coverImageUrl = mod.coverImageUrl ?? ""
-                        m.uploadTime = mod.uploadTime ?? ""
-                        m.totalTime = mod.totalTime
-                        m.playedTime = mod.playedTime
+                        m.cover = mod.coverImageUrl ?? ""
+                        m.country = mod.country ?? ""
                         m.playProgress = mod.playProgress
-                        m.dataSize = mod.dataSize ?? ""
-                        m.updateTime = mod.updateTime
-                        m.format = mod.format ?? ""
-                        m.captions = mod.captions ?? []
                         dataArray.append(m)
                     }
                 }

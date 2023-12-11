@@ -9,6 +9,7 @@ import Foundation
 
 class HKKeys {
     static let isForUser = "isForUser"
+    static let history = "history"
     static let tbaLogs = "tbaLogs"
     static let tbaInstall = "tbaInstall"
     static let isOfflineGuideShow = "isOfflineGuideShow"
