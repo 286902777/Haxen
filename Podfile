@@ -7,7 +7,7 @@ target 'HookMemory' do
 
   # Pods for HookMemory
   pod 'SnapKit'
-  pod 'lottie-ios'
+  pod 'lottie-ios', '4.3.3'
   pod 'MJRefresh'
   pod 'Alamofire'
   pod 'HandyJSON'
@@ -17,14 +17,14 @@ target 'HookMemory' do
   pod 'CryptoSwift'
   pod 'ZIPFoundation'
 
-  # pod 'FBSDKCoreKit'
+  pod 'FBSDKCoreKit'
   
   pod 'Firebase/Analytics'
   pod 'FirebaseCrashlytics'
   pod 'FirebasePerformance'
   pod 'FirebaseRemoteConfig'
 
-  pod 'Google-Mobile-Ads-SDK'
+  pod 'Google-Mobile-Ads-SDK', "10.11.0"
   pod 'AppLovinSDK', '~> 11.11.2'
 
   pod 'GoogleMobileAdsMediationAdColony'
@@ -34,7 +34,7 @@ target 'HookMemory' do
   pod 'GoogleMobileAdsMediationInMobi'
   pod 'GoogleMobileAdsMediationIronSource'
   pod 'GoogleMobileAdsMediationVungle'
-#  pod 'GoogleMobileAdsMediationFacebook'
+  pod 'GoogleMobileAdsMediationFacebook'
   pod 'GoogleMobileAdsMediationMintegral'
   pod 'GoogleMobileAdsMediationPangle'
   pod 'GoogleMobileAdsMediationTapjoy'
@@ -50,7 +50,7 @@ target 'HookMemory' do
   pod 'AppLovinMediationInMobiAdapter'
   pod 'AppLovinMediationIronSourceAdapter'
   pod 'AppLovinMediationVungleAdapter'
-#  pod 'AppLovinMediationFacebookAdapter'
+  pod 'AppLovinMediationFacebookAdapter'
   pod 'AppLovinMediationMintegralAdapter'
   pod 'AppLovinMediationByteDanceAdapter'
   pod 'AppLovinMediationSmaatoAdapter'

@@ -535,17 +535,17 @@ class HKPlayer: UIView {
 //        }
     }
     
-    func showPlayingAd(isPlay: Bool = true, placement: HKADLogENUM) {
+    func showPlayingAd(placement: HKADLogENUM) {
         HKConfig.showInterAD(type: self.isFullScreen ? .other : .play, placement: placement) { [weak self] result in
             DispatchQueue.main.async {
                 if result {
-                    self?.tempIsPlaying = isPlay ? true : (self?.isPlaying ?? false)
+                    self?.tempIsPlaying = self?.isPlaying ?? false
                     self?.pause()
                 }
             }
         }
         HKADManager.share.tempDismissComplete = { [weak self] in
-            DispatchQueue.main.async {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 if self?.tempIsPlaying == true {
                     self?.play()
                 }

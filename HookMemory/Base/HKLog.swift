@@ -57,12 +57,12 @@ extension HKLog {
     
     class func tab_tv_sh(loadsuccess: String, errorinfo: String) {
         HKLog.log("[LOG]: tab_电视剧展示 tab_tv_sh loadsuccess: \(loadsuccess), errorinfo: \(errorinfo)")
-        HKLog.logEvent("tab_tv_sh_ios", parameters: ["loadsuccess": loadsuccess, "errorinfo": errorinfo])
+        HKLog.logEvent("tab_tv_sh", parameters: ["loadsuccess": loadsuccess, "errorinfo": errorinfo])
     }
     
     class func tab_tv_cl(kid: String) {
         HKLog.log("[LOG]: tab_电视剧点击 tab_tv_cl kid: \(kid)")
-        HKLog.logEvent("tab_tv_cl_ios", parameters: ["kid": kid])
+        HKLog.logEvent("tab_tv_cl", parameters: ["kid": kid])
     }
     
     class func hk_search_result_sh(keyword: String, errorinf: String, source: String) {
@@ -77,7 +77,7 @@ extension HKLog {
     
     class func hk_movie_play_cl(kid: String, movie_id: String, movie_name: String, eps_id: String, eps_name: String) {
         HKLog.log("[LOG]: 播放页点击 movie_play_cl kid: \(kid), movie_id: \(movie_id), movie_name: \(movie_name), eps_id: \(eps_id), eps_name: \(eps_name)")
-        HKLog.logEvent("movie_play_cl_ios", parameters: ["kid": kid, "movie_id": movie_id, "movie_name": movie_name, "eps_id": eps_id, "eps_name": eps_name])
+        HKLog.logEvent("movie_play_cl", parameters: ["kid": kid, "movie_id": movie_id, "movie_name": movie_name, "eps_id": eps_id, "eps_name": eps_name])
     }
     
     class func hk_movie_play_len(movie_id: String, movie_name: String, eps_id: String, eps_name: String, movie_type: String, watch_len: String, source: String, if_success: String) {
@@ -87,17 +87,17 @@ extension HKLog {
     
     class func hk_vip_sh(source: String) {
         HKLog.log("[LOG]: 订阅页展示 vip_sh source: \(source)")
-        HKLog.logEvent("vip_sh_ios", parameters: ["source": source])
+        HKLog.logEvent("vip_sh", parameters: ["source": source])
     }
     
     class func hk_vip_cl(kid: String, type: String, source: String) {
         HKLog.log("[LOG]: 订阅页点击 vip_cl kid: \(kid), type: \(type), source: \(source)")
-        HKLog.logEvent("vip_cl_ios", parameters: ["kid": kid, "type": type, "source": source])
+        HKLog.logEvent("vip_cl", parameters: ["kid": kid, "type": type, "source": source])
     }
     
     class func hk_subscribe_status(status: String, source: String, pay_time: String) {
         HKLog.log("[LOG]: 订阅状态 subscribe_status status: \(status), source: \(source), pay_time: \(pay_time)")
-        HKLog.logEvent("subscribe_status_ios", parameters: ["status": status, "source": source, "pay_time": pay_time])
+        HKLog.logEvent("subscribe_status", parameters: ["status": status, "source": source, "pay_time": pay_time])
     }
     
 }
@@ -107,6 +107,9 @@ extension HKLog {
         
         HKLog.log("[LOG]: revenue value: \(value), currency: \(currency), adFormat: \(adFormat), adSource: \(adSource), adPlatform: \(adPlatform), adUnitName: \(adUnitName), precision: \(precision), placement: \(placement)")
         
+        HKTBAManager.share.setAdSubParas(capstan: Int64(value * 1000000), anew: currency, bright: adSource, avocate: adPlatform, smear: adUnitName, thruway: placement, drowsy: adFormat, trefoil: precision)
+        HKTBAManager.share.setHktbaParams(type: .ad)
+
         /// 上报firebase
         HKLog.logEvent(
                         "Ad_impression_revenue",

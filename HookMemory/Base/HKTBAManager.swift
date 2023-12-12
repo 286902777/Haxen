@@ -26,7 +26,6 @@ class HKTBAManager: NSObject {
     #endif
     
     static let SAFEBUNDLEID = "com.haxenplatform.live"
-//    static let SAFEBUNDLEID = "com.testbird.HookMemor2"
     
     var ip: String = UserDefaults.standard.value(forKey: HKKeys.last_ip) as? String ?? "" {
         didSet {
@@ -96,7 +95,7 @@ class HKTBAManager: NSObject {
         }
         
         let tempTbaLogs = self.tbaLogs
-        let urlString = "\(self.host)?itll=\(HKConfig.share.getDistinctId())&sneaky=\(HKConfig.idfv)&pershing=\(HKConfig.share.getDistinctId())".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)! // bundle_id  idfa  brand
+        let urlString = "\(self.host)?itll=\(HKConfig.share.getDistinctId())&sneaky=\(HKConfig.idfv)&pershing=\(UUID().uuidString)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)! // bundle_id  idfa  brand
         
         var request: URLRequest = URLRequest(url: URL(string: urlString)!)
         request.httpMethod = "POST"
@@ -150,7 +149,7 @@ class HKTBAManager: NSObject {
         let caudal: [String: Any] = [
             "figure": "\(Locale.current.languageCode ?? "zh")_\(Locale.current.regionCode ?? "CN")", // String locale = Locale.getDefault(); 拼接为：zh_CN的形式，下杠
             "itll": HKConfig.share.getDistinctId(), // 用户排重字段，统计涉及到的排重用户数就是依据该字段，对接时需要和产品确认
-            "pershing": HKConfig.share.getDistinctId(), // 日志唯一id，用于排重日志
+            "pershing": UUID().uuidString, // 日志唯一id，用于排重日志
             "sole": Int(Date().timeIntervalSince1970 * 1000), // 日志发生的客户端时间，毫秒数
         ]
         let choryza: [String: Any] = [
@@ -176,17 +175,14 @@ class HKTBAManager: NSObject {
         case .install:
             let subparas: [String: Any] = [
                 "nuptial": "build/\(Bundle.main.infoDictionary?["CFBundleVersion"] ?? "1")", // 系统构建版本，Build.ID， 以 build/ 开头
+                "non": "",// webview中的user_agent, 注意为webview的，android中的useragent有;wv关键字
                 "exclude": "segment", // 用户是否启用了限制跟踪，0：没有限制，1：限制了；映射关系：{“segment”: 0, “hang”: 1}
-                "megaword": "", // referrer_url
-                "charm": "",
-                "non": "", // webview中的user_agent, 注意为webview的，android中的useragent有;wv关键字
-                "arise": 0,
-                "english": 0,
-                "ember": 0,
-                "helmsmen": 0,
-                "sprung": 0,
-                "clayton": 0,
-                "skiff": false
+                "dupont": 0, // referrer_url
+                "holmium": 0,
+                "arterial": 0,
+                "typeset": 0,
+                "cannery": 0,
+                "job": 0
             ]
             paras["encomia"] = subparas
         case .session:
@@ -200,7 +196,8 @@ class HKTBAManager: NSObject {
                 for item in self.eventParam.keys.filter({ $0 != "healthy" }) {
                     eventMap[item] = self.eventParam[item]
                 }
-                paras[borne] = eventMap
+//                paras[borne] = eventMap
+                paras["tog"] = eventMap
             }
         }
         HKLog.log("[REQUEST] paras: \(paras)")

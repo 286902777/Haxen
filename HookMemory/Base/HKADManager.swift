@@ -228,12 +228,12 @@ extension HKADManager {
         }
         HKLog.log("[AD] 广告开始加载 type: \(type.rawValue)")
         // 是否在加载中 及 检查数组是否越界
-        if let m = self.dataArr.first(where: {$0.type == type}) {
-            if m.adIsLoding {
-                HKLog.log("[AD] 广告正在加载 type: \(type.rawValue)")
-                return
-            }
-        }
+//        if let m = self.dataArr.first(where: {$0.type == type}) {
+//            if m.adIsLoding {
+//                HKLog.log("[AD] 播放中--广告正在加载 type: \(type.rawValue)")
+//                return
+//            }
+//        }
         
         self.type = type
         

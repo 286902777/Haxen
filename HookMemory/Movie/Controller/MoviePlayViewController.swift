@@ -217,7 +217,11 @@ class MoviePlayViewController: UIViewController {
             } else {
                 self.player.playerLayer?.prepareToDeinit()
                 self.controller.isReadyToPlayed = false
-                self.navigationController?.popViewController(animated: true)
+                HKConfig.showInterAD(type: .play, placement: .play) { _ in
+                    DispatchQueue.main.async {
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                }
             }
         }
         player.exitFullScreen = { [weak self] full in

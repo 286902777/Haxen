@@ -7,6 +7,8 @@
 
 
 import UIKit
+import AppLovinSDK
+import GoogleMobileAds
 
 class MovieSettingViewController: MovieBaseViewController {
     let cellIdentifier = "SettingCell"
@@ -87,11 +89,33 @@ extension MovieSettingViewController: UITableViewDelegate, UITableViewDataSource
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         default:
-            break
+            self.adTestTool()
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 56
+    }
+    
+    func adTestTool() {
+        GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = ["9044820215e8f16b96eeff39b89d060c", "0ee00fe9a35b653f5b1a3c86d0036e6b"]
+        let alertController = UIAlertController(title: "AD Tools", message: "select AD Tool", preferredStyle: .actionSheet)
+        let action1 = UIAlertAction(title: "admob", style: .default) { (action) in
+            GADMobileAds.sharedInstance().presentAdInspector(from: self) { error in
+                
+            }
+        }
+        let action2 = UIAlertAction(title: "Max", style: .default) { (action) in
+            ALSdk.shared()!.showMediationDebugger()
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            // Cancel code
+        }
+        
+        alertController.addAction(action1)
+        alertController.addAction(action2)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
     }
 }

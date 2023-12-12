@@ -281,7 +281,9 @@ class MovieSearchViewController: MovieBaseViewController {
             self.historyView.clickBlock = { [weak self] text in
                 guard let self = self else { return }
                 self.removeHistoryView()
-                self.searchText(text)
+                self.key = text
+                self.textField.text = self.key
+                self.requestData()
             }
             self.historyView.clickDeleteBlock = {[weak self] in
                 guard let self = self else { return }

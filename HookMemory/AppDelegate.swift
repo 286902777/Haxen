@@ -15,9 +15,11 @@ import FirebaseCore
 import GoogleMobileAds
 import AppLovinSDK
 import StoreKit
+#if DEBUG
 
-//import FBSDKCoreKit
-
+#else
+import FBSDKCoreKit
+#endif
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var allowRotate: Bool = false
@@ -47,11 +49,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         FirebaseApp.configure()
         initGADMobileAds()
-//        ApplicationDelegate.shared.application(application,didFinishLaunchingWithOptions: launchOptions)
-//        Settings.shared.isAdvertiserTrackingEnabled = true
-//        Settings.shared.isAdvertiserIDCollectionEnabled = true
-//        Settings.shared.isAutoLogAppEventsEnabled = true
-//        Settings.shared.isCodelessDebugLogEnabled = false
+#if DEBUG
+#else
+        ApplicationDelegate.shared.application(application,didFinishLaunchingWithOptions: launchOptions)
+        Settings.shared.isAdvertiserTrackingEnabled = true
+        Settings.shared.isAdvertiserIDCollectionEnabled = true
+        Settings.shared.isAutoLogAppEventsEnabled = true
+        Settings.shared.isCodelessDebugLogEnabled = false
+#endif
         return true
     }
     /// TrackingAuth
@@ -59,7 +64,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             if #available(iOS 14, *) {
                 ATTrackingManager.requestTrackingAuthorization { status in
-//                    Settings.shared.isAdvertiserTrackingEnabled = true
+#if DEBUG
+#else
+                    Settings.shared.isAdvertiserTrackingEnabled = true
+#endif
                 }
             }
         }

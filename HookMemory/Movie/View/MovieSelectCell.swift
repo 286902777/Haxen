@@ -24,6 +24,7 @@ class MovieSelectCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        imageV.layer.borderColor = UIColor.white.cgColor
         imageV.layer.cornerRadius = 8
         imageV.layer.masksToBounds = true
         selectBtn.addCorner(conrners: [.topLeft, .bottomRight], radius: 8)
@@ -39,6 +40,7 @@ class MovieSelectCell: UICollectionViewCell {
         self.contentL.text = model.title
         self.selectBtn.isSelected = model.isSelect
         self.imageV.setImage(with: model.cover)
+        self.imageV.layer.borderWidth = model.isSelect ? 2 : 0
     }
     
     @IBAction func clickAction(_ sender: Any) {
@@ -47,6 +49,7 @@ class MovieSelectCell: UICollectionViewCell {
     
     @IBAction func clickSelectAction(_ sender: Any) {
         self.selectBtn.isSelected = !self.selectBtn.isSelected
+        self.imageV.layer.borderWidth = self.selectBtn.isSelected ? 2 : 0
         self.clickSelectHandle?()
     }
     

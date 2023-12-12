@@ -1,7 +1,7 @@
 {
     "hk_totalShowCount": 150,
-    "hk_sameInterval": 60,
-    "hk_differentInterval": 30,
+    "hk_sameInterval": 10,
+    "hk_differentInterval": 10,
     "hk_openInterval": 10,
     "hk_play_point_time": 120,
     "hk_open": [
