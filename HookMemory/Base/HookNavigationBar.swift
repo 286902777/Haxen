@@ -18,6 +18,8 @@ class HookNavigationBar: UIView{
     @IBOutlet weak var titleL: UILabel!
     @IBOutlet weak var backBtn: UIButton!
     
+    @IBOutlet weak var vipBtn: UIButton!
+    
     @IBOutlet weak var middleBtn: UIButton!
     
     @IBOutlet weak var rightBtn: UIButton!

@@ -162,8 +162,8 @@ class HKTBAManager: NSObject {
             "hobo": HKConfig.idfa, // idfa 原值（iOS）
 //            "remorse": self.ip, // 客户端IP地址，获取的结果需要判断是否为合法的ip地址！！
 //            "mongolia": "Apple", // 品牌
-////            "isis": "\(kScreenWidth)*\(kScreenHeight)", // 屏幕分辨率：宽*高， 例如：380*640
-////            "uniplex": UUID().uuidString, // 随机生成的uuid
+//            "isis": "\(kScreenWidth)*\(kScreenHeight)", // 屏幕分辨率：宽*高， 例如：380*640
+//            "uniplex": UUID().uuidString, // 随机生成的uuid
 //            "sen": self.timeZone, // 客户端时区
         ]
         var paras: [String: Any] = [:]
@@ -196,7 +196,6 @@ class HKTBAManager: NSObject {
                 for item in self.eventParam.keys.filter({ $0 != "healthy" }) {
                     eventMap[item] = self.eventParam[item]
                 }
-//                paras[borne] = eventMap
                 paras["tog"] = eventMap
             }
         }
@@ -243,8 +242,6 @@ class HKTBAManager: NSObject {
     
     func getIp() {
         if let url = "https://api.myip.com/".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
-//            WZToast.alert(title: "ip请求开始", text: "时间: \(Date())")
-            let startDate = Date().timeIntervalSince1970
             let request: URLRequest = URLRequest(url: URL(string: url)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 15)
             let configuration: URLSessionConfiguration = URLSessionConfiguration.default
             let session: URLSession = URLSession(configuration: configuration)
@@ -267,12 +264,9 @@ class HKTBAManager: NSObject {
                                 self.ip_country_code = country_code
                             }
                             HKLog.log("[REQUEST] ip: \(self.ip)")
-//                            WZToast.alert(title: "ip请求结束", text: "时间: \(Date())")
-//                            HKLog.get_ip("\(ceil(Date().timeIntervalSince1970) - startDate)")
                             if self.ipComplete != nil {
                                 self.ipComplete!(true)
                             }
-//                            NotificationCenter.default.post(name: .TBA.ipget, object: nil)
                         } else {
                             self.getIp2()
                         }
@@ -284,14 +278,12 @@ class HKTBAManager: NSObject {
                 }
             }
             task.resume()
-
         }
 
     }
 
     func getIp2() {
         if let url = "https://ip.seeip.org/geoip/".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
-            let startDate = Date().timeIntervalSince1970
             let request: URLRequest = URLRequest(url: URL(string: url)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 15)
             let configuration: URLSessionConfiguration = URLSessionConfiguration.default
             let session: URLSession = URLSession(configuration: configuration)

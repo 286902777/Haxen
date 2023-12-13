@@ -157,6 +157,18 @@ class MoviePlayViewController: UIViewController {
         if let appdelegate = UIApplication.shared.delegate as? AppDelegate  {
             appdelegate.allowRotate = true
         }
+        
+        let device = UIDevice.current
+        if device.orientation == .landscapeLeft || device.orientation == .landscapeRight{
+            ScreenisFull = true
+            self.onOrientationChanged(isLand: true)
+        } else if device.orientation == .portrait || device.orientation == .portraitUpsideDown {
+            if self.playLock == false {
+                ScreenisFull = false
+                self.onOrientationChanged(isLand: false)
+            }
+        }
+        
         self.setCoverImage()
     }
     

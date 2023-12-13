@@ -507,6 +507,7 @@ class DBManager {
                         m.eps_id = mod.eps_id ?? ""
                         m.cover = mod.coverImageUrl ?? ""
                         m.country = mod.country ?? ""
+                        m.rate = mod.rate ?? ""
                         m.playProgress = mod.playProgress
                         dataArray.append(m)
                     }

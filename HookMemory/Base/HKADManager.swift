@@ -673,9 +673,6 @@ extension HKADManager: GADFullScreenContentDelegate {
                 }
             }
         }
-        if HKConfig.share.isLoadingVC {
-            HKConfig.share.appRequest()
-        }
     }
     
     func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
@@ -727,9 +724,6 @@ extension HKADManager: GADFullScreenContentDelegate {
                 }
             }
         }
-        if HKConfig.share.isLoadingVC {
-            HKConfig.share.appRequest()
-        }
     }
     
     func adDidRecordClick(_ ad: GADFullScreenPresentingAd) {
@@ -747,9 +741,6 @@ extension HKADManager: GADFullScreenContentDelegate {
                     self.addClickCount(type: self.type)
                 }
             }
-        }
-        if HKConfig.share.isLoadingVC {
-            HKConfig.share.appRequest()
         }
     }
 }
@@ -831,9 +822,6 @@ extension HKADManager: MAAdViewAdDelegate {
                 break
             }
         }
-        if HKConfig.share.isLoadingVC {
-            HKConfig.share.appRequest()
-        }
     }
     
     func didClick(_ ad: MAAd) {
@@ -860,9 +848,6 @@ extension HKADManager: MAAdViewAdDelegate {
                     break
                 }
             }
-        }
-        if HKConfig.share.isLoadingVC {
-            HKConfig.share.appRequest()
         }
     }
 }

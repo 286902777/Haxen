@@ -49,8 +49,10 @@ class BaseViewController: UIViewController {
                 self.backAction()
             case 1:
                 self.rightAction()
-            default:
+            case 2:
                 self.middleAction()
+            default:
+                self.vipAction()
             }
         }
     }
@@ -64,6 +66,10 @@ class BaseViewController: UIViewController {
     }
     
     func middleAction() {
+        
+    }
+    
+    func vipAction() {
         
     }
 }

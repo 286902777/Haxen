@@ -39,11 +39,6 @@ class AddViewController: BaseViewController {
     let textView: IQTextView = IQTextView()
     let numL: UILabel = UILabel()
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        self.textView.becomeFirstResponder()
-//        self.textView.resignFirstResponder()
-//    }
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavbar()
@@ -128,9 +123,13 @@ class AddViewController: BaseViewController {
         })
     }
     @objc func doneAction() {
-        self.model.content = self.textView.text
-        self.doneBlock?(self.model)
-        self.navigationController?.popViewController(animated: true)
+        HKConfig.showInterAD(type: .play, placement: .play) { [weak self] _ in
+            guard let self = self else { return }
+            self.model.content = self.textView.text
+            self.doneBlock?(self.model)
+            self.navigationController?.popViewController(animated: true)
+
+        }
     }
 }
 

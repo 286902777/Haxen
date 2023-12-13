@@ -67,7 +67,7 @@ class MoviePlayHeadCell: UITableViewCell {
         self.clickMoreHandle = clickMoreBlock
         self.refreshHandle = refreshBlock
         self.titleL.text = model.data.title
-        self.scroL.text = model.data.rate
+        self.scroL.text = String(format: "%.1f", Float(model.data.rate) ?? 0)
         self.yearL.text = model.data.year
         self.ctrNoL.text = model.data.country
         self.dataArr = model.data.genre_dict

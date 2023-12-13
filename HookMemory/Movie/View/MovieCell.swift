@@ -25,7 +25,7 @@ class MovieCell: UICollectionViewCell {
     func setModel(model: MovieDataInfoModel, _ isHistory: Bool = false) {
         self.progressV.isHidden = !isHistory
         self.progressV.progress = Float(model.playProgress)
-        self.scoreL.text = model.rate
+        self.scoreL.text = String(format: "%.1f", Float(model.rate) ?? 0)
         self.contentL.text = model.title
         self.imageV.setImage(with: model.cover)
     }

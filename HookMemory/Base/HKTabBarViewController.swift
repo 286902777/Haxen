@@ -12,6 +12,7 @@ class HKTabBarViewController: UITabBarController {
         case home = "Home"
         case explore = "Explore"
         case setting = "Setting"
+        case vip = "vip"
     }
     
     override func viewDidLoad() {
@@ -19,12 +20,14 @@ class HKTabBarViewController: UITabBarController {
         let homeNav = addChildVC(vc: MovieHomeViewController(),title: TabBarItemTitle.home.rawValue, image: "movie_home", selectImage: "movie_home_select")
         let exploreNav = addChildVC(vc: MovieFilterViewController(),title: TabBarItemTitle.explore.rawValue, image: "movie_explore", selectImage: "movie_explore_select")
         let setNav = addChildVC(vc: MovieSettingViewController(),title: TabBarItemTitle.setting.rawValue, image: "movie_setting", selectImage: "movie_setting_select")
+        let vipNav = addChildVC(vc: HKPurchaseViewController(),title: TabBarItemTitle.vip.rawValue, image: "movie_setting", selectImage: "movie_setting_select")
+
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.hex("#FFFFFF", alpha: 0.5), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)], for: .normal)
         
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)], for: .selected)
         self.tabBar.barTintColor = UIColor.hex("#232323")
         self.tabBar.backgroundColor = .clear
-        self.viewControllers = [homeNav, exploreNav, setNav]
+        self.viewControllers = [homeNav, exploreNav, setNav, vipNav]
     }
     
     func addChildVC(vc: UIViewController, title: String, image: String, selectImage: String) -> UINavigationController {

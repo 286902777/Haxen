@@ -24,22 +24,18 @@ class HKConfig{
     
     private let Host: String = "https://sleeve.haxen24.com/thurman/ware"
     private let bundle_id: String = "com.haxenplatform.live"
-    
-    var isLoadingVC = true
-    
+        
     var isForUser = UserDefaults.standard.bool(forKey: HKKeys.isForUser) {
         didSet {
             if isForUser == true {
                 UserDefaults.standard.set(isForUser, forKey: HKKeys.isForUser)
-                if !isLoadingVC {
-                    self.setRoot(.movie)
-                }
             }
         }
     }
     
     func appRequest() {
 #if DEBUG
+        HKConfig.share.isForUser = true
         setRoot(.movie)
 #else
         if HKConfig.share.getPermission() {
@@ -56,11 +52,9 @@ class HKConfig{
             }
         }
 #endif
-        
     }
     
     func setRoot(_ type: rootType) {
-        self.isLoadingVC = false
         DispatchQueue.main.async {
             let vc = HomeViewController()
             let nav = UINavigationController(rootViewController: vc)
@@ -110,6 +104,7 @@ class HKConfig{
     }
     func setPermission(_ able: Bool) {
         UserDefaults.standard.setValue(able, forKey: "Permission")
+        HKConfig.share.isForUser = able
         UserDefaults.standard.synchronize()
     }
     

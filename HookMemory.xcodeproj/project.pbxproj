@@ -148,6 +148,17 @@
 		A7BC83DF2B04615B000912F1 /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7BC83DD2B04615B000912F1 /* LoadingViewController.xib */; };
 		A7BC83E12B0490E1000912F1 /* HKConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BC83E02B0490E1000912F1 /* HKConfig.swift */; };
 		A7BC83E32B04B5C4000912F1 /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BC83E22B04B5C4000912F1 /* ProgressHUD.swift */; };
+		A7C25CEF2B297AA6007218C9 /* HKPurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C25CEE2B297AA6007218C9 /* HKPurchaseViewController.swift */; };
+		A7C25CF82B297AF4007218C9 /* HKBuyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C25CF02B297AF3007218C9 /* HKBuyView.swift */; };
+		A7C25CF92B297AF4007218C9 /* HKUserVipView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7C25CF12B297AF3007218C9 /* HKUserVipView.xib */; };
+		A7C25CFA2B297AF4007218C9 /* HKBuyFailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C25CF22B297AF3007218C9 /* HKBuyFailedView.swift */; };
+		A7C25CFB2B297AF4007218C9 /* HKBuyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7C25CF32B297AF3007218C9 /* HKBuyView.xib */; };
+		A7C25CFC2B297AF4007218C9 /* HKBuySuccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7C25CF42B297AF3007218C9 /* HKBuySuccessView.xib */; };
+		A7C25CFD2B297AF4007218C9 /* HKBuySuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C25CF52B297AF4007218C9 /* HKBuySuccessView.swift */; };
+		A7C25CFE2B297AF4007218C9 /* HKBuyFailedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7C25CF62B297AF4007218C9 /* HKBuyFailedView.xib */; };
+		A7C25CFF2B297AF4007218C9 /* HKUserVipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C25CF72B297AF4007218C9 /* HKUserVipView.swift */; };
+		A7C25D022B297D4C007218C9 /* HKPurchaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C25D002B297D4C007218C9 /* HKPurchaseCell.swift */; };
+		A7C25D032B297D4C007218C9 /* HKPurchaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7C25D012B297D4C007218C9 /* HKPurchaseCell.xib */; };
 		A7C3F9CF2AFC7F520094A15B /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C3F9CD2AFC7F520094A15B /* FilterCell.swift */; };
 		A7C3F9D02AFC7F520094A15B /* FilterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7C3F9CE2AFC7F520094A15B /* FilterCell.xib */; };
 		A7C3F9D22AFC823F0094A15B /* MovieFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C3F9D12AFC823F0094A15B /* MovieFilterViewController.swift */; };
@@ -331,6 +342,17 @@
 		A7BC83DD2B04615B000912F1 /* LoadingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingViewController.xib; sourceTree = "<group>"; };
 		A7BC83E02B0490E1000912F1 /* HKConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKConfig.swift; sourceTree = "<group>"; };
 		A7BC83E22B04B5C4000912F1 /* ProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
+		A7C25CEE2B297AA6007218C9 /* HKPurchaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKPurchaseViewController.swift; sourceTree = "<group>"; };
+		A7C25CF02B297AF3007218C9 /* HKBuyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKBuyView.swift; sourceTree = "<group>"; };
+		A7C25CF12B297AF3007218C9 /* HKUserVipView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HKUserVipView.xib; sourceTree = "<group>"; };
+		A7C25CF22B297AF3007218C9 /* HKBuyFailedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKBuyFailedView.swift; sourceTree = "<group>"; };
+		A7C25CF32B297AF3007218C9 /* HKBuyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HKBuyView.xib; sourceTree = "<group>"; };
+		A7C25CF42B297AF3007218C9 /* HKBuySuccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HKBuySuccessView.xib; sourceTree = "<group>"; };
+		A7C25CF52B297AF4007218C9 /* HKBuySuccessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKBuySuccessView.swift; sourceTree = "<group>"; };
+		A7C25CF62B297AF4007218C9 /* HKBuyFailedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HKBuyFailedView.xib; sourceTree = "<group>"; };
+		A7C25CF72B297AF4007218C9 /* HKUserVipView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKUserVipView.swift; sourceTree = "<group>"; };
+		A7C25D002B297D4C007218C9 /* HKPurchaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKPurchaseCell.swift; sourceTree = "<group>"; };
+		A7C25D012B297D4C007218C9 /* HKPurchaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HKPurchaseCell.xib; sourceTree = "<group>"; };
 		A7C3F9CD2AFC7F520094A15B /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
 		A7C3F9CE2AFC7F520094A15B /* FilterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterCell.xib; sourceTree = "<group>"; };
 		A7C3F9D12AFC823F0094A15B /* MovieFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieFilterViewController.swift; sourceTree = "<group>"; };
@@ -438,6 +460,7 @@
 				A7A938EB2B036C9900232981 /* Photo */,
 				A79066662AF32DBA006A3982 /* Base */,
 				A79D65E52AFB5D6E0094E411 /* Movie */,
+				A7C25CEA2B2979F1007218C9 /* Purchase */,
 				A79BD74C2B07538800AD3508 /* HKPlayer */,
 				A77E07852B021ABD005A813C /* NetWork */,
 				A79E1ABF2B19B4BE00088004 /* Source */,
@@ -514,6 +537,7 @@
 		A79066662AF32DBA006A3982 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				A7BC83E02B0490E1000912F1 /* HKConfig.swift */,
 				A79066672AF32DE5006A3982 /* BaseViewController.swift */,
 				A79066692AF32E07006A3982 /* HookNavigationBar.swift */,
 				A790666B2AF32E16006A3982 /* HookNavigationBar.xib */,
@@ -536,7 +560,6 @@
 				A79D65EF2AFB70B30094E411 /* BaseModel.swift */,
 				A79D65F12AFB77350094E411 /* HKTabBarViewController.swift */,
 				A7A0AE952AFE21E800646494 /* MovieBaseViewController.swift */,
-				A7BC83E02B0490E1000912F1 /* HKConfig.swift */,
 				A7BC83DC2B04615B000912F1 /* LoadingViewController.swift */,
 				A7BC83DD2B04615B000912F1 /* LoadingViewController.xib */,
 				A7BC83E22B04B5C4000912F1 /* ProgressHUD.swift */,
@@ -737,6 +760,48 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		A7C25CEA2B2979F1007218C9 /* Purchase */ = {
+			isa = PBXGroup;
+			children = (
+				A7C25CEB2B297A53007218C9 /* Controller */,
+				A7C25CEC2B297A5D007218C9 /* View */,
+				A7C25CED2B297A67007218C9 /* Model */,
+			);
+			path = Purchase;
+			sourceTree = "<group>";
+		};
+		A7C25CEB2B297A53007218C9 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A7C25CEE2B297AA6007218C9 /* HKPurchaseViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A7C25CEC2B297A5D007218C9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A7C25CF02B297AF3007218C9 /* HKBuyView.swift */,
+				A7C25CF32B297AF3007218C9 /* HKBuyView.xib */,
+				A7C25CF22B297AF3007218C9 /* HKBuyFailedView.swift */,
+				A7C25CF62B297AF4007218C9 /* HKBuyFailedView.xib */,
+				A7C25CF52B297AF4007218C9 /* HKBuySuccessView.swift */,
+				A7C25CF42B297AF3007218C9 /* HKBuySuccessView.xib */,
+				A7C25CF72B297AF4007218C9 /* HKUserVipView.swift */,
+				A7C25CF12B297AF3007218C9 /* HKUserVipView.xib */,
+				A7C25D002B297D4C007218C9 /* HKPurchaseCell.swift */,
+				A7C25D012B297D4C007218C9 /* HKPurchaseCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A7C25CED2B297A67007218C9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -873,6 +938,8 @@
 				A7C3F9D62AFC83D20094A15B /* MovieCell.xib in Resources */,
 				A79066332AF32CE4006A3982 /* Main.storyboard in Resources */,
 				A7A0AE9E2AFE27F000646494 /* Hind-SemiBold.ttf in Resources */,
+				A7C25CF92B297AF4007218C9 /* HKUserVipView.xib in Resources */,
+				A7C25CFC2B297AF4007218C9 /* HKBuySuccessView.xib in Resources */,
 				A7A0AE9D2AFE27F000646494 /* FjallaOne-Regular.ttf in Resources */,
 				A79D65FA2AFB81810094E411 /* MovieListCell.xib in Resources */,
 				A79EA6302B0F38310007104B /* HKPlayEpsListCell.xib in Resources */,
@@ -882,10 +949,13 @@
 				A7C3F9D02AFC7F520094A15B /* FilterCell.xib in Resources */,
 				A7B86B262B269F7000670D6A /* MovieAlertController.xib in Resources */,
 				A79DE76A2B15B1C90029A612 /* HKPlayerLoadingView.xib in Resources */,
+				A7C25CFB2B297AF4007218C9 /* HKBuyView.xib in Resources */,
 				A77E07772B01E91F005A813C /* loading.json in Resources */,
 				A79ED77A2B11A12B009DC462 /* HKPlayerCaptionFullSetView.xib in Resources */,
+				A7C25D032B297D4C007218C9 /* HKPurchaseCell.xib in Resources */,
 				A79F0F842B10A54C00C2729B /* HKPlayerLanguageCell.xib in Resources */,
 				A79D66452B0DA0C70069F359 /* HKPlayerSelectSsnCell.xib in Resources */,
+				A7C25CFE2B297AF4007218C9 /* HKBuyFailedView.xib in Resources */,
 				A7B4E4E72B0B692A0061926C /* HKPlayerRemindView.xib in Resources */,
 				A7B86B292B26E7A400670D6A /* MovieSelectCell.xib in Resources */,
 				A79D664D2B0DFC130069F359 /* MoviePlayHeadCategoryCell.xib in Resources */,
@@ -1092,6 +1162,7 @@
 				A7C3F9DC2AFCAD480094A15B /* MovieSearchViewController.swift in Sources */,
 				A7B86B252B269F7000670D6A /* MovieAlertController.swift in Sources */,
 				A7BC83DE2B04615B000912F1 /* LoadingViewController.swift in Sources */,
+				A7C25CFD2B297AF4007218C9 /* HKBuySuccessView.swift in Sources */,
 				A7A938E82B03096800232981 /* MovieMroeModel.swift in Sources */,
 				A799FE832AF8C49C00840196 /* HKToast.swift in Sources */,
 				A7B4E4E62B0B692A0061926C /* HKPlayerRemindView.swift in Sources */,
@@ -1109,6 +1180,7 @@
 				A799FE852AF8F58100840196 /* UIImage+Extension.swift in Sources */,
 				A77F8CDA2AF4F5CE0031FA77 /* DayDB+CoreDataClass.swift in Sources */,
 				A79D66482B0DF2350069F359 /* MoviePlayHeadCell.swift in Sources */,
+				A7C25CEF2B297AA6007218C9 /* HKPurchaseViewController.swift in Sources */,
 				A79D65E42AFB551E0094E411 /* HKEmptyView.swift in Sources */,
 				A7B4E4DE2B0AF66F0061926C /* VideoDB+CoreDataProperties.swift in Sources */,
 				A79066302AF32CE4006A3982 /* HomeViewController.swift in Sources */,
@@ -1122,6 +1194,7 @@
 				A79D65F02AFB70B30094E411 /* BaseModel.swift in Sources */,
 				A790668C2AF36A8E006A3982 /* ListItemCell.swift in Sources */,
 				A79066872AF34910006A3982 /* MemoryDB+CoreDataClass.swift in Sources */,
+				A7C25CFA2B297AF4007218C9 /* HKBuyFailedView.swift in Sources */,
 				A77F8CDB2AF4F5CE0031FA77 /* DayDB+CoreDataProperties.swift in Sources */,
 				A79D66502B0DFDB00069F359 /* MoviePlayHeadInfoCell.swift in Sources */,
 				A79EA62C2B0F2DB50007104B /* MoviePlaySsnHeadView.swift in Sources */,
@@ -1159,9 +1232,12 @@
 				A790662C2AF32CE4006A3982 /* AppDelegate.swift in Sources */,
 				A79EA6272B0EF93C0007104B /* MoviePlayLikeCell.swift in Sources */,
 				A7C3F9D52AFC83D20094A15B /* MovieCell.swift in Sources */,
+				A7C25CFF2B297AF4007218C9 /* HKUserVipView.swift in Sources */,
 				A7A0AE942AFE1FDD00646494 /* MovieSettingViewController.swift in Sources */,
+				A7C25CF82B297AF4007218C9 /* HKBuyView.swift in Sources */,
 				A79BD7502B0759DD00AD3508 /* HKPlayerLayerView.swift in Sources */,
 				A79B972B2B05FDB700B34210 /* Array+Extension.swift in Sources */,
+				A7C25D022B297D4C007218C9 /* HKPurchaseCell.swift in Sources */,
 				A7C3F9D92AFCA9F20094A15B /* FilterListCell.swift in Sources */,
 				A799C30E2B1EFC6F00FB8E1B /* HKKeys.swift in Sources */,
 				A77F8CDF2AF4F82F0031FA77 /* DBManager.swift in Sources */,
@@ -1351,7 +1427,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5H2KT5RX6H;
+				DEVELOPMENT_TEAM = LQ97XNUM66;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HookMemory/Info.plist;
@@ -1372,7 +1448,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.testbird.HookMemor2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.testbird.HookMemory;
 				PRODUCT_NAME = Haxen;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1391,7 +1467,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5H2KT5RX6H;
+				DEVELOPMENT_TEAM = LQ97XNUM66;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HookMemory/Info.plist;
@@ -1412,7 +1488,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.testbird.HookMemor2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.testbird.HookMemory;
 				PRODUCT_NAME = Haxen;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

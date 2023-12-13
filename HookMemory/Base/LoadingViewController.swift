@@ -28,12 +28,16 @@ class LoadingViewController: UIViewController {
             HKADManager.share.openLoadingSuccessComplete = nil
             self?.endLoading(gotoHome: false)
         }
+        HKADManager.share.tempDismissComplete = {
+            HKConfig.share.appRequest()
+        }
         NotificationCenter.default.addObserver(self, selector: #selector(netWorkChange), name: Notification.Name("netStatus"), object: nil)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.timer?.cancel()
+        HKADManager.share.tempDismissComplete = nil
         HKADManager.share.openLoadingSuccessComplete = nil
     }
     
@@ -83,5 +87,6 @@ class LoadingViewController: UIViewController {
                 HKConfig.share.appRequest()
             }
         }
+        
     }
 }

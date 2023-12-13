@@ -60,6 +60,8 @@ class HomeViewController: BaseViewController {
         
         cusBar.titleL.isHidden = true
         cusBar.middleBtn.isHidden = false
+        cusBar.vipBtn.isHidden = false
+        cusBar.vipBtn.setImage(UIImage(named: "setting"), for: .normal)
         cusBar.rightBtn.setImage(UIImage(named: "setting"), for: .normal)
         cusBar.middleBtn.setImage(UIImage(named: "schedule"), for: .normal)
         cusBar.NaviBarBlock = { [weak self] index in
@@ -70,11 +72,16 @@ class HomeViewController: BaseViewController {
                 }
             }
             switch index {
+            case 0:
+                self.navigationController?.popViewController(animated: true)
             case 1:
                 let vc = SettingViewController()
                 self.navigationController?.pushViewController(vc, animated: true)
-            default:
+            case 2:
                 let vc = ListViewController()
+                self.navigationController?.pushViewController(vc, animated: true)
+            default:
+                let vc = HKPurchaseViewController()
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
