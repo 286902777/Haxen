@@ -57,7 +57,12 @@ class MovieHomeViewController: MovieBaseViewController {
     }
     
     func setUpUI() {
-        let search = SearchView.view()
+        let search = SearchView.view(true)
+        search.clickBlock = { [weak self] in
+            guard let self = self else { return }
+            self.tabBarController?.selectedIndex = 2
+        }
+        
         let tap = UITapGestureRecognizer(target: self, action: #selector(pushSearch))
         search.addGestureRecognizer(tap)
         view.addSubview(search)

@@ -816,11 +816,11 @@ extension HKADManager: MAAdViewAdDelegate {
                 mod.adShowing = false
                 self.setTime(mod.type)
                 self.hk_loadFullAd(type: mod.type, placement: mod.placement)
-                if self.tempDismissComplete != nil {
-                    self.tempDismissComplete!()
-                }
                 break
             }
+        }
+        if self.tempDismissComplete != nil {
+            self.tempDismissComplete!()
         }
     }
     

@@ -36,7 +36,7 @@ class HKConfig{
     func appRequest() {
 #if DEBUG
         HKConfig.share.isForUser = true
-        setRoot(.movie)
+        setRoot(.home)
 #else
         if HKConfig.share.getPermission() {
             HKConfig.share.setRoot(.movie)
@@ -104,12 +104,12 @@ class HKConfig{
     }
     func setPermission(_ able: Bool) {
         UserDefaults.standard.setValue(able, forKey: "Permission")
-        HKConfig.share.isForUser = able
         UserDefaults.standard.synchronize()
     }
     
     func getPermission() -> Bool {
         let able = UserDefaults.standard.bool(forKey: "Permission")
+        HKConfig.share.isForUser = able
         return able
     }
     

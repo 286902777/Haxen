@@ -14,6 +14,11 @@ class MovieBaseViewController: UIViewController {
         return view
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.hex("#141414")
@@ -62,7 +67,6 @@ class MovieBaseViewController: UIViewController {
     }
     
     func addNavBar() {
-        self.navigationController?.navigationBar.isHidden = true
         self.navigationController?.navigationBar.barStyle = .black
         view.addSubview(self.cusBar)
         cusBar.snp.makeConstraints { make in

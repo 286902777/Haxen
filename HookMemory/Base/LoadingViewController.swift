@@ -27,21 +27,22 @@ class LoadingViewController: UIViewController {
         HKADManager.share.openLoadingSuccessComplete = { [weak self] in
             HKADManager.share.openLoadingSuccessComplete = nil
             self?.endLoading(gotoHome: false)
+            HKADManager.share.openLoadingSuccessComplete = nil
         }
         HKADManager.share.tempDismissComplete = {
             HKConfig.share.appRequest()
+            HKADManager.share.tempDismissComplete = nil
         }
         NotificationCenter.default.addObserver(self, selector: #selector(netWorkChange), name: Notification.Name("netStatus"), object: nil)
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         self.timer?.cancel()
-        HKADManager.share.tempDismissComplete = nil
-        HKADManager.share.openLoadingSuccessComplete = nil
     }
     
     deinit {
+        self.timer?.cancel()
         NotificationCenter.default.removeObserver(self)
     }
     

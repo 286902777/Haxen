@@ -16,6 +16,7 @@ class WebViewController: MovieBaseViewController {
         let view = WKWebView()
         return view
     }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()

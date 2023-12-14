@@ -14,47 +14,69 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="91"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uUg-mt-TRJ">
-                    <rect key="frame" x="16" y="49" width="361" height="40"/>
+                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vz2-jA-o4t">
+                    <rect key="frame" x="16" y="51" width="361" height="40"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search Movies &amp; TV Shows" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lI-VG-euJ">
-                            <rect key="frame" x="16" y="13" width="154" height="14.333333333333336"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                            <color key="textColor" red="1" green="1" blue="1" alpha="0.75" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="movie_search" translatesAutoresizingMaskIntoConstraints="NO" id="1n7-4X-0P1">
-                            <rect key="frame" x="331" y="13" width="14" height="14"/>
-                        </imageView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uUg-mt-TRJ">
+                            <rect key="frame" x="0.0" y="0.0" width="361" height="40"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search Movies &amp; TV Shows" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lI-VG-euJ">
+                                    <rect key="frame" x="16" y="13" width="154" height="14.333333333333336"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="0.75" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="movie_search" translatesAutoresizingMaskIntoConstraints="NO" id="1n7-4X-0P1">
+                                    <rect key="frame" x="331" y="13" width="14" height="14"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" red="0.27843137254901962" green="0.22352941176470587" blue="0.2196078431372549" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstItem="5lI-VG-euJ" firstAttribute="leading" secondItem="uUg-mt-TRJ" secondAttribute="leading" constant="16" id="6yd-sn-qN4"/>
+                                <constraint firstAttribute="trailing" secondItem="1n7-4X-0P1" secondAttribute="trailing" constant="16" id="A2s-vQ-HUW"/>
+                                <constraint firstItem="5lI-VG-euJ" firstAttribute="centerY" secondItem="uUg-mt-TRJ" secondAttribute="centerY" id="Xfs-Vs-Ims"/>
+                                <constraint firstItem="1n7-4X-0P1" firstAttribute="centerY" secondItem="uUg-mt-TRJ" secondAttribute="centerY" id="xoq-7D-odo"/>
+                            </constraints>
+                        </view>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Whc-25-wyg">
+                            <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="HIf-96-c6i"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="movie_vip"/>
+                            <connections>
+                                <action selector="clickVipAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="ItF-TY-R1G"/>
+                            </connections>
+                        </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.27843137254901962" green="0.22352941176470587" blue="0.2196078431372549" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstItem="5lI-VG-euJ" firstAttribute="leading" secondItem="uUg-mt-TRJ" secondAttribute="leading" constant="16" id="6yd-sn-qN4"/>
-                        <constraint firstAttribute="trailing" secondItem="1n7-4X-0P1" secondAttribute="trailing" constant="16" id="A2s-vQ-HUW"/>
-                        <constraint firstItem="5lI-VG-euJ" firstAttribute="centerY" secondItem="uUg-mt-TRJ" secondAttribute="centerY" id="Xfs-Vs-Ims"/>
-                        <constraint firstItem="1n7-4X-0P1" firstAttribute="centerY" secondItem="uUg-mt-TRJ" secondAttribute="centerY" id="xoq-7D-odo"/>
-                        <constraint firstAttribute="height" constant="40" id="yhh-U8-jfV"/>
+                        <constraint firstItem="uUg-mt-TRJ" firstAttribute="leading" secondItem="Vz2-jA-o4t" secondAttribute="leading" id="RXD-3R-s14"/>
+                        <constraint firstAttribute="bottom" secondItem="uUg-mt-TRJ" secondAttribute="bottom" id="lKW-rc-1sT"/>
+                        <constraint firstAttribute="height" constant="40" id="rFP-bU-AzV"/>
                     </constraints>
-                </view>
+                </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="viewFlipsideBackgroundColor"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="uUg-mt-TRJ" secondAttribute="bottom" constant="2" id="BUz-r2-lLl"/>
-                <constraint firstItem="uUg-mt-TRJ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="Ntl-cG-Vei"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="uUg-mt-TRJ" secondAttribute="trailing" constant="16" id="d1E-be-rne"/>
+                <constraint firstAttribute="trailing" secondItem="Vz2-jA-o4t" secondAttribute="trailing" constant="16" id="1t1-fQ-sOx"/>
+                <constraint firstItem="Vz2-jA-o4t" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="boj-Oa-NHi"/>
+                <constraint firstAttribute="bottom" secondItem="Vz2-jA-o4t" secondAttribute="bottom" id="zhN-bx-eM8"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="bgView" destination="uUg-mt-TRJ" id="IVP-nC-mAw"/>
                 <outlet property="rightV" destination="1n7-4X-0P1" id="Hnd-13-Qzb"/>
                 <outlet property="titleL" destination="5lI-VG-euJ" id="e4k-ny-fES"/>
+                <outlet property="vipBtn" destination="Whc-25-wyg" id="9eg-bh-olx"/>
             </connections>
             <point key="canvasLocation" x="84.732824427480907" y="8.8028169014084519"/>
         </view>
     </objects>
     <resources>
         <image name="movie_search" width="14" height="14"/>
+        <image name="movie_vip" width="24" height="24"/>
         <systemColor name="viewFlipsideBackgroundColor">
             <color red="0.12156862745098039" green="0.12941176470588237" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

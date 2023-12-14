@@ -9,9 +9,9 @@ import UIKit
 import StoreKit
 
 #if DEBUG
-let vipHost = ""
+let vipHost = "https://apporder.powerfulclean.net"
 #else
-let vipHost = ""
+let vipHost = "https://prodapi.apporder.net"
 #endif
 
 struct HKUserData {
@@ -92,9 +92,7 @@ class HKUserManager: NSObject {
             }
         }
     }
-    
-    var windowList: [String] = []
-    
+        
     var dataArr: [HKUserData] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -118,14 +116,6 @@ class HKUserManager: NSObject {
         self.create()
         
         self.premiumList = [HKUserID.month.rawValue, HKUserID.year.rawValue, HKUserID.week.rawValue]
-        
-        //        if UserDefaults.standard.value(forKey: Remote.premiumWindow) == nil || UserDefaults.standard.value(forKey: Remote.premiumWindow) as! String == "" {
-        //            self.windowList = ["US","MX","BR","CA","CH","DE","PT","GB","BE","IT","FR","ES","NL","ID","SA"]
-        //        } else {
-        //            let jsonString = UserDefaults.standard.value(forKey: Remote.premiumWindow) as! String
-        //            let list = jsonString.components(separatedBy: ",")
-        //            self.windowList = list
-        //        }
         
         var idList: [HKUserData] = []
         for item in self.premiumList {
@@ -166,7 +156,6 @@ class HKUserManager: NSObject {
     
     func restore() {
         if !self.isVip {
-            //            HKLog.premium_retry()
             self.from = .restore
             ProgressHUD.showLoading()
             self.refreshReceipt(from: .restore)
@@ -223,12 +212,12 @@ class HKUserManager: NSObject {
     func getPurchaseData(from: HKPurchaseType = .update) {
         self.from = from
         if canMakePay() {
-            HKLog.log("[内购] 允许内购")
+            HKLog.log("app [内购] 允许内购")
             let productRequest = SKProductsRequest(productIdentifiers: HKUserID.allValueStr)
             productRequest.delegate = self
             productRequest.start()
         } else {
-            HKLog.log("[内购] 不允许内购")
+            HKLog.log("app [内购] 不允许内购")
         }
     }
     /* 准备拉起内购
@@ -258,14 +247,13 @@ class HKUserManager: NSObject {
     /// - Parameter from: 购买/恢复购买/验证
     /// - Parameter source: 调起内购来源页面，用于日志标识
     func verifyByServer(receiptData: String, from: HKPurchaseType, transaction: SKPaymentTransaction?) {
-        
         guard self.task == nil else {
             return
         }
         
         let bodyStr = String(format: "{\"device_id\":\"%@\",\"receipt_base64_data\":\"%@\",\"product_id\":\"%@\",\"package_name\":\"%@\"}", HKConfig.idfv, receiptData, self.productId, self.perBundleID)
         HKLog.log("[内购] bodyString: \(bodyStr)")
-        let url = "https://apporder.powerfulclean.net/v1/ios/receipt-verifier"
+        let url = "\(vipHost)/v1/ios/receipt-verifier"
         var request: URLRequest = URLRequest(url: URL(string: url)!)
         request.httpMethod = "POST"
         let data = bodyStr.data(using: .utf8)
@@ -338,7 +326,6 @@ class HKUserManager: NSObject {
             }
         })
         self.task?.resume()
-        
     }
     
     func buyError(productId: String, error: String?) {
@@ -399,10 +386,8 @@ extension HKUserManager: SKProductsRequestDelegate, SKPaymentTransactionObserver
     func request(_ request: SKRequest, didFailWithError error: Error) {
         if self.from == .restore {
             HKLog.log("[内购] 恢复购买失败: \(error.localizedDescription)")
-            
-            //            ProgressHUD.dismiss()
-            //            toast(MTCommonManager.localizedString(key: "Restore purchase failed!"))
-            toast("Restore purchase failed!")
+            ProgressHUD.dismiss()
+            ProgressHUD.showError("Restore purchase failed!")
         } else {
             HKLog.log("[内购] 产品请求失败: \(error.localizedDescription)")
         }
@@ -428,7 +413,7 @@ extension HKUserManager: SKProductsRequestDelegate, SKPaymentTransactionObserver
                 HKLog.log("[内购] 已经购买过")
                 self.fetchReceiptData(product: self.productId, from: self.from, transaction: transaction)
                 self.getPurchaseData(from: .updatePrice)
-            @unknown default:
+            default:
                 HKLog.log("[内购] 未知错误")
                 self.finishTransaction(transaction: transaction)
                 self.buyError(productId: self.productId, error: transaction.error?.localizedDescription)

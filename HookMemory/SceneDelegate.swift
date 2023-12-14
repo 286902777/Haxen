@@ -38,6 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func sceneWillEnterForeground(_ scene: UIScene) {
         HKTBAManager.share.setHktbaParams(type: .session)
+        HKUserManager.share.refreshReceipt(from: .update)
         if !first {
             DispatchQueue.main.asyncAfter(deadline: .now()) {
                 if HKConfig.currentVC()?.isKind(of: MoviePlayViewController.self) == false {
@@ -53,12 +54,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {
-        // Called as the scene transitions from the foreground to the background.
-        // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
-        
-        // Save changes in the application's managed object context when the application transitions to the background.
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+        HKUserManager.share.request.cancel()
+        HKUserManager.share.task?.cancel()
+        HKUserManager.share.task = nil
     }
     
 //    func windowScene(_ windowScene: UIWindowScene, didUpdate previousCoordinateSpace: UICoordinateSpace, interfaceOrientation previousInterfaceOrientation: UIInterfaceOrientation, traitCollection previousTraitCollection: UITraitCollection) {

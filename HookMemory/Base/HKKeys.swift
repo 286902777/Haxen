@@ -28,4 +28,7 @@ class HKKeys {
     static let expires_date_ms = "expires_date_ms"
     static let product_id = "product_id"
     static let auto_renew_status = "auto_renew_status"
+    
+    /// email
+    static let email = "stefanbender667@hotmail.com"
 }
