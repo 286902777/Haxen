@@ -209,7 +209,7 @@ class HKUserVipView: UIView {
     @IBAction func clickPayAction(_ sender: Any) {
         HKLog.log("pushPay")
         if let premiumID = UserDefaults.standard.value(forKey: HKKeys.product_id) as? String {
-            HKUserManager.share.buyProduct(premiumID, from: .buy)
+            HKUserManager.share.goBuyProduct(premiumID, from: .buy)
         }
     }
 }

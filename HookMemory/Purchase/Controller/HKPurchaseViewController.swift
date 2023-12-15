@@ -29,16 +29,13 @@ class HKPurchaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         HKUserManager.share.refreshReceipt(from: .update)
-        
         setUI()
         NotificationCenter.default.addObserver(forName: Noti_VipChange, object: nil, queue: .main) { [weak self] _ in
             DispatchQueue.main.async {
                 self?.updateViews()
             }
         }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -109,17 +106,3 @@ class HKPurchaseViewController: UIViewController {
         }
     }
 }
-
-//extension HKPurchaseViewController: UIScrollViewDelegate {
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let setY = scrollView.contentOffset.y
-//        if setY < 0 {
-//            self.cusBar.titleL.alpha = 0
-//        } else if setY >= 44 {
-//            self.cusBar.titleL.alpha = 1
-//        } else {
-//            let alpha = setY / 44
-//            self.cusBar.titleL.alpha = alpha
-//        }
-//    }
-//}

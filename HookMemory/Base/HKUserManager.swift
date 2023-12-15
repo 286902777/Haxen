@@ -216,26 +216,26 @@ class HKUserManager: NSObject {
     }
     
     // 获取reciptData
-    func fetchReceiptData(product: Any?, from: HKPurchaseType, transaction: SKPaymentTransaction? = nil) {
+    func getReceiptData(product: Any?, from: HKPurchaseType, transaction: SKPaymentTransaction? = nil) {
         if let reciptURL = Bundle.main.appStoreReceiptURL, FileManager.default.fileExists(atPath: reciptURL.path) {
             do {
                 let reciptData = try Data(contentsOf: reciptURL, options: .alwaysMapped)
                 if reciptData.count > 0 {
-                    self.verifyByServer(receiptData: reciptData.base64EncodedString(options: []), from: from, transaction: transaction)
+                    self.checkByServer(receiptData: reciptData.base64EncodedString(options: []), from: from, transaction: transaction)
                 }
             } catch {
                 ProgressHUD.dismiss()
                 if from == .buy || from == .restore {
                     ProgressHUD.showError("Failed to get ticket!")
                 }
-                self.buyError(productId: self.productId, error: "Failed to get ticket!")
+                self.showError(productId: self.productId, error: "Failed to get ticket!")
             }
         } else {
             ProgressHUD.dismiss()
             if from == .buy || from == .restore {
                 ProgressHUD.showError("Failed to get ticket!")
             }
-            self.buyError(productId: self.productId, error: "Failed to get ticket!")
+            self.showError(productId: self.productId, error: "Failed to get ticket!")
         }
     }
     
@@ -256,7 +256,7 @@ class HKUserManager: NSObject {
      // - Parameter from: 购买/恢复购买/验证
      // - Parameter source: 调起内购来源页面，用于日志标识
      */
-    func buyProduct(_ productId: String, from: HKPurchaseType) {
+    func goBuyProduct(_ productId: String, from: HKPurchaseType) {
         ProgressHUD.showLoading()
         self.productId = productId
         self.from = from
@@ -265,7 +265,7 @@ class HKUserManager: NSObject {
             SKPaymentQueue.default().add(payment)
         } else {
             ProgressHUD.showError("Failed to get product!")
-            self.buyError(productId: self.productId, error: "Failed to get product!")
+            self.showError(productId: self.productId, error: "Failed to get product!")
             let payment = SKMutablePayment()
             payment.productIdentifier = productId
             payment.quantity = 1
@@ -276,7 +276,7 @@ class HKUserManager: NSObject {
     /// admin 内购校验
     /// - Parameter from: 购买/恢复购买/验证
     /// - Parameter source: 调起内购来源页面，用于日志标识
-    func verifyByServer(receiptData: String, from: HKPurchaseType, transaction: SKPaymentTransaction?) {
+    func checkByServer(receiptData: String, from: HKPurchaseType, transaction: SKPaymentTransaction?) {
         guard self.task == nil else {
             return
         }
@@ -302,7 +302,7 @@ class HKUserManager: NSObject {
                 switch from {
                 case .buy:
                     self.showBuyFailed(.buy)
-                    self.buyError(productId: self.productId, error: error?.localizedDescription)
+                    self.showError(productId: self.productId, error: error?.localizedDescription)
                 case .restore:
                     self.showBuyFailed(.restore)
                 default:
@@ -332,7 +332,7 @@ class HKUserManager: NSObject {
                                 switch from {
                                 case .buy:
                                     self.showBuyFailed(.buy)
-                                    self.buyError(productId: self.productId, error: "severs error")
+                                    self.showError(productId: self.productId, error: "severs error")
                                 case .restore:
                                     self.showBuyFailed(.restore)
                                 default:
@@ -345,7 +345,7 @@ class HKUserManager: NSObject {
                     switch from {
                     case .buy:
                         self.showBuyFailed(.buy)
-                        self.buyError(productId: self.productId, error: "\(res.statusCode)")
+                        self.showError(productId: self.productId, error: "\(res.statusCode)")
                     case .restore:
                         self.showBuyFailed(.restore)
                     default:
@@ -357,7 +357,7 @@ class HKUserManager: NSObject {
         self.task?.resume()
     }
     
-    func buyError(productId: String, error: String?) {
+    func showError(productId: String, error: String?) {
         ProgressHUD.dismiss()
         switch from {
         case .buy, .restore:
@@ -415,27 +415,27 @@ extension HKUserManager: SKProductsRequestDelegate, SKPaymentTransactionObserver
                 HKLog.log("[内购] 交易延期")
             case .purchased:
                 HKLog.log("[内购] 交易完成")
-                self.fetchReceiptData(product: self.productId, from: self.from, transaction: transaction)
+                self.getReceiptData(product: self.productId, from: self.from, transaction: transaction)
                 self.getPurchaseData(from: .updatePrice)
             case .failed:
                 HKLog.log("[内购] 交易失败")
                 self.finishTransaction(transaction: transaction)
-                self.buyError(productId: self.productId, error: transaction.error?.localizedDescription)
+                self.showError(productId: self.productId, error: transaction.error?.localizedDescription)
             case .restored:
                 HKLog.log("[内购] 已经购买过")
-                self.fetchReceiptData(product: self.productId, from: self.from, transaction: transaction)
+                self.getReceiptData(product: self.productId, from: self.from, transaction: transaction)
                 self.getPurchaseData(from: .updatePrice)
             default:
                 HKLog.log("[内购] 未知错误")
                 self.finishTransaction(transaction: transaction)
-                self.buyError(productId: self.productId, error: transaction.error?.localizedDescription)
+                self.showError(productId: self.productId, error: transaction.error?.localizedDescription)
             }
         }
     }
     
     func requestDidFinish(_ request: SKRequest) {
         if self.from == .restore || self.from == .update {
-            self.fetchReceiptData(product: nil, from: from)
+            self.getReceiptData(product: nil, from: from)
         }
     }
     
@@ -462,58 +462,6 @@ extension HKUserManager {
             }
         }
     }
-}
-extension HKUserManager {
-    //    func math(numberStr: String, day: Double) -> String {
-    //        var pointNumber = 0
-    //        let price = Double(numberStr) ?? 0.0
-    //
-    //        if numberStr.contains(".") {
-    //            let follow = numberStr.components(separatedBy: ".").last
-    //            pointNumber = follow?.count ?? 0
-    //            if follow == "0" {
-    //                pointNumber = 0
-    //            }
-    //        }
-    //
-    //        let dayPrice = self.interceptionDecimal(pointNumber, number: price / day)
-    //
-    //        return self.newStrBy(pointNumber: pointNumber, dayPrice: dayPrice)
-    //    }
-    
-    //    func newStrBy(pointNumber: Int, dayPrice: Double) -> String {
-    //        var newStr = String(format: "%.\(pointNumber)f", dayPrice)
-    //
-    ////        var minusStr = "9"
-    ////        if pointNumber > 0 {
-    ////            var magicStr = ""
-    ////            for _ in 0..<pointNumber - 1 {
-    ////                magicStr += "0"
-    ////            }
-    ////
-    ////            minusStr = magicStr == "" ? "0.9" : "0." + magicStr + "9"
-    ////        }
-    ////
-    ////        if let minus = Double(minusStr), dayPrice > minus {
-    ////            newStr = String(format: "%.\(pointNumber)f", dayPrice - minus)
-    ////            let range = newStr.index(newStr.endIndex, offsetBy: -1) ..< newStr.endIndex
-    ////            newStr.replaceSubrange(range, with: "9")
-    ////        }
-    //
-    //        return newStr
-    //    }
-    //
-    //    func interceptionDecimal(_ base: Int, number: Double) -> Double {
-    //        let format = NumberFormatter()
-    //        format.numberStyle = .decimal
-    //        format.minimumFractionDigits = base
-    //        format.maximumFractionDigits = base
-    //        format.formatterBehavior = .default
-    //        format.roundingMode = .down
-    //        let string = format.string(from: NSNumber(value: number)) ?? ""
-    //        let string2 = string.replacingOccurrences(of: ",", with: "")
-    //        return Double(string2) ?? 0.0
-    //    }
 }
 
 class HKPremiuModel: BaseModel {

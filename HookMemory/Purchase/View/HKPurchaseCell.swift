@@ -21,9 +21,9 @@ class HKPurchaseCell: UITableViewCell {
         }
     }
     
-    var isChoose = false {
+    var isSelelct = false {
         didSet {
-            if isChoose {
+            if isSelelct {
                 backView.layer.borderWidth = 2
                 if HKConfig.share.isForUser {
                     backView.layer.borderColor = UIColor.hex("#FF4131").cgColor
@@ -42,4 +42,17 @@ class HKPurchaseCell: UITableViewCell {
         }
     }
     
+    func setModel(_ model: HKUserData) {
+        self.titleLabel.text = model.title
+        self.costLabel.text = model.price
+        self.tipLabel.isHidden = model.tag.count == 0
+        self.tipLabel.text = model.tag
+        if model.isLine {
+            let worldAttrStr: NSMutableAttributedString = NSMutableAttributedString(string: model.subTitle)
+            worldAttrStr.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSRange(location: 0, length: model.subTitle.count))
+            self.infoLabel.attributedText = worldAttrStr
+        } else {
+            self.infoLabel.text = model.subTitle
+        }
+    }
 }

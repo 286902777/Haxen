@@ -204,7 +204,7 @@ class HKBuyView: UIView {
     
     @objc func pushPay(gesture: UITapGestureRecognizer) {
         HKLog.log("pushPay")
-        HKUserManager.share.buyProduct(self.selectData?.premiumID.rawValue ?? HKUserID.month.rawValue, from: .buy)
+        HKUserManager.share.goBuyProduct(self.selectData?.premiumID.rawValue ?? HKUserID.month.rawValue, from: .buy)
     }
     
     @objc func gotoRestore(gesture: UITapGestureRecognizer) {
@@ -227,28 +227,14 @@ extension HKBuyView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: HKPurchaseCell.self)) as! HKPurchaseCell
-        cell.selectionStyle = .none
-        
-        let data = HKUserManager.share.dataArr[indexPath.row]
-        if data.premiumID == self.selectData?.premiumID {
-            cell.isChoose = true
-        } else {
-            cell.isChoose = false
+        if let model = HKUserManager.share.dataArr.safe(indexPath.row) {
+            if model.premiumID == self.selectData?.premiumID {
+                cell.isSelelct = true
+            } else {
+                cell.isSelelct = false
+            }
+            cell.setModel(model)
         }
-        
-        cell.titleLabel.text = data.title
-        cell.costLabel.text = data.price
-        cell.tipLabel.isHidden = data.tag.count == 0
-        cell.tipLabel.text = data.tag
-        
-        if data.isLine {
-            let worldAttrStr: NSMutableAttributedString = NSMutableAttributedString(string: data.subTitle)
-            worldAttrStr.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSRange(location: 0, length: data.subTitle.count))
-            cell.infoLabel.attributedText = worldAttrStr
-        } else {
-            cell.infoLabel.text = data.subTitle
-        }
-        
         return cell
     }
     
