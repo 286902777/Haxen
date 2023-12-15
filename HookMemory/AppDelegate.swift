@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         initGADMobileAds()
         HKUserManager.share.getPurchaseData()
 #if DEBUG
-        HKUserManager.share.isVip = false
+//        HKUserManager.share.isVip = false
 #else
         ApplicationDelegate.shared.application(application,didFinishLaunchingWithOptions: launchOptions)
         Settings.shared.isAdvertiserTrackingEnabled = true

@@ -86,10 +86,12 @@ extension MovieSettingViewController: UITableViewDelegate, UITableViewDataSource
         case 2:
             let vc = FeedBackViewController()
             vc.titleName = dataArr[indexPath.row]
+            vc.isMovie = true
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         default:
-            self.adTestTool()
+            break
+//            self.adTestTool()
         }
     }
     

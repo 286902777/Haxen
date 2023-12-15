@@ -100,21 +100,21 @@ class MoviePlayViewController: UIViewController {
         setUI()
         setupHKPlayerManager()
         setResource()
-        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { _ in
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.player.pause()
-                self.player.playerLayer?.playerLayer?.player = nil
-            }
-        }
-        
-        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { _ in
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.player.playerLayer?.playerLayer?.player = self.player.playerLayer?.player
-                self.player.play()
-            }
-        }
+//        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { _ in
+//            DispatchQueue.main.async { [weak self] in
+//                guard let self = self else { return }
+//                self.player.pause()
+//                self.player.playerLayer?.playerLayer?.player = nil
+//            }
+//        }
+//        
+//        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { _ in
+//            DispatchQueue.main.async { [weak self] in
+//                guard let self = self else { return }
+//                self.player.playerLayer?.playerLayer?.player = self.player.playerLayer?.player
+//                self.player.play()
+//            }
+//        }
         
         NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }

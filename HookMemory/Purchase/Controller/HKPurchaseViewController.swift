@@ -44,9 +44,8 @@ class HKPurchaseViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
-        self.buyView.selectData = HKUserManager.share.dataArr.first
+        self.buyView.selectData = HKUserManager.share.dataArr.first(where: {$0.oldPrice.isEmpty == false})
         HKUserManager.share.getPurchaseData()
-        HKUserManager.share.isVip = !HKUserManager.share.isVip
         self.updateViews()
     }
     
@@ -100,22 +99,8 @@ class HKPurchaseViewController: UIViewController {
             self.vipView.isHidden = false
             self.vipView.hdView.isHidden = !HKConfig.share.isForUser
             self.scrollView.contentSize = CGSize(width: kScreenWidth, height: imgH + 570)
-
-            if let status = UserDefaults.standard.value(forKey: HKKeys.auto_renew_status) as? String, let time = UserDefaults.standard.value(forKey: HKKeys.expires_date_ms) as? Double {
-                if status == "1" {
-                    self.vipView.centerLabel.text = "Auto-Renewal Active"
-                } else {
-                    let date = Date(timeIntervalSince1970: time / 1000)
-                    let dateformatter = DateFormatter()
-                    dateformatter.dateFormat = "yyyy-MM-dd"
-                    let dateString = dateformatter.string(from: date as Date)
-                    self.vipView.centerLabel.text = "Cancel On : \(dateString)"
-                }
-            }
+            self.vipView.updateUI()
             
-            if let premiumID = UserDefaults.standard.value(forKey: HKKeys.product_id) as? String, let data = HKUserManager.share.dataArr.first(where: { $0.premiumID.rawValue == premiumID }) {
-                self.vipView.planLabel.text = data.title
-            }
         } else {
             self.scrollView.contentSize = CGSize(width: kScreenWidth, height: imgH + 688)
             self.buyView.isHidden = false

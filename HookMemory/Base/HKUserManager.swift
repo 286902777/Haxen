@@ -17,6 +17,7 @@ let vipHost = "https://prodapi.apporder.net"
 struct HKUserData {
     var premiumID: HKUserID = .month
     var price = ""
+    var oldPrice = ""
     var title = ""
     var subTitle = ""
     var tag = ""
@@ -27,13 +28,13 @@ struct HKUserData {
 enum HKUserID: String {
     
 #if DEBUG
-    case week = "weekly_movie_cgfloat"
-    case month = "monthly_movie_cgfloat"
-    case year = "yearly_movie_cgfloat"
+    case week = "haxen_123_week"
+    case month = "haxen_123_month"
+    case year = "haxen_123_year"
 #else
-    case week = "weezer_premium_weekly"
-    case month = "weezer_premium_yearly"
-    case year = "weezer_premium_permanent"
+    case week = "haxen_premium_week"
+    case month = "haxen_premium_month"
+    case year = "haxen_premium_year"
 #endif
     
     static var allValueStr: Set<String>{
@@ -52,9 +53,8 @@ enum HKPurchaseType: Int {
 var purMoneyWeek = "$1.99"
 var purMoneyMonth = "$4.99"
 var purMoneyYear = "$29.99"
-var lifetimeMoney = "$49.99"
 var purMoneyYearCut = "$120"
-var purCurrencySymbol = "$"            // 货币单位
+//var purCurrencySymbol = "$"            // 货币单位
 
 class HKUserManager: NSObject {
     
@@ -72,9 +72,9 @@ class HKUserManager: NSObject {
     var regionCode: String = ""
     var currencyCode: String = ""
     
-    var week = HKUserData(premiumID: .week, price: purMoneyWeek, title: "Weekly", subTitle: "For the per week", tag: "", isLine: false)
-    var month = HKUserData(premiumID: .month, price: purMoneyMonth, title: "Monthly", subTitle: "For the per month", tag: "", isLine: false)
-    var year = HKUserData(premiumID: .year, price: purMoneyYear, title: "Annually", subTitle: purMoneyYearCut, tag: "-70%", isLine: true)
+    var week = HKUserData(premiumID: .week, price: purMoneyWeek, oldPrice: "", title: "Weekly", subTitle: "For the per week", tag: "", isLine: false)
+    var month = HKUserData(premiumID: .month, price: purMoneyMonth, oldPrice: "",  title: "Monthly", subTitle: "For the per month", tag: "", isLine: false)
+    var year = HKUserData(premiumID: .year, price: purMoneyYear, oldPrice: "",  title: "Annually", subTitle: purMoneyYearCut, tag: "-70%", isLine: true)
     
     var premiumList: [String] = [] {
         didSet {
@@ -137,11 +137,42 @@ class HKUserManager: NSObject {
         self.destroy()
     }
     
-    func reloadLists() {
-        self.week = HKUserData(premiumID: .week, price: purMoneyWeek, title: "Weekly", subTitle: "For the per week", tag: "", isLine: false)
-        self.month = HKUserData(premiumID: .month, price: purMoneyMonth, title: "Monthly", subTitle: "For the per month", tag: "", isLine: false)
-        self.year = HKUserData(premiumID: .year, price: purMoneyYear, title: "Annually", subTitle: purMoneyYearCut, tag: "-70%", isLine: true)
-        self.dataArr = [self.month, self.year, self.week]
+    func reloadLists(arr: [SKProduct]) {
+        self.dataArr.removeAll()
+        let form = NumberFormatter.init()
+        form.numberStyle = .currencyAccounting
+        form.usesGroupingSeparator = true
+        for (_, model) in arr.enumerated() {
+            var price: String = ""
+            var oldPrice: String = ""
+            if let p = model.introductoryPrice?.price, let op = form.string(from: p) {
+                price = op
+                if let op = form.string(from: model.price) {
+                    oldPrice = op
+                }
+            } else {
+                if let p = form.string(from: model.price) {
+                    price = p
+                }
+            }
+            
+            switch HKUserID(rawValue: model.productIdentifier) {
+            case .week:
+                purMoneyWeek = price
+//                purCurrencySymbol = form.currencySymbol
+                self.week = HKUserData(premiumID: .week, price: purMoneyWeek, oldPrice: oldPrice, title: "Weekly", subTitle: "For the per week", tag: "", isLine: false)
+            case .month:
+                purMoneyMonth = price
+                self.month = HKUserData(premiumID: .month, price: purMoneyMonth, oldPrice: oldPrice, title: "Monthly", subTitle: "For the per month", tag: "", isLine: false)
+            case .year:
+                purMoneyYear = price
+                purMoneyYearCut = form.string(from: (model.price.doubleValue / 0.3) as NSNumber) ?? "$120"
+                self.year = HKUserData(premiumID: .year, price: purMoneyYear, oldPrice: oldPrice, title: "Annually", subTitle: purMoneyYearCut, tag: "-70%", isLine: true)
+            case .none:
+                break
+            }
+            self.dataArr = [self.month, self.year, self.week]
+        }
     }
     
     // 加入Queue
@@ -226,14 +257,13 @@ class HKUserManager: NSObject {
      // - Parameter source: 调起内购来源页面，用于日志标识
      */
     func buyProduct(_ productId: String, from: HKPurchaseType) {
+        ProgressHUD.showLoading()
         self.productId = productId
         self.from = from
-        ProgressHUD.showLoading()
         if let product = self.productsArray.first(where: { $0.productIdentifier == productId }) {
             let payment = SKPayment(product: product)
             SKPaymentQueue.default().add(payment)
         } else {
-            ProgressHUD.dismiss()
             ProgressHUD.showError("Failed to get product!")
             self.buyError(productId: self.productId, error: "Failed to get product!")
             let payment = SKMutablePayment()
@@ -250,7 +280,6 @@ class HKUserManager: NSObject {
         guard self.task == nil else {
             return
         }
-        
         let bodyStr = String(format: "{\"device_id\":\"%@\",\"receipt_base64_data\":\"%@\",\"product_id\":\"%@\",\"package_name\":\"%@\"}", HKConfig.idfv, receiptData, self.productId, self.perBundleID)
         HKLog.log("[内购] bodyString: \(bodyStr)")
         let url = "\(vipHost)/v1/ios/receipt-verifier"
@@ -359,25 +388,9 @@ extension HKUserManager: SKProductsRequestDelegate, SKPaymentTransactionObserver
         form.usesGroupingSeparator = true
         self.regionCode = form.locale.regionCode ?? ""
         self.currencyCode = form.currencyCode
-        
-        for product in self.productsArray {
-            HKLog.log("[内购] 产品价格: \(product.productIdentifier) \(product.price)")
-            form.locale = product.priceLocale
-            switch product.productIdentifier {
-            case HKUserID.week.rawValue:
-                purMoneyWeek = form.string(from: product.price) ?? "$1.99"
-                purCurrencySymbol = form.currencySymbol
-            case HKUserID.month.rawValue:
-                purMoneyMonth = form.string(from: product.price) ?? "$4.99"
-            case HKUserID.year.rawValue:
-                purMoneyYear = form.string(from: product.price) ?? "$29.99"
-                purMoneyYearCut = form.string(from: (product.price.doubleValue / 0.3) as NSNumber) ?? "$120"
-            default:
-                break
-            }
-        }
+        ProgressHUD.dismiss()
         DispatchQueue.main.async {
-            self.reloadLists()
+            self.reloadLists(arr: self.productsArray)
         }
         
     }
@@ -400,7 +413,6 @@ extension HKUserManager: SKProductsRequestDelegate, SKPaymentTransactionObserver
                 HKLog.log("[内购] 商品添加进列表")
             case .deferred:
                 HKLog.log("[内购] 交易延期")
-                ProgressHUD.dismiss()
             case .purchased:
                 HKLog.log("[内购] 交易完成")
                 self.fetchReceiptData(product: self.productId, from: self.from, transaction: transaction)
@@ -418,7 +430,6 @@ extension HKUserManager: SKProductsRequestDelegate, SKPaymentTransactionObserver
                 self.finishTransaction(transaction: transaction)
                 self.buyError(productId: self.productId, error: transaction.error?.localizedDescription)
             }
-            
         }
     }
     
@@ -433,14 +444,22 @@ extension HKUserManager {
     func showBuySuccess(_ type: HKPurchaseType) {
         let text: String = type == .buy ? "Subscription Success!" : "Restore Success!"
         DispatchQueue.main.async {
-            HKConfig.currentVC()?.view.addSubview(HKBuySuccessView.viewWithTitle(text))
+            let view = HKBuySuccessView.viewWithTitle(text)
+            HKConfig.currentVC()?.view.addSubview(view)
+            view.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
         }
     }
     
     func showBuyFailed(_ type: HKPurchaseType) {
         let text: String = type == .buy ? "Subscription Failed Please Retry!" : "Restore Failed Please Retry!"
         DispatchQueue.main.async {
-            HKConfig.currentVC()?.view.addSubview(HKBuyFailedView.viewWithTitle(text))
+            let view = HKBuyFailedView.viewWithTitle(text)
+            HKConfig.currentVC()?.view.addSubview(view)
+            view.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
         }
     }
 }
