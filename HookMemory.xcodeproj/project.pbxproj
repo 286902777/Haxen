@@ -815,7 +815,7 @@
 				A79066262AF32CE4006A3982 /* Resources */,
 				1E2D0BAA9C4D1599445527CB /* [CP] Embed Pods Frameworks */,
 				A7D3CA9C2B16CDAF006AA727 /* ShellScript */,
-				4C39637AD41CCEFD110757E6 /* [CP] Copy Pods Resources */,
+				0020BC1C956E6795265895D0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -854,7 +854,7 @@
 				A79066482AF32CE6006A3982 /* Frameworks */,
 				A79066492AF32CE6006A3982 /* Resources */,
 				E2652BC2F7268D4A3D08895D /* [CP] Embed Pods Frameworks */,
-				48A6546CDCDA1202953C934E /* [CP] Copy Pods Resources */,
+				BCB40A908A856E7BA961BF34 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -979,6 +979,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0020BC1C956E6795265895D0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HookMemory/Pods-HookMemory-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HookMemory/Pods-HookMemory-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HookMemory/Pods-HookMemory-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		1E2D0BAA9C4D1599445527CB /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1040,40 +1057,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		48A6546CDCDA1202953C934E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HookMemory-HookMemoryUITests/Pods-HookMemory-HookMemoryUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HookMemory-HookMemoryUITests/Pods-HookMemory-HookMemoryUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HookMemory-HookMemoryUITests/Pods-HookMemory-HookMemoryUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4C39637AD41CCEFD110757E6 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HookMemory/Pods-HookMemory-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HookMemory/Pods-HookMemory-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HookMemory/Pods-HookMemory-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		6908A973ACBFDAC9BFF4DF86 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1114,6 +1097,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
+		BCB40A908A856E7BA961BF34 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HookMemory-HookMemoryUITests/Pods-HookMemory-HookMemoryUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HookMemory-HookMemoryUITests/Pods-HookMemory-HookMemoryUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HookMemory-HookMemoryUITests/Pods-HookMemory-HookMemoryUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		E2652BC2F7268D4A3D08895D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -12,6 +12,7 @@ import AppTrackingTransparency
 import Alamofire
 import SVProgressHUD
 import FirebaseCore
+import FirebaseMessaging
 import GoogleMobileAds
 import AppLovinSDK
 import StoreKit
@@ -59,6 +60,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Settings.shared.isAutoLogAppEventsEnabled = true
         Settings.shared.isCodelessDebugLogEnabled = false
 #endif
+        Messaging.messaging().delegate = self
+        Messaging.messaging().token { token, error in
+          if let error = error {
+            print("Error fetching FCM registration token: \(error)")
+          } else if let token = token {
+            print("FCM registration token: \(token)")
+          }
+        }
+        UNUserNotificationCenter.current().delegate = self
+        application.registerForRemoteNotifications()
         return true
     }
     /// TrackingAuth
@@ -100,12 +111,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         HKTBAManager.share.initSet()
 
         GADMobileAds.sharedInstance().start { status in
-            
             // Optional: Log each adapter's initialization latency.
             let adapterStatuses = status.adapterStatusesByClassName
             for adapter in adapterStatuses {
                 let adapterStatus = adapter.value
-                NSLog("[Ad] Adapter Name: %@, Description: %@, Latency: %f", adapter.key,
+                NSLog("Ad Name: %@, Description: %@, Latency: %f", adapter.key,
                       adapterStatus.description, adapterStatus.latency)
             }
             
@@ -141,17 +151,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let container = NSPersistentContainer(name: "HookMemory")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                
-                /*
-                 Typical reasons for an error here include:
-                 * The parent directory does not exist, cannot be created, or disallows writing.
-                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                 * The device is out of space.
-                 * The store could not be migrated to the current model version.
-                 Check the error message to determine what the actual problem was.
-                 */
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
@@ -183,3 +182,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate {
+    
+    // Receive displayed notifications for iOS 10 devices.
+      func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                  willPresent notification: UNNotification) async
+        -> UNNotificationPresentationOptions {
+        let userInfo = notification.request.content.userInfo
+
+        print(userInfo)
+
+        return [[.alert, .sound]]
+      }
+
+      func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                  didReceive response: UNNotificationResponse) async {
+        let userInfo = response.notification.request.content.userInfo
+
+        print(userInfo)
+      }
+    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+      print("Firebase registration token: \(String(describing: fcmToken))")
+
+      let dataDict: [String: String] = ["token": fcmToken ?? ""]
+      NotificationCenter.default.post(
+        name: Notification.Name("FCMToken"),
+        object: nil,
+        userInfo: dataDict
+      )
+    }
+}
+
+@available(iOS, introduced: 15.7, obsoleted: 16.0)
+@objc extension SKStoreProductViewController {
+    func sceneDisconnected(_ arg: AnyObject) {}
+    func appWillTerminate() {}
+}
