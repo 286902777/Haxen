@@ -204,6 +204,18 @@ class HKBuyView: UIView {
     
     @objc func pushPay(gesture: UITapGestureRecognizer) {
         HKLog.log("pushPay")
+        var t: String = "1"
+        switch self.selectData?.premiumID {
+        case .week:
+            t = "3"
+        case .month:
+            t = "1"
+        case .year:
+            t = "2"
+        case nil:
+            break
+        }
+        HKLog.hk_vip_cl(kid: "1", type: t, source: "1")
         HKUserManager.share.goBuyProduct(self.selectData?.premiumID.rawValue ?? HKUserID.month.rawValue, from: .buy)
     }
     
@@ -212,6 +224,18 @@ class HKBuyView: UIView {
         if let restoreRange = self.restoreRange {
             if gesture.didTapAttributedTextInLabel(label: self.restoreLabel, inRange: restoreRange) {
                 HKLog.log("gotoRestore")
+                var t: String = "1"
+                switch self.selectData?.premiumID {
+                case .week:
+                    t = "3"
+                case .month:
+                    t = "1"
+                case .year:
+                    t = "2"
+                case nil:
+                    break
+                }
+                HKLog.hk_vip_cl(kid: "2", type: t, source: "1")
                 HKUserManager.share.restore()
             }
         }

@@ -46,6 +46,7 @@ class HKPurchaseViewController: UIViewController {
         } else {
             self.buyView.selectData = HKUserManager.share.dataArr.first
         }
+        HKLog.hk_vip_sh(source: "1")
         HKUserManager.share.getPurchaseData()
         self.updateViews()
     }

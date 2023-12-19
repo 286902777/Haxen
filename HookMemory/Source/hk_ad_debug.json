@@ -6,10 +6,10 @@
     "hk_play_point_time": 120,
     "hk_open": [
         {
-            "id": "ca-app-pub-3940256099942544/4411468910",
-            "level": 1,
-            "type": "inTerstitial",
-            "source": "admob"
+            "id": "1ff4d0a101522ccc",
+            "level": 3,
+            "type": "interstitial",
+            "source": "Max"
         }
     ],
     "hk_play": [

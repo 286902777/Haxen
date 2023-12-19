@@ -10,6 +10,7 @@ import MessageUI
 
 class HKUserVipView: UIView {
 
+    private var t: String = "1"
     @IBOutlet weak var planLabel: UILabel!
     
     @IBOutlet weak var centerLabel: UILabel!
@@ -141,6 +142,14 @@ class HKUserVipView: UIView {
                     self.payBtn.setTitle("Pay \(data.oldPrice)", for: .normal)
                     self.payL.text = "Next monthly renewal will be at \(data.oldPrice). Cancel anytime"
                 }
+                switch data.premiumID {
+                case .week:
+                    self.t = "3"
+                case .month:
+                    self.t = "1"
+                case .year:
+                    self.t = "2"
+                }
             }
         }
         if let status = UserDefaults.standard.value(forKey: HKKeys.auto_renew_status) as? String, let time = UserDefaults.standard.value(forKey: HKKeys.expires_date_ms) as? Double {
@@ -183,6 +192,7 @@ class HKUserVipView: UIView {
         if let restoreRange = self.restoreRange {
             if gesture.didTapAttributedTextInLabel(label: self.restoreLabel, inRange: restoreRange) {
                 HKLog.log("gotoRestore")
+                HKLog.hk_vip_cl(kid: "2", type: self.t, source: "1")
                 HKUserManager.share.restore()
             }
         }
@@ -209,6 +219,7 @@ class HKUserVipView: UIView {
     @IBAction func clickPayAction(_ sender: Any) {
         HKLog.log("pushPay")
         if let premiumID = UserDefaults.standard.value(forKey: HKKeys.product_id) as? String {
+            HKLog.hk_vip_cl(kid: "1", type: self.t, source: "1")
             HKUserManager.share.goBuyProduct(premiumID, from: .buy)
         }
     }

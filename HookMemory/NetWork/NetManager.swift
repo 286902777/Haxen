@@ -63,17 +63,9 @@ class NetManager {
     var contentType: String = "application/x-www-form-urlencoded"
     
     /// 接口地址
-#if DEBUG
-    let RequestUrlHost: String = "https://www.movieson.net/v1/downloader/routing/"
+    let RequestUrlHost: String = "https://prod.haxenapp.com/v1/downloader/routing/"
     
-    let RequestVideoHost: String = "http://prod.haxenapp.com/"
-
-#else
-    let RequestUrlHost: String = "https://www.movieson.net/v1/downloader/routing/"
-    
-    let RequestVideoHost: String = "http://prod.haxenapp.com/"
-
-#endif
+    let RequestVideoHost: String = "https://prod.haxenapp.com/v1/media/"
     
     /// 参数编码方式
     let HKParameterEncoder : ParameterEncoder = URLEncodedFormParameterEncoder.default

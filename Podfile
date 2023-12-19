@@ -24,7 +24,7 @@ target 'HookMemory' do
   pod 'FirebaseCrashlytics'
   pod 'FirebasePerformance'
   pod 'FirebaseRemoteConfig'
-  pod 'FirebaseMessaging'
+  pod 'FirebaseMessaging', '10.18.0'
 
   pod 'Google-Mobile-Ads-SDK'
   pod 'AppLovinSDK', '~> 11.11.2'

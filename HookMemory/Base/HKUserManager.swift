@@ -313,16 +313,21 @@ class HKUserManager: NSObject {
             if let res = response as? HTTPURLResponse {
                 if res.statusCode == 200, let data = data {
                     if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                        var t: String = "1"
+                        let time = "\(Date().timeIntervalSince1970)"
                         if let model = HKPremiuModel.deserialize(from: json) {
                             if model.entity.ok == true {
                                 switch from {
                                 case .buy:
                                     self.showBuySuccess(.buy)
+                                    t = "3"
                                 case .restore:
                                     self.showBuySuccess(.restore)
+                                    t = "2"
                                 default:
                                     break
                                 }
+                                HKLog.hk_subscribe_status(status: "1", source: t, pay_time: time)
                                 UserDefaults.standard.set(model.product_id, forKey: HKKeys.product_id)
                                 UserDefaults.standard.set(model.expires_date_ms, forKey: HKKeys.expires_date_ms)
                                 UserDefaults.standard.set(model.auto_renew_status, forKey: HKKeys.auto_renew_status)
@@ -333,11 +338,14 @@ class HKUserManager: NSObject {
                                 case .buy:
                                     self.showBuyFailed(.buy)
                                     self.showError(productId: self.productId, error: "severs error")
+                                    t = "3"
                                 case .restore:
                                     self.showBuyFailed(.restore)
+                                    t = "2"
                                 default:
                                     break
                                 }
+                                HKLog.hk_subscribe_status(status: "2", source: t, pay_time: time)
                             }
                         }
                     }
