@@ -235,7 +235,7 @@ extension HKADManager {
 //            }
 //        }
         
-        self.type = type
+//        self.type = type
         
         if let item = self.dataArr.first(where: {$0.type == type}), let opentime = UserDefaults.standard.value(forKey: HKKeys.appOpneCount) as? Int {
             if let model = item.item.safe(index) {

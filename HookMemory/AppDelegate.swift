@@ -50,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         FirebaseApp.configure()
         initGADMobileAds()
+        
         HKUserManager.share.getPurchaseData()
 #if DEBUG
 //        HKUserManager.share.isVip = false
@@ -72,6 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerForRemoteNotifications()
         return true
     }
+    
     /// TrackingAuth
     func setTrackingAuth() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {

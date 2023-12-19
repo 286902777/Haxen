@@ -149,21 +149,21 @@ class HKBuyView: UIView {
                         if selectData.oldPrice.isEmpty {
                             world = "*Auto-renewal for \(purMoneyMonth) per month. Cancel anytime."
                         } else {
-                            world = "*\(purMoneyMonth) for the 1st month. Next recurring monthly renewal will be $\(selectData.oldPrice). Cancel anytime."
+                            world = "*\(purMoneyMonth) for the 1st month. Next recurring monthly renewal will be \(selectData.oldPrice). Cancel anytime."
                         }
                     case .week:
                         self.payMoneyLabel.text = purMoneyWeek
                         if selectData.oldPrice.isEmpty {
                             world = "*Auto-renewal for \(purMoneyWeek) per weak. Cancel anytime."
                         } else {
-                            world = "*\(purMoneyWeek) for the 1st week. Next recurring weekly renewal will be $\(selectData.oldPrice). Cancel anytime."
+                            world = "*\(purMoneyWeek) for the 1st week. Next recurring weekly renewal will be \(selectData.oldPrice). Cancel anytime."
                         }
                     case .year:
                         self.payMoneyLabel.text = purMoneyYear
                         if selectData.oldPrice.isEmpty {
                             world = "*Auto-renewal for \(purMoneyYear) per year. Cancel anytime."
                         } else {
-                            world = "*\(purMoneyYear) for the 1st year. Next recurring annually renewal will be $\(selectData.oldPrice). Cancel anytime."
+                            world = "*\(purMoneyYear) for the 1st year. Next recurring annually renewal will be \(selectData.oldPrice). Cancel anytime."
                         }
                     }
                     let worldAttrStr: NSMutableAttributedString = NSMutableAttributedString(string: world)

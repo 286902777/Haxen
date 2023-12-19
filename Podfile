@@ -16,6 +16,7 @@ target 'HookMemory' do
   pod 'IQKeyboardManagerSwift'
   pod 'CryptoSwift'
   pod 'ZIPFoundation'
+  pod 'GoogleUserMessagingPlatform'
 
   pod 'FBSDKCoreKit'
   
@@ -25,7 +26,7 @@ target 'HookMemory' do
   pod 'FirebaseRemoteConfig'
   pod 'FirebaseMessaging'
 
-  pod 'Google-Mobile-Ads-SDK', "10.11.0"
+  pod 'Google-Mobile-Ads-SDK'
   pod 'AppLovinSDK', '~> 11.11.2'
 
   pod 'GoogleMobileAdsMediationAdColony'

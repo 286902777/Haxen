@@ -85,7 +85,7 @@ PODS:
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesSwift (~> 2.1)
   - FirebaseSharedSwift (10.18.0)
-  - Google-Mobile-Ads-SDK (10.11.0):
+  - Google-Mobile-Ads-SDK (10.13.0):
     - GoogleAppMeasurement (< 11.0, >= 7.0)
     - GoogleUserMessagingPlatform (>= 1.1)
   - GoogleAppMeasurement (10.18.0):
@@ -161,7 +161,8 @@ DEPENDENCIES:
   - FirebaseMessaging
   - FirebasePerformance
   - FirebaseRemoteConfig
-  - Google-Mobile-Ads-SDK (= 10.11.0)
+  - Google-Mobile-Ads-SDK
+  - GoogleUserMessagingPlatform
   - HandyJSON
   - IQKeyboardManagerSwift
   - Kingfisher
@@ -223,7 +224,7 @@ SPEC CHECKSUMS:
   FirebaseRemoteConfig: bbd42790a4e84fde6aab7eae810b608e7b5c0bf6
   FirebaseSessions: f90fe9212ee2818641eda051c0835c9c4e30d9ae
   FirebaseSharedSwift: 62e248642c0582324d0390706cadd314687c116b
-  Google-Mobile-Ads-SDK: 58b4fda3f9758fc1ed210aa5cf7777b5eb55d47e
+  Google-Mobile-Ads-SDK: 517003a1a2430005da3e85df4d061cd7de107a5a
   GoogleAppMeasurement: 70ce9aa438cff1cfb31ea3e660bcc67734cb716e
   GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
   GoogleUserMessagingPlatform: dce302b8f1b84d6e945812ee7a15c3f65a102cbf
@@ -240,6 +241,6 @@ SPEC CHECKSUMS:
   SVProgressHUD: 4837c74bdfe2e51e8821c397825996a8d7de6e22
   ZIPFoundation: d170fa8e270b2a32bef9dcdcabff5b8f1a5deced
 
-PODFILE CHECKSUM: 7ca5da3e51b5b91a75811453f1922ae0f4c0c74c
+PODFILE CHECKSUM: 6d366252e8613537e137b61fdf701ffc2a2a6da6
 
 COCOAPODS: 1.14.2

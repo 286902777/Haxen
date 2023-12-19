@@ -10,6 +10,7 @@ import UIKit
 import AdSupport
 import Alamofire
 import GoogleMobileAds
+import UserMessagingPlatform
 
 class HKConfig{
     static let share = HKConfig()
@@ -24,7 +25,9 @@ class HKConfig{
     
     private let Host: String = "https://sleeve.haxen24.com/thurman/ware"
     private let bundle_id: String = "com.haxenplatform.live"
-        
+      
+    private var isMobileAdsStartCalled = false
+
     var isForUser = UserDefaults.standard.bool(forKey: HKKeys.isForUser) {
         didSet {
             if isForUser == true {
@@ -34,10 +37,10 @@ class HKConfig{
     }
     
     func appRequest() {
-//#if DEBUG
-//        HKConfig.share.isForUser = true
-//        setRoot(.movie)
-//#else
+#if DEBUG
+        HKConfig.share.isForUser = false
+        setRoot(.home)
+#else
         if HKConfig.share.getPermission() {
             HKConfig.share.setRoot(.movie)
         } else {
@@ -51,7 +54,7 @@ class HKConfig{
                 }
             }
         }
-//#endif
+#endif
     }
     
     func setRoot(_ type: rootType) {
@@ -64,7 +67,49 @@ class HKConfig{
             } else {
                 HKConfig.share.currentWindow()?.rootViewController = nav
             }
+            self.addUMP()
         }
+    }
+    
+    
+    private func addUMP() {
+        #if DEBUG
+        UMPConsentInformation.sharedInstance.reset()
+        #endif
+        if let vc = HKConfig.currentVC() {
+            GoogleMobileAdsConsentManager.shared.gatherConsent(from: vc) {
+                [weak self] consentError in
+                guard let self else { return }
+                
+                if let consentError {
+                    // Consent gathering failed.
+                    print("Error: \(consentError.localizedDescription)")
+                }
+                
+                if GoogleMobileAdsConsentManager.shared.canRequestAds {
+                    self.startGoogleMobileAdsSDK()
+                }
+            }
+            
+            // This sample attempts to load ads using consent obtained in the previous session.
+            if GoogleMobileAdsConsentManager.shared.canRequestAds {
+                startGoogleMobileAdsSDK()
+            }
+        }
+//        AppOpenAdManager.shared.appOpenAdManagerDelegate = HKConfig.currentVC()
+       
+    }
+    
+    private func startGoogleMobileAdsSDK() {
+      DispatchQueue.main.async {
+        guard !self.isMobileAdsStartCalled else { return }
+
+        self.isMobileAdsStartCalled = true
+
+        // Initialize the Google Mobile Ads SDK.
+        // Load an ad.
+//        AppOpenAdManager.shared.loadAd()
+      }
     }
     
     private func request(complete: @escaping ((_ info: String?) -> Void)) {

@@ -15,7 +15,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="purchase_unVip_bg" translatesAutoresizingMaskIntoConstraints="NO" id="Nv3-yz-anb">
-                    <rect key="frame" x="16" y="22" width="374" height="148.33333333333334"/>
+                    <rect key="frame" x="16" y="22" width="373.33333333333331" height="148"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="Nv3-yz-anb" secondAttribute="height" multiplier="343:136" id="wvX-n8-U7C"/>
                     </constraints>
@@ -36,7 +36,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JG2-Rb-CGR">
-                    <rect key="frame" x="0.0" y="162.33333333333331" width="406" height="692.66666666666674"/>
+                    <rect key="frame" x="0.0" y="162" width="406" height="693"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All Privileges" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fdf-lE-rvK">
                             <rect key="frame" x="16" y="24" width="75" height="14.333333333333336"/>

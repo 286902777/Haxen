@@ -9,7 +9,7 @@ import UIKit
 
 class SettingViewController: BaseViewController {
     let cellIdentifier = "SettingCell"
-    let dataArr: [String] = ["About us","Feedback", "Share", "Evaluate"]
+    var dataArr: [String] = []
     lazy var tableView: UITableView = {
         let table = UITableView.init(frame: .zero, style: .plain)
         table.delegate = self
@@ -27,6 +27,14 @@ class SettingViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setepUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.dataArr = ["About us","Feedback", "Share", "Evaluate"]
+        if GoogleMobileAdsConsentManager.shared.isPrivacyOptionsRequired {
+            self.dataArr.insert("Privacy Setting", at: 2)
+        }
     }
     
     func setepUI() {
@@ -62,9 +70,24 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             vc.titleName = dataArr[indexPath.row]
             self.navigationController?.pushViewController(vc, animated: true)
         case 2:
-            let url: String = "https://apps.apple.com/us/app/id6471642830"
-            let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-            present(activityController, animated: true, completion: nil)
+            if GoogleMobileAdsConsentManager.shared.isPrivacyOptionsRequired {
+                GoogleMobileAdsConsentManager.shared.presentPrivacyOptionsForm(from: self) { _ in
+                }
+            } else {
+                let url: String = "https://apps.apple.com/us/app/id6471642830"
+                let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+                present(activityController, animated: true, completion: nil)
+            }
+        case 3:
+            if GoogleMobileAdsConsentManager.shared.isPrivacyOptionsRequired {
+                let url: String = "https://apps.apple.com/us/app/id6471642830"
+                let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+                present(activityController, animated: true, completion: nil)
+            } else {
+                if let url = URL(string: "itms-apps://itunes.apple.com/app/id6471642830?action=write-review") {
+                    UIApplication.shared.open(url)
+                }
+            }
         default:
             if let url = URL(string: "itms-apps://itunes.apple.com/app/id6471642830?action=write-review") {
                 UIApplication.shared.open(url)

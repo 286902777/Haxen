@@ -12,7 +12,7 @@ import GoogleMobileAds
 
 class MovieSettingViewController: MovieBaseViewController {
     let cellIdentifier = "SettingCell"
-    let dataArr: [String] = ["Privacy Policy","Terms of Service", "Feedback", "About"]
+    var dataArr: [String] = []
     lazy var tableView: UITableView = {
         let table = UITableView.init(frame: .zero, style: .plain)
         table.delegate = self
@@ -33,8 +33,13 @@ class MovieSettingViewController: MovieBaseViewController {
         setepUI()
     }
     
-
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.dataArr = ["Privacy Policy","Terms of Service", "Feedback", "About"]
+        if GoogleMobileAdsConsentManager.shared.isPrivacyOptionsRequired {
+            self.dataArr.insert("Privacy Setting", at: 2)
+        }
+    }
     func setepUI() {
         view.addSubview(tableView)
         self.cusBar.backBtn.isHidden = true
@@ -84,11 +89,24 @@ extension MovieSettingViewController: UITableViewDelegate, UITableViewDataSource
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         case 2:
-            let vc = FeedBackViewController()
-            vc.titleName = dataArr[indexPath.row]
-            vc.isMovie = true
-            vc.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(vc, animated: true)
+            if GoogleMobileAdsConsentManager.shared.isPrivacyOptionsRequired {
+                GoogleMobileAdsConsentManager.shared.presentPrivacyOptionsForm(from: self) { _ in
+                }
+            } else {
+                let vc = FeedBackViewController()
+                vc.titleName = dataArr[indexPath.row]
+                vc.isMovie = true
+                vc.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        case 3:
+            if GoogleMobileAdsConsentManager.shared.isPrivacyOptionsRequired {
+                let vc = FeedBackViewController()
+                vc.titleName = dataArr[indexPath.row]
+                vc.isMovie = true
+                vc.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         default:
             break
 //            self.adTestTool()

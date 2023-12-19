@@ -66,12 +66,12 @@ class NetManager {
 #if DEBUG
     let RequestUrlHost: String = "https://www.movieson.net/v1/downloader/routing/"
     
-    let RequestVideoHost: String = "https://www.movieson.net/v1/media/"
+    let RequestVideoHost: String = "http://prod.haxenapp.com/"
 
 #else
     let RequestUrlHost: String = "https://www.movieson.net/v1/downloader/routing/"
     
-    let RequestVideoHost: String = "https://www.movieson.net/v1/media/"
+    let RequestVideoHost: String = "http://prod.haxenapp.com/"
 
 #endif
     

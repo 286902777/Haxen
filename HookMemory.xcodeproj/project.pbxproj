@@ -51,6 +51,8 @@
 		A79066972AF37B00006A3982 /* AboutUsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79066952AF37B00006A3982 /* AboutUsViewController.xib */; };
 		A790669A2AF37CF3006A3982 /* FeedBackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79066982AF37CF3006A3982 /* FeedBackViewController.swift */; };
 		A790669B2AF37CF3006A3982 /* FeedBackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79066992AF37CF3006A3982 /* FeedBackViewController.xib */; };
+		A79664A42B30433600EFC1EE /* GoogleMobileAdsConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79664A32B30433600EFC1EE /* GoogleMobileAdsConsentManager.swift */; };
+		A79664A72B3043AC00EFC1EE /* AppOpenAdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79664A62B3043AC00EFC1EE /* AppOpenAdManager.swift */; };
 		A799C30E2B1EFC6F00FB8E1B /* HKKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799C30D2B1EFC6F00FB8E1B /* HKKeys.swift */; };
 		A799FE812AF889B500840196 /* memoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799FE802AF889B500840196 /* memoryModel.swift */; };
 		A799FE832AF8C49C00840196 /* HKToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = A799FE822AF8C49C00840196 /* HKToast.swift */; };
@@ -245,6 +247,8 @@
 		A79066952AF37B00006A3982 /* AboutUsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutUsViewController.xib; sourceTree = "<group>"; };
 		A79066982AF37CF3006A3982 /* FeedBackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedBackViewController.swift; sourceTree = "<group>"; };
 		A79066992AF37CF3006A3982 /* FeedBackViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedBackViewController.xib; sourceTree = "<group>"; };
+		A79664A32B30433600EFC1EE /* GoogleMobileAdsConsentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleMobileAdsConsentManager.swift; sourceTree = "<group>"; };
+		A79664A62B3043AC00EFC1EE /* AppOpenAdManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppOpenAdManager.swift; sourceTree = "<group>"; };
 		A799C30D2B1EFC6F00FB8E1B /* HKKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKKeys.swift; sourceTree = "<group>"; };
 		A799FE802AF889B500840196 /* memoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = memoryModel.swift; sourceTree = "<group>"; };
 		A799FE822AF8C49C00840196 /* HKToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKToast.swift; sourceTree = "<group>"; };
@@ -464,6 +468,7 @@
 				A79BD74C2B07538800AD3508 /* HKPlayer */,
 				A77E07852B021ABD005A813C /* NetWork */,
 				A79E1ABF2B19B4BE00088004 /* Source */,
+				A79664A52B30437500EFC1EE /* GMobileAd */,
 				A79066312AF32CE4006A3982 /* Main.storyboard */,
 				A79066372AF32CE6006A3982 /* Assets.xcassets */,
 				A790663C2AF32CE6006A3982 /* Info.plist */,
@@ -611,6 +616,15 @@
 				A79066992AF37CF3006A3982 /* FeedBackViewController.xib */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		A79664A52B30437500EFC1EE /* GMobileAd */ = {
+			isa = PBXGroup;
+			children = (
+				A79664A62B3043AC00EFC1EE /* AppOpenAdManager.swift */,
+				A79664A32B30433600EFC1EE /* GoogleMobileAdsConsentManager.swift */,
+			);
+			path = GMobileAd;
 			sourceTree = "<group>";
 		};
 		A79BD74C2B07538800AD3508 /* HKPlayer */ = {
@@ -1143,6 +1157,7 @@
 				A79D65EC2AFB66580094E411 /* HKRefresh.swift in Sources */,
 				A7A0AE962AFE21E800646494 /* MovieBaseViewController.swift in Sources */,
 				A7BC83E12B0490E1000912F1 /* HKConfig.swift in Sources */,
+				A79664A72B3043AC00EFC1EE /* AppOpenAdManager.swift in Sources */,
 				A790666A2AF32E07006A3982 /* HookNavigationBar.swift in Sources */,
 				A790669A2AF37CF3006A3982 /* FeedBackViewController.swift in Sources */,
 				A79BD75C2B07739B00AD3508 /* MoviePlayViewController.swift in Sources */,
@@ -1196,6 +1211,7 @@
 				A79066872AF34910006A3982 /* MemoryDB+CoreDataClass.swift in Sources */,
 				A7C25CFA2B297AF4007218C9 /* HKBuyFailedView.swift in Sources */,
 				A77F8CDB2AF4F5CE0031FA77 /* DayDB+CoreDataProperties.swift in Sources */,
+				A79664A42B30433600EFC1EE /* GoogleMobileAdsConsentManager.swift in Sources */,
 				A79D66502B0DFDB00069F359 /* MoviePlayHeadInfoCell.swift in Sources */,
 				A79EA62C2B0F2DB50007104B /* MoviePlaySsnHeadView.swift in Sources */,
 				A79EA62F2B0F38310007104B /* HKPlayEpsListCell.swift in Sources */,

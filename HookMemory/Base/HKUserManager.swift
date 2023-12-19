@@ -11,7 +11,7 @@ import StoreKit
 #if DEBUG
 let vipHost = "https://apporder.powerfulclean.net"
 #else
-let vipHost = "https://prodapi.apporder.net"
+let vipHost = "https://prod.haxeorder.com"
 #endif
 
 struct HKUserData {

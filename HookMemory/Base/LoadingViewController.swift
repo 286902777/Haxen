@@ -14,9 +14,9 @@ class LoadingViewController: UIViewController {
 
     var isRequest: Bool = false
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
         timer = DispatchSource.makeTimerSource(flags: [], queue: .main)
         timer?.setEventHandler(handler: { [weak self] in
             self?.setProgress()
@@ -25,7 +25,6 @@ class LoadingViewController: UIViewController {
         timer?.resume()
         
         HKADManager.share.openLoadingSuccessComplete = { [weak self] in
-            HKADManager.share.openLoadingSuccessComplete = nil
             self?.endLoading(gotoHome: false)
             HKADManager.share.openLoadingSuccessComplete = nil
         }
@@ -35,7 +34,7 @@ class LoadingViewController: UIViewController {
         }
         NotificationCenter.default.addObserver(self, selector: #selector(netWorkChange), name: Notification.Name("netStatus"), object: nil)
     }
-
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.timer?.cancel()
@@ -88,6 +87,6 @@ class LoadingViewController: UIViewController {
                 HKConfig.share.appRequest()
             }
         }
-        
     }
 }
+

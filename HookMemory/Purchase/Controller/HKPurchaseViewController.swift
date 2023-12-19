@@ -41,7 +41,11 @@ class HKPurchaseViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
-        self.buyView.selectData = HKUserManager.share.dataArr.first(where: {$0.oldPrice.isEmpty == false})
+        if let data = HKUserManager.share.dataArr.first(where: {$0.oldPrice.isEmpty == false}) {
+            self.buyView.selectData = data
+        } else {
+            self.buyView.selectData = HKUserManager.share.dataArr.first
+        }
         HKUserManager.share.getPurchaseData()
         self.updateViews()
     }
@@ -97,7 +101,6 @@ class HKPurchaseViewController: UIViewController {
             self.vipView.hdView.isHidden = !HKConfig.share.isForUser
             self.scrollView.contentSize = CGSize(width: kScreenWidth, height: imgH + 570)
             self.vipView.updateUI()
-            
         } else {
             self.scrollView.contentSize = CGSize(width: kScreenWidth, height: imgH + 688)
             self.buyView.isHidden = false
