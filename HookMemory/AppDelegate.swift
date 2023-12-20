@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         initGADMobileAds()
         
-        HKUserManager.share.getPurchaseData()
+        HKUserManager.share.getPurchaseData(from: .app)
 #if DEBUG
 //        HKUserManager.share.isVip = false
 #else

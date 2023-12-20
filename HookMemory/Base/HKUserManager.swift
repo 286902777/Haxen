@@ -47,6 +47,7 @@ enum HKPurchaseType: Int {
     case restore
     case update
     case updatePrice
+    case app
 }
 
 //内购显示价格 货币单位
@@ -313,9 +314,18 @@ class HKUserManager: NSObject {
             if let res = response as? HTTPURLResponse {
                 if res.statusCode == 200, let data = data {
                     if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
-                        var t: String = "1"
+                        var t: String = ""
                         let time = "\(Date().timeIntervalSince1970)"
                         if let model = HKPremiuModel.deserialize(from: json) {
+                            var s: String = "1"
+                            switch Int(model.auto_renew_status) {
+                            case 0:
+                                s = "3"
+                            case 1:
+                                s = "1"
+                            default:
+                                s = "2"
+                            }
                             if model.entity.ok == true {
                                 switch from {
                                 case .buy:
@@ -324,10 +334,14 @@ class HKUserManager: NSObject {
                                 case .restore:
                                     self.showBuySuccess(.restore)
                                     t = "2"
+                                case .app:
+                                    t = "1"
                                 default:
                                     break
                                 }
-                                HKLog.hk_subscribe_status(status: "1", source: t, pay_time: time)
+                                if t.isEmpty == false {
+                                    HKLog.hk_subscribe_status(status: s, source: t, pay_time: time)
+                                }
                                 UserDefaults.standard.set(model.product_id, forKey: HKKeys.product_id)
                                 UserDefaults.standard.set(model.expires_date_ms, forKey: HKKeys.expires_date_ms)
                                 UserDefaults.standard.set(model.auto_renew_status, forKey: HKKeys.auto_renew_status)
@@ -342,10 +356,14 @@ class HKUserManager: NSObject {
                                 case .restore:
                                     self.showBuyFailed(.restore)
                                     t = "2"
+                                case .app:
+                                    t = "1"
                                 default:
-                                    break
+                                    t = ""
                                 }
-                                HKLog.hk_subscribe_status(status: "2", source: t, pay_time: time)
+                                if t.isEmpty == false {
+                                    HKLog.hk_subscribe_status(status: "2", source: t, pay_time: time)
+                                }
                             }
                         }
                     }
@@ -477,7 +495,7 @@ class HKPremiuModel: BaseModel {
     var checks = [String]()
     
     var auto_renew_status: String {
-        return entity.pending_renewal_info.first?.auto_renew_status ?? "0"
+        return entity.pending_renewal_info.first?.auto_renew_status ?? "2"
     }
     
     var product_id: String {
