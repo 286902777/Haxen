@@ -49,9 +49,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self?.netStatus = status
         })
         FirebaseApp.configure()
+        HKUserManager.share.refreshReceipt(from: .app)
         initGADMobileAds()
-        
-        HKUserManager.share.getPurchaseData(from: .app)
 #if DEBUG
 //        HKUserManager.share.isVip = false
 #else
@@ -81,7 +80,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 ATTrackingManager.requestTrackingAuthorization { status in
 #if DEBUG
 #else
-                    Settings.shared.isAdvertiserTrackingEnabled = true
+                    if status == .authorized {
+                        Settings.shared.isAdvertiserTrackingEnabled = true
+                        HKConfig.share.addUMP()
+                    }
 #endif
                 }
             }

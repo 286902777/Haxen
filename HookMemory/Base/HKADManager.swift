@@ -703,26 +703,23 @@ extension HKADManager: GADFullScreenContentDelegate {
             if self.type == .open {
                 self.removeFirstCache(type: .open)
                 self.hk_loadFullAd(type: .open, placement: .open_show)
-                if self.tempDismissComplete != nil {
-                    self.tempDismissComplete!()
-                }
             }
         } else {
             let interstitialAd = ad as? GADInterstitialAd
             let rewardAd = ad as? GADRewardedAd
             let rewardInterstitialAd = ad as? GADRewardedInterstitialAd
             if let m = self.dataArr.first(where: {$0.type == type}) {
-                if let _ = m.item.first(where: {$0.id == interstitialAd?.adUnitID || $0.id == rewardAd?.adUnitID || $0.id == rewardInterstitialAd?.adUnitID}), self.type == m.type {
+                if let _ = m.item.first(where: {$0.id == interstitialAd?.adUnitID || $0.id == rewardAd?.adUnitID || $0.id == rewardInterstitialAd?.adUnitID}) {
                     self.removeFirstCache(type: m.type)
                     m.adIsLoding = false
                     m.adShowing = false
                     self.setTime(m.type)
                     self.hk_loadFullAd(type: m.type, placement: m.placement)
-                    if self.tempDismissComplete != nil {
-                        self.tempDismissComplete!()
-                    }
                 }
             }
+        }
+        if self.tempDismissComplete != nil {
+            self.tempDismissComplete!()
         }
     }
     

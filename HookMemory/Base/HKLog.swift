@@ -91,8 +91,8 @@ extension HKLog {
     }
     
     class func hk_vip_cl(kid: String, type: String, source: String) {
-        HKLog.log("[LOG]: 订阅页点击 vip_cl kid: \(kid), type: \(type), source: \(source)")
-        HKLog.logEvent("vip_cl", parameters: ["kid": kid, "type": type, "source": source])
+        HKLog.log("[LOG]: 订阅页点击 vip_cl kid: \(kid), hk_type: \(type), source: \(source)")
+        HKLog.logEvent("vip_cl", parameters: ["kid": kid, "hk_type": type, "source": source])
     }
     
     class func hk_subscribe_status(status: String, source: String, pay_time: String) {

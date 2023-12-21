@@ -38,8 +38,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func sceneWillEnterForeground(_ scene: UIScene) {
         HKTBAManager.share.setHktbaParams(type: .session)
-        HKUserManager.share.refreshReceipt(from: .update)
         if !first {
+            HKUserManager.share.refreshReceipt(from: .update)
             DispatchQueue.main.asyncAfter(deadline: .now()) {
                 if HKConfig.currentVC()?.isKind(of: MoviePlayViewController.self) == false {
                     HKADManager.share.hk_loadFullAd(type: .open, placement: .open)

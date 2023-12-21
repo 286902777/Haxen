@@ -89,6 +89,7 @@ class MovieAPI {
         para["type"] = type
         para["page"] = "\(page)"
         para["page_size"] = "\(self.pageSize)"
+        ProgressHUD.showLoading()
         NetManager.request(url: MovieNetAPI.movieFilterApi.rawValue, method: .post, parameters: para, modelType: MovieFilterModel.self) { responseModel in
             if let mod = responseModel.model {
                 if responseModel.status == .success {

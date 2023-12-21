@@ -88,9 +88,10 @@ class HKPlayerControlView: UIView {
     
     var playerState: HKPlayerState = .noURL
     
-    let leading: CGFloat = 16
+    let leading: CGFloat = 88
     let marge: CGFloat = 8
-    
+    let space: CGFloat = 72
+
     fileprivate var isSelectDefinition = false
     
     // MARK: UI Components
@@ -386,18 +387,20 @@ class HKPlayerControlView: UIView {
             self.lockBtn.isHidden = true
         }
         leftView.snp.remakeConstraints {  make in
-            make.top.leading.bottom.equalTo(self.mainView)
+            make.top.bottom.equalTo(self.mainView)
+            make.left.equalTo(self.space)
             make.width.equalTo(isFullscreen ? ((kScreenHeight - 144) * 0.45) : (kScreenWidth * 0.45))
         }
         
         rightView.snp.remakeConstraints {  make in
             make.top.trailing.bottom.equalTo(self.mainView)
+            make.trailing.equalTo(-self.space)
             make.width.equalTo(isFullscreen ? ((kScreenHeight - 144) * 0.45) : (kScreenWidth * 0.45))
         }
         
         backBtn.snp.remakeConstraints { (make) in
             make.width.height.equalTo(44)
-            make.leading.equalToSuperview().offset(isFullscreen ? 0 : marge)
+            make.leading.equalToSuperview().offset(isFullscreen ? space : marge)
             make.bottom.equalToSuperview()
         }
   
@@ -476,8 +479,8 @@ class HKPlayerControlView: UIView {
         fullscreenBtn.snp.remakeConstraints {  make in
             make.width.height.equalTo(40)
             if isFullscreen {
-                make.bottom.equalToSuperview().offset(-leading)
-                make.trailing.equalToSuperview().offset(-marge)
+                make.bottom.equalToSuperview().offset(-16)
+                make.trailing.equalToSuperview().offset(-leading + marge)
             } else {
                 make.centerY.equalTo(playBtn)
                 make.right.equalToSuperview().offset(-marge)

@@ -427,9 +427,7 @@ class MoviePlayViewController: UIViewController {
     func changeScreenInterfaceOrientation(_ isFull: Bool) {
         self.player.snp.remakeConstraints { (make) in
             if isFull {
-                make.top.bottom.equalToSuperview()
-                make.leading.equalTo(72)
-                make.trailing.equalTo(-72)
+                make.edges.equalToSuperview()
             } else {
                 make.leading.trailing.equalToSuperview()
                 make.top.equalToSuperview().offset(statusH)

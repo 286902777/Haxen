@@ -67,12 +67,12 @@ class HKConfig{
             } else {
                 HKConfig.share.currentWindow()?.rootViewController = nav
             }
-            self.addUMP()
+//            self.addUMP()
         }
     }
     
     
-    private func addUMP() {
+     func addUMP() {
         #if DEBUG
         UMPConsentInformation.sharedInstance.reset()
         #endif

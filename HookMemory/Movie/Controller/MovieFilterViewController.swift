@@ -180,7 +180,9 @@ class MovieFilterViewController: MovieBaseViewController {
     }
     
     private func loadMoreData() {
-        ProgressHUD.showLoading()
+        ProgressHUD.dismiss()
+        collectionView.mj_header?.endRefreshing()
+        collectionView.mj_footer?.endRefreshing()
         MovieAPI.share.movieFilterInfo(cntyno: self.cntyno, genre: self.genre, pubdate: self.pubdate, type: self.type, page: self.page) { [weak self] success, model in
             guard let self = self else { return }
             ProgressHUD.dismiss()

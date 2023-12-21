@@ -131,7 +131,7 @@ class HKUserManager: NSObject {
             }
         }
         self.dataArr = idList
-        self.refreshReceipt(from: .update)
+        self.refreshReceipt(from: .app)
     }
     
     deinit {
@@ -202,7 +202,6 @@ class HKUserManager: NSObject {
         request = SKReceiptRefreshRequest()
         request.delegate = self
         request.start()
-        self.from = from
         self.getPurchaseData(from: from)
     }
     
@@ -460,7 +459,7 @@ extension HKUserManager: SKProductsRequestDelegate, SKPaymentTransactionObserver
     }
     
     func requestDidFinish(_ request: SKRequest) {
-        if self.from == .restore || self.from == .update {
+        if self.from == .restore || self.from == .update || self.from == .app {
             self.getReceiptData(product: nil, from: from)
         }
     }
