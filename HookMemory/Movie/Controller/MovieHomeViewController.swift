@@ -100,13 +100,13 @@ class MovieHomeViewController: MovieBaseViewController {
     }
     
     override func refreshRequest() {
+        ProgressHUD.dismiss()
+        tableView.mj_header?.endRefreshing()
         tableView.mj_header?.beginRefreshing()
     }
     
     func initData() {
-        ProgressHUD.dismiss()
-        tableView.mj_header?.endRefreshing()
-        self.isNeedRefresh = false
+         self.isNeedRefresh = false
         if HKConfig.share.isNet == false {
             self.tableView.mj_header?.endRefreshing()
             self.showEmpty(.noNet, self.tableView)

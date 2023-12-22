@@ -64,6 +64,36 @@
                   endingLineNumber = "196"
                   offsetFromSymbolStart = "696">
                </Location>
+               <Location
+                  uuid = "D7D2EF93-4157-4945-B451-A99442CB19BA - aabc6605df692ee7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Haxen.MovieAPI.getVideoLink(id: Swift.String, type: Swift.Int, _: (Swift.Bool, Swift.Optional&lt;Haxen.MoviePlayLinkModel&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Haxen"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hf/Desktop/HookMemory/HookMemory/NetWork/MovieAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "195"
+                  endingLineNumber = "195"
+                  offsetFromSymbolStart = "1196">
+               </Location>
+               <Location
+                  uuid = "D7D2EF93-4157-4945-B451-A99442CB19BA - aabc6605df692ee7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Haxen.MovieAPI.getVideoLink(id: Swift.String, type: Swift.Int, _: (Swift.Bool, Swift.Optional&lt;Haxen.MoviePlayLinkModel&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Haxen"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hf/Desktop/HookMemory/HookMemory/NetWork/MovieAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "195"
+                  endingLineNumber = "195"
+                  offsetFromSymbolStart = "1164">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
