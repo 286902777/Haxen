@@ -73,13 +73,6 @@ class HKTBAManager: NSObject {
         })
         cacheTimer?.schedule(deadline: .now() + 10, repeating: 10)
         cacheTimer?.resume()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            if !UserDefaults.standard.bool(forKey: HKKeys.tbaInstall) {
-                self.setHktbaParams(type: .install)
-                UserDefaults.standard.set(true, forKey: HKKeys.tbaInstall)
-            }
-        }
-        
     }
     
     func tbaNeedRequest() {

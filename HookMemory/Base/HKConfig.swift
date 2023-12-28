@@ -38,7 +38,7 @@ class HKConfig{
     
     func appRequest() {
 #if DEBUG
-        HKConfig.share.isForUser = false
+        HKConfig.share.isForUser = true
         setRoot(.movie)
 #else
         if HKConfig.share.getPermission() {

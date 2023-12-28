@@ -383,7 +383,6 @@ class HKUserManager: NSObject {
     }
     
     func showError(productId: String, error: String?) {
-        ProgressHUD.dismiss()
         switch from {
         case .buy, .restore:
             break
@@ -417,7 +416,6 @@ extension HKUserManager: SKProductsRequestDelegate, SKPaymentTransactionObserver
         DispatchQueue.main.async {
             self.reloadLists(arr: self.productsArray)
         }
-        
     }
     
     // 请求产品信息失败

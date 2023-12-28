@@ -174,6 +174,7 @@ class HKBuyView: UIView {
                     worldAttrStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(white: 1, alpha: 0.5).cgColor, range: range)
                     
                     self.infoLabel.attributedText = worldAttrStr
+                    self.tableView.reloadData()
                 }
             }
         }

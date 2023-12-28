@@ -51,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         HKUserManager.share.refreshReceipt(from: .app)
         initGADMobileAds()
+        tbaInstall()
 #if DEBUG
 //        HKUserManager.share.isVip = false
 #else
@@ -128,6 +129,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         GADMobileAds.sharedInstance().applicationMuted = true
+    }
+    
+    func tbaInstall() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            if !UserDefaults.standard.bool(forKey: HKKeys.tbaInstall) {
+                HKTBAManager.share.setHktbaParams(type: .install)
+                UserDefaults.standard.set(true, forKey: HKKeys.tbaInstall)
+            }
+        }
     }
     // MARK: UISceneSession Lifecycle
     
