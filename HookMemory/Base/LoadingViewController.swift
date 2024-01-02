@@ -17,6 +17,8 @@ class LoadingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        progressView.layer.cornerRadius = 2
+        progressView.layer.masksToBounds = true
         timer = DispatchSource.makeTimerSource(flags: [], queue: .main)
         timer?.setEventHandler(handler: { [weak self] in
             self?.setProgress()

@@ -1448,9 +1448,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HookMemory/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Haxen;
-				INFOPLIST_KEY_NSCameraUsageDescription = "\"Haxen\" would like to access your camera\nHaxen needs to access your camera to take pictures and videos";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Enable 'Haxen' to access your camera, so that you can add the photos and videos you take directly to your diary.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "\"Haxen\" would like to access your microphone\nOnce the microphone is enabled, you can record sound";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"Haxen\" would like to access your photo gallery\nTo read or save photos and videos, gallery permission needs to be enabled";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Haxen needs access to your photo album to add photos and videos while editing your diary.";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This identifier will be used to deliver personalized ads to you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = Main.storyboard;
@@ -1462,7 +1462,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.testbird.HookMemory;
 				PRODUCT_NAME = Haxen;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1487,9 +1487,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HookMemory/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Haxen;
-				INFOPLIST_KEY_NSCameraUsageDescription = "\"Haxen\" would like to access your camera\nHaxen needs to access your camera to take pictures and videos";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Enable 'Haxen' to access your camera, so that you can add the photos and videos you take directly to your diary.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "\"Haxen\" would like to access your microphone\nOnce the microphone is enabled, you can record sound";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"Haxen\" would like to access your photo gallery\nTo read or save photos and videos, gallery permission needs to be enabled";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Haxen needs access to your photo album to add photos and videos while editing your diary.";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This identifier will be used to deliver personalized ads to you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = Main.storyboard;
@@ -1501,7 +1501,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.testbird.HookMemory;
 				PRODUCT_NAME = Haxen;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

@@ -39,7 +39,12 @@ class MovieSelectCell: UICollectionViewCell {
         self.clickHandle = clickBlock
         self.clickSelectHandle = clickSelectBlock
         self.progressV.progress = Float(model.playProgress)
-        self.scoreL.text = String(format: "%.1f", Float(model.rate) ?? 0)
+        if let r = Float(model.rate) {
+            self.scoreL.isHidden = false
+            self.scoreL.text = String(format: "%.1f", r)
+        } else {
+            self.scoreL.isHidden = true
+        }
         self.contentL.text = model.title
         self.selectBtn.isSelected = model.isSelect
         self.imageV.setImage(with: model.cover)

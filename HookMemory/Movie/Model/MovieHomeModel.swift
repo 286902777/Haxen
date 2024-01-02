@@ -80,6 +80,7 @@ class MovieDataInfoModel: BaseModel {
     var video_flag: String = ""
     var playProgress: Double = 0
     var isSelect: Bool = false
+    var isDelete: Bool = false
     var isMovie: Bool {
         get {
             return m_type != "tv_mflx"

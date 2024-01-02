@@ -67,7 +67,12 @@ class MoviePlayHeadCell: UITableViewCell {
         self.clickMoreHandle = clickMoreBlock
         self.refreshHandle = refreshBlock
         self.titleL.text = model.data.title
-        self.scroL.text = String(format: "%.1f", Float(model.data.rate) ?? 0)
+        if let r = Float(model.data.rate) {
+            self.scroL.isHidden = false
+            self.scroL.text = String(format: "%.1f", r)
+        } else {
+            self.scroL.isHidden = true
+        }
         self.yearL.text = model.data.year
         self.ctrNoL.text = model.data.country
         self.dataArr = model.data.genre_dict

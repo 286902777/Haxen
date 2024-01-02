@@ -162,6 +162,7 @@ class MovieSearchViewController: MovieBaseViewController {
             guard let self = self else { return }
             self.tableView.isHidden = true
             self.collectionView.isHidden = false
+            self.historyView.isHidden = true
         }
         self.loadMoreData()
     }
@@ -198,6 +199,7 @@ class MovieSearchViewController: MovieBaseViewController {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 self.tableView.isHidden = true
+                self.historyView.isHidden = true
                 self.collectionView.isHidden = false
                 self.collectionView.reloadData()
             }
@@ -226,6 +228,7 @@ class MovieSearchViewController: MovieBaseViewController {
                 self.tableView.isHidden = false
                 self.removeHistoryView()
                 self.collectionView.isHidden = true
+                self.historyView.isHidden = true
                 self.tableView.reloadData()
             }
         }

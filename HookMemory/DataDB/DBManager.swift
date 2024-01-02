@@ -210,7 +210,11 @@ class DBManager {
             m.coverImageUrl = model.cover
             m.uploadTime = model.pub_date
             m.rate = model.rate
-            m.isMovie = model.m_type != "tv_mflx"
+            if model.m_type.isEmpty {
+                m.isMovie = model.video_flag == "1"
+            } else {
+                m.isMovie = model.m_type != "tv_mflx"
+            }
             m.ssn_eps = model.ss_eps
             m.country = model.country
             m.updateTime = Double(Date().timeIntervalSince1970)
@@ -221,7 +225,11 @@ class DBManager {
             m.coverImageUrl = model.cover
             m.uploadTime = model.pub_date
             m.rate = model.rate
-            m.isMovie = model.m_type != "tv_mflx"
+            if model.m_type.isEmpty {
+                m.isMovie = model.video_flag == "1"
+            } else {
+                m.isMovie = model.m_type != "tv_mflx"
+            }
             m.ssn_eps = model.ss_eps
             m.country = model.country
             m.updateTime = Double(Date().timeIntervalSince1970)
@@ -429,9 +437,6 @@ class DBManager {
             m.eps_name = model.eps_name
             m.delete = true
             m.updateTime = Double(Date().timeIntervalSince1970)
-        } else {
-            model.updateTime = Double(Date().timeIntervalSince1970)
-            self.insertVideoData(mod: model)
         }
         
         if context.hasChanges {
@@ -529,7 +534,7 @@ class DBManager {
             if searchResults.count > 0 {
                 dataArray.removeAll()
                 for model in searchResults {
-                    if let mod = model as? VideoDB, mod.delete == false, mod.playProgress > 0 {
+                    if let mod = model as? VideoDB, mod.playProgress > 0 {
                         /*只取播放记录里最新的一条，主要是对TV筛选*/
                         if let _ = dataArray.first(where: {$0.id == mod.id}) {
                             continue
@@ -538,18 +543,20 @@ class DBManager {
                         m.id = mod.id ?? ""
                         m.title = mod.title ?? ""
                         m.m_type = mod.isMovie ? "" : "tv_mflx"
+                        m.video_flag = mod.isMovie ? "1" : "2"
                         m.ssn_id = mod.ssn_id ?? ""
                         m.eps_id = mod.eps_id ?? ""
                         m.ssn_eps = mod.ssn_eps ?? ""
                         m.cover = mod.coverImageUrl ?? ""
                         m.country = mod.country ?? ""
+                        m.isDelete = mod.delete
                         m.rate = mod.rate ?? ""
                         m.playProgress = mod.playProgress
                         dataArray.append(m)
                     }
                 }
             }
-            return dataArray
+            return dataArray.filter({ $0.isDelete == false })
         } catch  {
             return dataArray
         }
