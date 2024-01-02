@@ -25,6 +25,7 @@ class MoviePlayViewController: UIViewController {
             self.controller.isMovie = epsId.count == 0
         }
     }
+    private var ssn_eps: String = ""
     private var remView: HKPlayerRemindView = HKPlayerRemindView.view()
     private var captions: HKSubtitles? {
         didSet {
@@ -615,6 +616,16 @@ extension MoviePlayViewController: HKPlayerDelegate {
         model.title = self.videoModel.data.title
         model.coverImageUrl = self.videoModel.data.cover
         model.isMovie = self.model.isMovie
+        var ssn_num: String = ""
+        for (index, item) in self.videoModel.ssn.ssn_list.enumerated() {
+            if item.isSelect {
+                ssn_num = "\(index + 1)"
+            }
+        }
+        if let epsModel = self.videoModel.ssn.epss.filter({$0.isSelect == true}).first {
+            let num = "\(epsModel.eps_num)"
+            model.ssn_eps = "S\(ssn_num.changeTextNum()) E\(num.changeTextNum())"
+        }
         if currentTime == totalTime {
             model.playedTime = 0
             model.playProgress = 0

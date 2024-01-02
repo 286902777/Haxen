@@ -21,6 +21,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="134" height="151"/>
                         <color key="backgroundColor" red="0.078431372549019607" green="0.078431372549019607" blue="0.078431372549019607" alpha="0.75" colorSpace="calibratedRGB"/>
                     </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play_mask" translatesAutoresizingMaskIntoConstraints="NO" id="BgF-i4-Q2A">
+                        <rect key="frame" x="0.0" y="0.0" width="134" height="151"/>
+                    </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OUm-QT-rpB">
                         <rect key="frame" x="0.0" y="155" width="134" height="40"/>
                         <subviews>
@@ -53,26 +56,40 @@
                         <color key="progressTintColor" red="1" green="0.25490196079999999" blue="0.19215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="trackTintColor" red="1" green="1" blue="1" alpha="0.49803358843537415" colorSpace="custom" customColorSpace="sRGB"/>
                     </progressView>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PLl-ms-ts3">
+                        <rect key="frame" x="129" y="139" width="0.0" height="0.0"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="OUm-QT-rpB" secondAttribute="bottom" id="1j7-Tg-k1o"/>
                 <constraint firstItem="CWQ-LI-INB" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="2HA-a0-fZK"/>
+                <constraint firstItem="jgA-kP-niF" firstAttribute="top" secondItem="PLl-ms-ts3" secondAttribute="bottom" constant="4" id="2yz-Or-dKz"/>
+                <constraint firstItem="BgF-i4-Q2A" firstAttribute="leading" secondItem="VIJ-1h-tXg" secondAttribute="leading" id="3zc-zS-R2U"/>
                 <constraint firstAttribute="trailing" secondItem="VIJ-1h-tXg" secondAttribute="trailing" id="4vY-Nd-xif"/>
                 <constraint firstItem="jgA-kP-niF" firstAttribute="trailing" secondItem="VIJ-1h-tXg" secondAttribute="trailing" constant="-4" id="4y0-F1-oyq"/>
                 <constraint firstItem="jgA-kP-niF" firstAttribute="bottom" secondItem="VIJ-1h-tXg" secondAttribute="bottom" constant="-4" id="C5v-jJ-1RN"/>
                 <constraint firstItem="VIJ-1h-tXg" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="FK5-Ew-11u"/>
                 <constraint firstItem="VIJ-1h-tXg" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="JuW-8Z-hJ1"/>
+                <constraint firstAttribute="trailing" secondItem="PLl-ms-ts3" secondAttribute="trailing" constant="5" id="Rrx-6A-bwj"/>
                 <constraint firstItem="CWQ-LI-INB" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="Sc0-6t-3po"/>
+                <constraint firstItem="BgF-i4-Q2A" firstAttribute="top" secondItem="VIJ-1h-tXg" secondAttribute="top" id="aDK-y3-rOl"/>
                 <constraint firstItem="OUm-QT-rpB" firstAttribute="top" secondItem="VIJ-1h-tXg" secondAttribute="bottom" constant="4" id="hwY-D2-8G4"/>
                 <constraint firstItem="OUm-QT-rpB" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="mXC-oy-cUS"/>
                 <constraint firstItem="jgA-kP-niF" firstAttribute="leading" secondItem="VIJ-1h-tXg" secondAttribute="leading" constant="4" id="mqw-PW-SpC"/>
+                <constraint firstItem="BgF-i4-Q2A" firstAttribute="bottom" secondItem="VIJ-1h-tXg" secondAttribute="bottom" id="sUo-QB-K4c"/>
+                <constraint firstItem="BgF-i4-Q2A" firstAttribute="trailing" secondItem="VIJ-1h-tXg" secondAttribute="trailing" id="uZU-rc-RSd"/>
                 <constraint firstAttribute="trailing" secondItem="OUm-QT-rpB" secondAttribute="trailing" id="vHE-XN-NrU"/>
             </constraints>
             <size key="customSize" width="134" height="195"/>
             <connections>
                 <outlet property="contentL" destination="DGe-bt-tRn" id="RVT-ee-ham"/>
+                <outlet property="epsL" destination="PLl-ms-ts3" id="FTm-3r-s39"/>
                 <outlet property="imageV" destination="VIJ-1h-tXg" id="mTi-yg-So6"/>
                 <outlet property="progressV" destination="jgA-kP-niF" id="C5A-Nm-jXo"/>
                 <outlet property="scoreL" destination="CWQ-LI-INB" id="mHg-Tc-rXw"/>
@@ -80,4 +97,7 @@
             <point key="canvasLocation" x="-505.34351145038164" y="69.366197183098592"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="play_mask" width="104" height="138"/>
+    </resources>
 </document>

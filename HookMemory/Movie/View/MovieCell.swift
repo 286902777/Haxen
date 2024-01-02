@@ -8,7 +8,8 @@
 import UIKit
 
 class MovieCell: UICollectionViewCell {
-
+    @IBOutlet weak var epsL: UILabel!
+    
     @IBOutlet weak var imageV: UIImageView!
     
     @IBOutlet weak var contentL: UILabel!
@@ -23,6 +24,12 @@ class MovieCell: UICollectionViewCell {
     }
 
     func setModel(model: MovieDataInfoModel, _ isHistory: Bool = false) {
+        if isHistory, model.isMovie == false, model.ssn_eps.count > 0 {
+            self.epsL.isHidden = false
+            self.epsL.text = model.ssn_eps
+        } else {
+            self.epsL.isHidden = true
+        }
         self.progressV.isHidden = !isHistory
         self.progressV.progress = Float(model.playProgress)
         self.scoreL.text = String(format: "%.1f", Float(model.rate) ?? 0)

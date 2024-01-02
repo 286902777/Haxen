@@ -2,7 +2,7 @@
 //  VideoDB+CoreDataProperties.swift
 //  HookMemory
 //
-//  Created by HF on 2023/11/22.
+//  Created by HF on 2024/1/2.
 //
 //
 
@@ -40,6 +40,7 @@ extension VideoDB {
     @NSManaged public var uploadTime: String?
     @NSManaged public var url: String?
     @NSManaged public var videoInfo: String?
+    @NSManaged public var delete: Bool
     @NSManaged public var videoShip: CaptionDB?
 
 }

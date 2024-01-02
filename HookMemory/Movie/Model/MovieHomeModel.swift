@@ -65,6 +65,7 @@ class MovieDataInfoModel: BaseModel {
     var data_type: String = ""
     var eps_cnts: String = ""
     var ssn_id: String = ""
+    var ssn_eps: String = ""
     var eps_list: [String] = []
     var eps_id: String = ""
     var country: String = ""

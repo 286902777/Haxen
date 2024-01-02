@@ -271,9 +271,11 @@ class DBManager {
     func updateVideoPlayData(_ model: MovieVideoModel) {
         let context:NSManagedObjectContext = DBManager.share.mainQueueContext
         if let m: VideoDB = findVideoDataWithModel(id: model.id, ssn_id: model.ssn_id, eps_id: model.eps_id) {
+            m.ssn_eps = model.ssn_eps
             m.playProgress = model.playProgress
             m.totalTime = model.totalTime
             m.playedTime = model.playedTime
+            m.delete = false
             m.updateTime = Double(Date().timeIntervalSince1970)
         } else {
             model.updateTime = Double(Date().timeIntervalSince1970)
@@ -379,6 +381,7 @@ class DBManager {
         } catch { }
     }
     
+    /*
     func deleteVideoData(model: MovieDataInfoModel) {
         let context:NSManagedObjectContext = DBManager.share.mainQueueContext
 
@@ -409,7 +412,38 @@ class DBManager {
             }
         }
     }
-
+    */
+    func deleteVideoData(_ model: MovieVideoModel) {
+        let context:NSManagedObjectContext = DBManager.share.mainQueueContext
+        if let m: VideoDB = findVideoDataWithModel(id: model.id, ssn_id: model.ssn_id, eps_id: model.eps_id) {
+            m.title = model.title
+            m.coverImageUrl = model.coverImageUrl
+            m.rate = model.rate
+            m.ssn_eps = model.ssn_eps
+            m.country = model.country
+            m.isMovie = model.isMovie
+            m.ssn_id = model.ssn_id
+            m.ssn_name = model.ssn_name
+            m.eps_id = model.eps_id
+            m.eps_num = Int16(model.eps_num)
+            m.eps_name = model.eps_name
+            m.delete = true
+            m.updateTime = Double(Date().timeIntervalSince1970)
+        } else {
+            model.updateTime = Double(Date().timeIntervalSince1970)
+            self.insertVideoData(mod: model)
+        }
+        
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
+    }
+    
     func findVideoDataWithModel(id: String, ssn_id: String = "", eps_id: String = "") -> VideoDB? {
         let context:NSManagedObjectContext = DBManager.share.mainQueueContext
         let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "VideoDB")
@@ -495,7 +529,8 @@ class DBManager {
             if searchResults.count > 0 {
                 dataArray.removeAll()
                 for model in searchResults {
-                    if let mod = model as? VideoDB {
+                    if let mod = model as? VideoDB, mod.delete == false, mod.playProgress > 0 {
+                        /*只取播放记录里最新的一条，主要是对TV筛选*/
                         if let _ = dataArray.first(where: {$0.id == mod.id}) {
                             continue
                         }
@@ -505,6 +540,7 @@ class DBManager {
                         m.m_type = mod.isMovie ? "" : "tv_mflx"
                         m.ssn_id = mod.ssn_id ?? ""
                         m.eps_id = mod.eps_id ?? ""
+                        m.ssn_eps = mod.ssn_eps ?? ""
                         m.cover = mod.coverImageUrl ?? ""
                         m.country = mod.country ?? ""
                         m.rate = mod.rate ?? ""

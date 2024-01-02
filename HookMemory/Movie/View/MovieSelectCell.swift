@@ -8,7 +8,8 @@
 import UIKit
 
 class MovieSelectCell: UICollectionViewCell {
-
+    @IBOutlet weak var epsL: UILabel!
+    
     @IBOutlet weak var imageV: UIImageView!
     
     @IBOutlet weak var contentL: UILabel!
@@ -32,6 +33,8 @@ class MovieSelectCell: UICollectionViewCell {
     }
 
     func setModel(isSelect: Bool, model: MovieDataInfoModel, _ clickBlock: clickBlock?, _ clickSelectBlock: clickSelectBlock?) {
+        self.epsL.isHidden = model.isMovie
+        self.epsL.text = model.ssn_eps
         self.selectBtn.isHidden = !isSelect
         self.clickHandle = clickBlock
         self.clickSelectHandle = clickSelectBlock

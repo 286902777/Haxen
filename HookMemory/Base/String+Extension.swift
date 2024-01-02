@@ -10,6 +10,14 @@ import CryptoSwift
 
 extension String {
 
+    func changeTextNum() -> String {
+        if self.count > 1 {
+            return self
+        } else {
+            return "0\(self)"
+        }
+    }
+    
     //  MARK:  AES-ECB128解密
     func AESECB_Decode() -> String? {
         //decode base64

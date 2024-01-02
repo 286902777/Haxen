@@ -264,8 +264,8 @@ class HKUserManager: NSObject {
             let payment = SKPayment(product: product)
             SKPaymentQueue.default().add(payment)
         } else {
-            ProgressHUD.showError("Failed to get product!")
-            self.showError(productId: self.productId, error: "Failed to get product!")
+//            ProgressHUD.showError("Failed to get product!")
+//            self.showError(productId: self.productId, error: "Failed to get product!")
             let payment = SKMutablePayment()
             payment.productIdentifier = productId
             payment.quantity = 1
@@ -338,9 +338,7 @@ class HKUserManager: NSObject {
                                 default:
                                     break
                                 }
-                                if t.isEmpty == false {
-                                    HKLog.hk_subscribe_status(status: s, source: t, pay_time: time)
-                                }
+                                HKLog.hk_subscribe_status(status: s, source: t, pay_time: time)
                                 UserDefaults.standard.set(model.product_id, forKey: HKKeys.product_id)
                                 UserDefaults.standard.set(model.expires_date_ms, forKey: HKKeys.expires_date_ms)
                                 UserDefaults.standard.set(model.auto_renew_status, forKey: HKKeys.auto_renew_status)

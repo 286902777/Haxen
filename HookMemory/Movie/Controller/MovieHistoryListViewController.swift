@@ -76,7 +76,12 @@ class MovieHistoryListViewController: MovieBaseViewController {
             } else {
                 let selectArr = self.dataArr.filter({$0.isSelect == true})
                 for (_, m) in selectArr.enumerated() {
-                    DBManager.share.deleteVideoData(model: m)
+                    let model = MovieVideoModel()
+                    model.title = m.title
+                    model.ssn_id = m.ssn_id
+                    model.eps_id = m.eps_id
+                    model.id = m.id
+                    DBManager.share.deleteVideoData(model)
                 }
                 self.dataArr = self.dataArr.filter({$0.isSelect == false})
                 DispatchQueue.main.async {
@@ -113,7 +118,12 @@ extension MovieHistoryListViewController: UICollectionViewDelegate, UICollection
                             DBManager.share.updateVideoData(model)
                             HKPlayerManager.share.gotoPlayer(controller: self, id: model.id, from: .home)
                         } else {
-                            DBManager.share.deleteVideoData(model: model)
+                            let m = MovieVideoModel()
+                            m.title = model.title
+                            m.ssn_id = model.ssn_id
+                            m.eps_id = model.eps_id
+                            m.id = model.id
+                            DBManager.share.deleteVideoData(m)
                             self.dataArr.remove(at: indexPath.item)
                             self.collectionView.reloadData()
                         }
