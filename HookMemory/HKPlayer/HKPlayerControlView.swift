@@ -472,8 +472,8 @@ class HKPlayerControlView: UIView {
         
         nextBtn.snp.remakeConstraints { make in
             make.width.height.equalTo(40)
-            make.bottom.equalToSuperview().offset(-leading)
-            make.left.equalToSuperview().offset(marge)
+            make.bottom.equalToSuperview().offset(-16)
+            make.left.equalToSuperview().offset(leading - marge)
         }
         
         fullscreenBtn.snp.remakeConstraints {  make in

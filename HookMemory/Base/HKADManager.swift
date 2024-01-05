@@ -697,7 +697,6 @@ extension HKADManager: GADFullScreenContentDelegate {
     
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         UIApplication.shared.isStatusBarHidden = false
-        
         if ad is GADAppOpenAd {
             self.openTime = Date().timeIntervalSince1970
             if self.type == .open {
@@ -742,7 +741,6 @@ extension HKADManager: GADFullScreenContentDelegate {
     }
 }
 
-
 extension HKADManager: MAAdViewAdDelegate {
     func didExpand(_ ad: MAAd) {
         HKLog.log("[Ad] didExpand")
@@ -754,7 +752,7 @@ extension HKADManager: MAAdViewAdDelegate {
     
     func didLoad(_ ad: MAAd) {
         HKLog.log("[Ad] didLoad")
-        for (_, mod) in self.dataArr.enumerated() {
+        for mod in self.dataArr {
             if let _ = mod.item.first(where: {$0.id == ad.adUnitIdentifier}) {
                 HKLog.log("[Ad] 广告加载成功 type: \(mod.type.rawValue) 优先级: \(mod.index + 1), placementid: \(ad.adUnitIdentifier)")
                 mod.adIsLoding = false
@@ -781,7 +779,7 @@ extension HKADManager: MAAdViewAdDelegate {
     
     func didFailToLoadAd(forAdUnitIdentifier adUnitIdentifier: String, withError error: MAError) {
         HKLog.log("[Ad] didFailToLoadAd: adUnitIdentifier: \(adUnitIdentifier), error: \(error.mediatedNetworkErrorCode) \(error.message)")
-        for (_, mod) in self.dataArr.enumerated() {
+        for mod in self.dataArr {
             if let _ = mod.item.first(where: {$0.id == adUnitIdentifier}) {
                 HKLog.log("[Ad] 广告加载失败 type: \(HKADType.play.rawValue) 优先级: \(mod.index + 1), placementid: \(adUnitIdentifier)")
                 self.hk_adFail(placement: mod.placement, code: "\(error.code.rawValue)")
@@ -793,7 +791,7 @@ extension HKADManager: MAAdViewAdDelegate {
     
     func didDisplay(_ ad: MAAd) {
         HKLog.log("[Ad] didDisplay")
-        for (_, mod) in self.dataArr.enumerated() {
+        for mod in self.dataArr {
             if let _ = mod.item.first(where: {$0.id == ad.adUnitIdentifier}), mod.type == self.type {
                 self.addShowCount(type: mod.type)
                 mod.adShowing = true
@@ -860,7 +858,6 @@ extension HKADManager: MAAdRevenueDelegate {
         HKLog.log("[Ad] didPayRevenue")
         
         let revenue = ad.revenue // In USD
-        
         // Miscellaneous data
         let countryCode = ALSdk.shared()!.configuration.countryCode // "US" for the United States, etc - Note: Do not confuse this with currency code which is "USD" in most cases!
         let networkName = ad.networkName // Display name of the network that showed the ad (e.g. "AdColony")
@@ -882,96 +879,7 @@ extension HKADManager: MAAdRevenueDelegate {
                 placem = mod.type.rawValue
             }
         }
-        
         HKLog.hk_ad_impression_revenue(value: revenue, currency: "USD", adFormat: format, adSource: networkName, adPlatform: "MAX", adUnitName: adUnitId , precision: "", placement: placem)
-        
-    }
-    
-}
-
-extension HKADManager {
-    func HKAdLoaded(adUnitId: String) {
-        for (_, mod) in self.dataArr.enumerated() {
-            if let _ = mod.item.first(where: {$0.id == adUnitId}) {
-                HKLog.log("[Ad] 广告加载成功 type: \(mod.type.rawValue) 优先级: \(mod.index + 1), placementid: \(adUnitId)")
-                mod.adIsLoding = false
-                if mod.index > mod.item.count {
-                    return
-                }
-                if let m = mod.item.safe(mod.index) {
-                    let cache = HKADCache()
-                    cache.id = m.id
-                    cache.level = m.level
-                    cache.source = m.source
-                    cache.type = type
-                    cache.id_type = m.type
-                    self.addCacheWithType(type: type, model: cache)
-                }
-            }
-        }
-        self.coolLoadSuccess = true
-        if self.openLoadingSuccessComplete != nil {
-            self.openLoadingSuccessComplete!()
-        }
-        
-    }
-    
-    func HKAdLoadFailWithError(adUnitId: String, code: String) {
-        for (_, mod) in self.dataArr.enumerated() {
-            if let _ = mod.item.first(where: {$0.id == adUnitId}),
-               self.type == mod.type {
-                self.hk_adFail(placement: mod.placement, code: code)
-                mod.adIsLoding = false
-                self.hk_loadFullAd(type: mod.type, index: mod.index + 1, placement: mod.placement)
-            }
-        }
-    }
-    
-    func HKAdImpression(adUnitId: String) {
-        for (_, mod) in self.dataArr.enumerated() {
-            if let _ = mod.item.first(where: {$0.id == adUnitId}),
-               self.type == mod.type {
-                self.addShowCount(type: mod.type)
-                if mod.type == .play {
-                    mod.adShowing = true
-                }
-            }
-        }
-        self.isShowingCoolAd = true
-    }
-    
-    func HKAdImpressionFailWithError(adUnitId: String, code: String) {
-        for (_, mod) in self.dataArr.enumerated() {
-            if let _ = mod.item.first(where: {$0.id == adUnitId}),
-               self.type == mod.type {
-                self.removeFirstCache(type: mod.type)
-                self.hk_loadFullAd(type: mod.type, placement: mod.placement)
-            }
-        }
-    }
-    
-    func HKAdClicked(adUnitId: String) {
-        for (_, mod) in self.dataArr.enumerated() {
-            if let _ = mod.item.first(where: {$0.id == adUnitId}),
-               self.type == mod.type {
-                self.addClickCount(type: mod.type)
-            }
-        }
-    }
-    
-    func HKAdDismissed(adUnitId: String) {
-        for (_, mod) in self.dataArr.enumerated() {
-            if let _ = mod.item.first(where: {$0.id == adUnitId}),
-               self.type == mod.type {
-                self.removeFirstCache(type: mod.type)
-                self.hk_loadFullAd(type: mod.type, placement: mod.placement)
-                break
-            }
-        }
-        self.setTime(self.type)
-    }
-    
-    func HKTradECPM(_ hkAdInfo: [AnyHashable : Any], type: HKADType) {
     }
 }
 
