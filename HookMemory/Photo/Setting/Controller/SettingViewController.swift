@@ -73,6 +73,8 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             if GoogleMobileAdsConsentManager.shared.isPrivacyOptionsRequired {
                 GoogleMobileAdsConsentManager.shared.presentPrivacyOptionsForm(from: self) { _ in
                 }
+               
+                
             } else {
                 let url: String = "https://apps.apple.com/us/app/id6471642830"
                 let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)

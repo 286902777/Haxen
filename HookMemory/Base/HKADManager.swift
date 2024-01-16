@@ -280,7 +280,7 @@ extension HKADManager {
             return
         }
         let time = Date().timeIntervalSince1970
-        if let m = self.dataArr.first(where: {$0.type == type}) {
+        if let _ = self.dataArr.first(where: {$0.type == type}) {
             switch type {
             case .open:
                 if Int(ceil(time - self.openTime)) < self.sameInterval || Int(ceil(time - self.otherTime)) < self.differentInterval || Int(ceil(time - self.playTime)) < self.differentInterval || Int(ceil(time - self.offlineTime)) < self.differentInterval {
@@ -337,6 +337,9 @@ extension HKADManager {
                 } else if c.source == .max {
                     if (c.ad as? MAInterstitialAd)?.isReady == true {
                         (c.ad as? MAInterstitialAd)?.show()
+                        complete(true, nil)
+                    } else if (c.ad as? MAAppOpenAd)?.isReady == true {
+                        (c.ad as? MAAppOpenAd)?.show()
                         complete(true, nil)
                     } else if (c.ad as? MARewardedAd)?.isReady == true {
                         (c.ad as? MARewardedAd)?.show()
@@ -540,7 +543,6 @@ extension HKADManager {
                     ad.paidEventHandler = { value in
                         let nvalue = value.value
                         let currencyCode = value.currencyCode
-                        
                         HKLog.hk_ad_impression_revenue(value: nvalue.doubleValue, currency: currencyCode, adFormat: "INTERSTITIAL", adSource: ad.responseInfo.loadedAdNetworkResponseInfo?.adNetworkClassName ?? "", adPlatform: "admob", adUnitName: item.id , precision: "\(value.precision.rawValue)", placement: type.rawValue)
                     }
                     

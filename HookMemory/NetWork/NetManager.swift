@@ -198,7 +198,7 @@ extension NetManager{
 }
 
 extension String{
-    fileprivate func jointHost() -> String{
+     func jointHost() -> String{
         let host = NetManager.defualt.RequestUrlHost
         guard !self.isEmpty else {
             return host

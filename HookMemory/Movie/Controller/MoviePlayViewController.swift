@@ -649,6 +649,8 @@ extension MoviePlayViewController: HKPlayerDelegate {
             make.left.top.bottom.equalToSuperview()
             make.right.equalTo(-72)
         }
+        let _ = self.videoModel.ssn.ssn_list.map({$0.isSelect = false})
+        self.videoModel.ssn.ssn_list.filter({$0.id == self.ssnId}).first?.isSelect = true
         epsView?.setModel(self.videoId, self.videoModel.ssn) { [weak self] epsList, ssnId, epsId in
             guard let self = self else { return }
             self.videoModel.ssn.epss = epsList

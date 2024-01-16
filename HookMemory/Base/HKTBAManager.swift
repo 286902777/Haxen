@@ -82,11 +82,9 @@ class HKTBAManager: NSObject {
     }
     
     func tbaRequest() {
-        
         if self.task != nil {
             return
         }
-        
         let tempTbaLogs = self.tbaLogs
         let urlString = "\(self.host)?itll=\(HKConfig.share.getDistinctId())&sneaky=\(HKConfig.idfv)&pershing=\(UUID().uuidString)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)! // bundle_id  idfa  brand
         
@@ -104,7 +102,6 @@ class HKTBAManager: NSObject {
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)
         self.task = session.dataTask(with: request, completionHandler: { data, response, error in
-            
             guard error == nil else {
                 HKLog.log("TBA error: \(error?.localizedDescription ?? "")")
                 self.task = nil
@@ -115,7 +112,6 @@ class HKTBAManager: NSObject {
             }
             if let res = response as? HTTPURLResponse, res.statusCode == 200 {
                 HKLog.log("TBA success!")
-
                 for item in tempTbaLogs {
                     if let index = self.tbaLogs.firstIndex(where: { ($0["itll"] as? String) == (item["itll"] as? String) }) {
                         self.tbaLogs.remove(at: index)
@@ -125,7 +121,6 @@ class HKTBAManager: NSObject {
                 HKLog.log("TBA fail!")
             }
             self.task = nil
-            
         })
         self.task?.resume()
     }

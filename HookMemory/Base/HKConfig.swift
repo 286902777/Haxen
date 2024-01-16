@@ -177,26 +177,6 @@ class HKConfig{
         return window
     }
     
-//    var currentVC: UIViewController? {
-//        get {
-//            if let window = HKConfig.share.currentWindow() {
-//                if let navVC = window.rootViewController as? UINavigationController {
-//                    return navVC.visibleViewController
-//                }
-//                if let tabVC = window.rootViewController as? UITabBarController {
-//                    return tabVC.selectedViewController
-//                }
-//                if let presentVC = window.rootViewController?.presentedViewController {
-//                    return presentVC
-//                }
-//                if let vc = window.rootViewController {
-//                    return vc
-//                }
-//            }
-//            return nil
-//        }
-//    }
-    
     class func currentVC(controller: UIViewController? = nil) -> UIViewController? {
         var controller = controller
         if controller == nil {

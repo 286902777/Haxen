@@ -92,7 +92,6 @@ class MovieFilterViewController: MovieBaseViewController {
         let footer = RefreshAutoNormalFooter { [weak self] in
             guard let self = self else { return }
             self.page += 1
-            self.selectL.text = ""
             self.loadMoreData()
         }
         collectionView.mj_footer = footer
