@@ -424,17 +424,6 @@ class DBManager {
     func deleteVideoData(_ model: MovieVideoModel) {
         let context:NSManagedObjectContext = DBManager.share.mainQueueContext
         if let m: VideoDB = findVideoDataWithModel(id: model.id, ssn_id: model.ssn_id, eps_id: model.eps_id) {
-            m.title = model.title
-            m.coverImageUrl = model.coverImageUrl
-            m.rate = model.rate
-            m.ssn_eps = model.ssn_eps
-            m.country = model.country
-            m.isMovie = model.isMovie
-            m.ssn_id = model.ssn_id
-            m.ssn_name = model.ssn_name
-            m.eps_id = model.eps_id
-            m.eps_num = Int16(model.eps_num)
-            m.eps_name = model.eps_name
             m.delete = true
             m.updateTime = Double(Date().timeIntervalSince1970)
         }
