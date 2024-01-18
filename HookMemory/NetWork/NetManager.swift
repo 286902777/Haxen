@@ -77,7 +77,6 @@ extension NetManager{
                                                                   method:HTTPMethod = .post,
                                                                   parameters:Parameters? = nil
     ) -> DataRequest{
-        AF.sessionConfiguration.timeoutIntervalForRequest = 15
         var headers : HTTPHeaders = HTTPHeaders()
         headers.add(name: "Accept", value: NetManager.defualt.contentType)
         if NetManager.defualt.contentType != "application/x-www-form-urlencoded" {
@@ -86,7 +85,7 @@ extension NetManager{
         let encoder : ParameterEncoder = NetManager.defualt.HKParameterEncoder
         let requestUrl = url.jointHost()
         
-        let request : DataRequest = AF.request(requestUrl, method: method, parameters: parameters, encoder: encoder, headers: headers, interceptor: nil, requestModifier: nil)
+        let request : DataRequest = AF.request(requestUrl, method: method, parameters: parameters, encoder: encoder, headers: headers, interceptor: nil, requestModifier: { $0.timeoutInterval = 15 })
         return request
     }
 }
@@ -126,11 +125,6 @@ extension NetManager{
     {
         NetManager.InitDataRequest(url: url, method: method, parameters: parameters)
             .responseString { string in
-                
-                if let error = string.error{
-                    print(error.errorDescription as Any)
-                    return
-                }
                 self.response(modelType, string.value,resultBlock)
             }
     }
@@ -139,10 +133,6 @@ extension NetManager{
                           parameters: [String:String]? = [:], resultBlock: @escaping (String) ->()) {
         NetManager.InitDataRequest(url: url, method: .get ,parameters: parameters)
             .responseString { string in
-                if let error = string.error{
-                    print(error.errorDescription as Any)
-                    return
-                }
                 resultBlock(string.value ?? "")
             }
     }

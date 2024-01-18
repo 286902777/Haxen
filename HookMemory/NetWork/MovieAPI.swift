@@ -47,6 +47,8 @@ class MovieAPI {
                     HKLog.hk_home_sh(loadsuccess: "4", errorinfo: responseModel.errorMessage)
                 }
                 completion(responseModel.status == .success, list)
+            } else {
+                completion(false, nil)
             }
         }
     }
@@ -59,6 +61,8 @@ class MovieAPI {
         NetManager.request(url: MovieNetAPI.movieMoreListApi.rawValue, method: .post, parameters: para, modelType: MovieMroeModel.self) { responseModel in
             if let mod = responseModel.model {
                 completion(responseModel.status == .success, mod)
+            } else {
+                completion(false, MovieMroeModel())
             }
         }
     }
@@ -77,6 +81,8 @@ class MovieAPI {
                     HKLog.hk_search_result_sh(keyword: keyword, errorinf: responseModel.errorMessage, source: "\(from.rawValue)")
                 }
                 completion(responseModel.status == .success, mod)
+            } else {
+                completion(false, MovieSearchModel())
             }
         }
     }
@@ -98,6 +104,8 @@ class MovieAPI {
                     HKLog.hk_explore_sh(loadsuccess: "4", errorinfo: responseModel.errorMessage)
                 }
                 completion(responseModel.status == .success, mod)
+            } else {
+                completion(false, MovieFilterModel())
             }
         }
     }
@@ -143,6 +151,8 @@ class MovieAPI {
             ProgressHUD.dismiss()
             if let list = responseModel.models {
                 completion(responseModel.status == .success, list)
+            } else {
+                completion(false, [MovieVideoInfoSsnlistModel()])
             }
         }
     }
@@ -154,6 +164,8 @@ class MovieAPI {
             ProgressHUD.dismiss()
             if let mod = responseModel.model {
                 completion(responseModel.status == .success, mod)
+            } else {
+                completion(false, MovieTVEpsListModel())
             }
         }
     }
