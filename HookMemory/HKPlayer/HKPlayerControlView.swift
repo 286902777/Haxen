@@ -88,7 +88,7 @@ class HKPlayerControlView: UIView {
     
     var playerState: HKPlayerState = .noURL
     
-    let leading: CGFloat = 88
+    let leading: CGFloat = 12
     let marge: CGFloat = 8
     let space: CGFloat = 72
 
@@ -400,7 +400,7 @@ class HKPlayerControlView: UIView {
         
         backBtn.snp.remakeConstraints { (make) in
             make.width.height.equalTo(44)
-            make.leading.equalToSuperview().offset(isFullscreen ? space : marge)
+            make.leading.equalToSuperview().offset(isFullscreen ? 0 : marge)
             make.bottom.equalToSuperview()
         }
   
@@ -416,13 +416,13 @@ class HKPlayerControlView: UIView {
             
             backwordBtn.snp.remakeConstraints {  make in
                 make.width.height.equalTo(48)
-                make.trailing.equalTo(play1Btn.snp.leading).offset(-38)
+                make.trailing.equalTo(play1Btn.snp.leading).offset(-48)
                 make.centerY.equalToSuperview()
             }
             
             forwordBtn.snp.remakeConstraints { (make) in
                 make.width.height.equalTo(48)
-                make.leading.equalTo(play1Btn.snp.trailing).offset(38)
+                make.leading.equalTo(play1Btn.snp.trailing).offset(48)
                 make.centerY.equalToSuperview()
             }
         } else {
@@ -988,8 +988,11 @@ class HKPlayerControlView: UIView {
         rightGesture = UITapGestureRecognizer(target: self, action: #selector(onrightGestureRecognized(_:)))
         rightGesture.numberOfTapsRequired = 2
         rightView.addGestureRecognizer(rightGesture)
-
         tapGesture.require(toFail: rightGesture)
+        
+        leftGesture.delegate = self
+        rightGesture.delegate = self
+        doubleGesture.delegate = self
     }
     
     func setConstraint() {
@@ -1099,13 +1102,13 @@ class HKPlayerControlView: UIView {
         
         backwordBtn.snp.makeConstraints {  make in
             make.width.height.equalTo(48)
-            make.trailing.equalTo(play1Btn.snp.leading).offset(-38)
+            make.trailing.equalTo(play1Btn.snp.leading).offset(-48)
             make.centerY.equalToSuperview()
         }
         
         forwordBtn.snp.makeConstraints { (make) in
             make.width.height.equalTo(48)
-            make.leading.equalTo(play1Btn.snp.trailing).offset(38)
+            make.leading.equalTo(play1Btn.snp.trailing).offset(48)
             make.centerY.equalToSuperview()
         }
 
@@ -1154,11 +1157,11 @@ class HKPlayerControlView: UIView {
     }
 }
 
-//extension HKPlayerControlView: UIGestureRecognizerDelegate {
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-//        if HKPlayerManager.share.isLock {
-//            return false
-//        }
-//        return true
-//    }
-//}
+extension HKPlayerControlView: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if HKPlayerManager.share.isLock {
+            return false
+        }
+        return true
+    }
+}

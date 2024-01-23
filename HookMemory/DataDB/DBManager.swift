@@ -230,6 +230,8 @@ class DBManager {
             } else {
                 m.isMovie = model.m_type != "tv_mflx"
             }
+            m.ssn_id = model.ssn_id
+            m.eps_id = model.eps_id
             m.ssn_eps = model.ss_eps
             m.country = model.country
             m.updateTime = Double(Date().timeIntervalSince1970)

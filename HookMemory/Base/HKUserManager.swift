@@ -338,7 +338,9 @@ class HKUserManager: NSObject {
                                 default:
                                     break
                                 }
-                                HKLog.hk_subscribe_status(status: s, source: t, pay_time: time)
+                                if t.isEmpty == false {
+                                    HKLog.hk_subscribe_status(status: s, source: t, pay_time: time)
+                                }
                                 UserDefaults.standard.set(model.product_id, forKey: HKKeys.product_id)
                                 UserDefaults.standard.set(model.expires_date_ms, forKey: HKKeys.expires_date_ms)
                                 UserDefaults.standard.set(model.auto_renew_status, forKey: HKKeys.auto_renew_status)
@@ -356,7 +358,7 @@ class HKUserManager: NSObject {
                                 case .app:
                                     t = "1"
                                 default:
-                                    t = ""
+                                    break
                                 }
                                 if t.isEmpty == false {
                                     HKLog.hk_subscribe_status(status: "2", source: t, pay_time: time)
@@ -486,7 +488,7 @@ extension HKUserManager {
 }
 
 class HKPremiuModel: BaseModel {
-    var entity = MTPremiuEntityModel()
+    var entity = HKPremiuEntityModel()
     var checks = [String]()
     
     var auto_renew_status: String {

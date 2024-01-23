@@ -283,13 +283,14 @@ class MoviePlayViewController: UIViewController {
                 if success {
                     if let mod = model {
                         self.videoModel = mod
+                        self.videoModel.ssn.ssn_list = self.videoModel.ssn.ssn_list.sorted(by: {Int($0.id) ?? 0 < Int($1.id) ?? 0})
                         if self.model.isMovie == false {
                             self.videoModel.ssn.ssn_list.first(where: {$0.id == self.ssnId})?.isSelect = true
                             self.videoModel.ssn.epss.first(where: {$0.id == self.epsId})?.isSelect = true
                         }
                     }
-                    group.leave()
                 }
+                group.leave()
             }
         }
         group.enter()
@@ -575,9 +576,7 @@ extension MoviePlayViewController: HKPlayerDelegate {
     func player(player: HKPlayer, playerOrientChanged isFullscreen: Bool) {
         player.snp.remakeConstraints { (make) in
             if isFullscreen {
-                make.top.bottom.equalToSuperview()
-                make.leading.equalTo(72)
-                make.trailing.equalTo(-72)
+                make.edges.equalToSuperview()
             } else {
                 make.leading.trailing.equalToSuperview()
                 make.top.equalToSuperview().offset(statusH)
