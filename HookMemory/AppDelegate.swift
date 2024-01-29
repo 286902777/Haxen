@@ -25,6 +25,8 @@ import FBSDKCoreKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var allowRotate: Bool = false
     var screenLock: Bool = false
+    var window: UIWindow?
+    
     override init() {
         super.init()
         CaptionTransformer.register()    // 注册CaptionTransformer

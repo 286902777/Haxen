@@ -111,7 +111,7 @@ class MoviePlayViewController: UIViewController {
                 self.player.playerLayer?.playerLayer?.player = nil
                 if let oldTime = self.getSourceTime, let ready = self.videoReadyTime {
                     let time = Int(ready - oldTime)
-                    HKLog.hk_playback_status(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: self.epsName, movie_type: "\(self.from.rawValue)", cache_len: "\(time)", source: self.model.isMovie ? "1" : "2", if_success: "1", errorinfo: "")
+                    HKLog.hk_playback_status(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: self.epsName, movie_type: self.model.isMovie ? "1" : "2", cache_len: "\(time)", source: "\(self.from.rawValue)", if_success: "1", errorinfo: "")
                 }
                 
                 let name = self.videoModel.ssn.ssn_list.first(where: {$0.isSelect == true})?.title
@@ -196,7 +196,7 @@ class MoviePlayViewController: UIViewController {
         
         if let oldTime = self.getSourceTime, let ready = self.videoReadyTime {
             let time = Int(ready - oldTime)
-            HKLog.hk_playback_status(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: self.epsName, movie_type: "\(self.from.rawValue)", cache_len: "\(time)", source: self.model.isMovie ? "1" : "2", if_success: "1", errorinfo: "")
+            HKLog.hk_playback_status(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: self.epsName, movie_type: self.model.isMovie ? "1" : "2", cache_len: "\(time)", source: "\(self.from.rawValue)", if_success: "1", errorinfo: "")
         }
         
         let name = self.videoModel.ssn.ssn_list.first(where: {$0.isSelect == true})?.title
@@ -341,7 +341,7 @@ class MoviePlayViewController: UIViewController {
                         self.player.setVideo(resource: asset!, sourceKey: self.videoId)
                     }
                 } else {
-                    HKLog.hk_playback_status(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: self.epsName, movie_type: "\(self.from.rawValue)", cache_len: "0", source: self.model.isMovie ? "1" : "2", if_success: "3", errorinfo: "")
+                    HKLog.hk_playback_status(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: self.epsName, movie_type: self.model.isMovie ? "1" : "2", cache_len: "0", source: "\(self.from.rawValue)", if_success: "3", errorinfo: "")
                     self.tableView.isHidden = true
                     self.remView.isHidden = false
                     self.player.isReminder = true
@@ -596,7 +596,7 @@ extension MoviePlayViewController: HKPlayerDelegate {
             self.videoReadyTime = Date().timeIntervalSince1970
             if let oldTime = self.getSourceTime, let ready = self.videoReadyTime {
                 let time = Int(ready - oldTime)
-                HKLog.hk_playback_status(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: self.epsName, movie_type: "\(self.from.rawValue)", cache_len: "\(time)", source: self.model.isMovie ? "1" : "2", if_success: "1", errorinfo: "")
+                HKLog.hk_playback_status(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: self.epsName, movie_type: self.model.isMovie ? "1" : "2", cache_len: "\(time)", source: "\(self.from.rawValue)", if_success: "1", errorinfo: "")
             }
         case .waiting:
             self.setPlayerTimer()
@@ -608,7 +608,7 @@ extension MoviePlayViewController: HKPlayerDelegate {
         case .error:
             if let oldTime = self.getSourceTime {
                 let time = Int((Date().timeIntervalSince1970 - oldTime))
-                HKLog.hk_playback_status(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: self.epsName, movie_type: "\(self.from.rawValue)", cache_len: "\(time)", source: self.model.isMovie ? "1" : "2", if_success: "2", errorinfo: errorInfo ?? "")
+                HKLog.hk_playback_status(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: self.epsName, movie_type: self.model.isMovie ? "1" : "2", cache_len: "\(time)", source: "\(self.from.rawValue)", if_success: "2", errorinfo: errorInfo ?? "")
             }
         default:
             break
