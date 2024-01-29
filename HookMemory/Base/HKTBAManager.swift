@@ -209,7 +209,7 @@ class HKTBAManager: NSObject {
     }
     
     func setHktbaParams(type: HKTBAType) {
-        var tbas: [[String: Any]] = []
+        var tbas = self.tbaLogs
         tbas.append(self.getTabParameters(type: type))
         self.tbaLogs = tbas
         self.tbaRequest()

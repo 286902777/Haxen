@@ -55,7 +55,7 @@ var purMoneyWeek = "$1.99"
 var purMoneyMonth = "$4.99"
 var purMoneyYear = "$29.99"
 var purMoneyYearCut = "$120"
-//var purCurrencySymbol = "$"            // 货币单位
+var purCurrencySymbol = "$"            // 货币单位
 
 class HKUserManager: NSObject {
     
@@ -69,9 +69,6 @@ class HKUserManager: NSObject {
             NotificationCenter.default.post(name: Noti_VipChange, object: nil)
         }
     }
-    
-    var regionCode: String = ""
-    var currencyCode: String = ""
     
     var week = HKUserData(premiumID: .week, price: purMoneyWeek, oldPrice: "", title: "Weekly", subTitle: "For the per week", tag: "", isLine: false)
     var month = HKUserData(premiumID: .month, price: purMoneyMonth, oldPrice: "",  title: "Monthly", subTitle: "For the per month", tag: "", isLine: false)
@@ -142,6 +139,9 @@ class HKUserManager: NSObject {
         self.dataArr.removeAll()
         let form = NumberFormatter.init()
         form.numberStyle = .currencyAccounting
+        if let f = arr.first {
+            form.locale = f.priceLocale
+        }
         form.usesGroupingSeparator = true
         for (_, model) in arr.enumerated() {
             var price: String = ""
@@ -160,7 +160,6 @@ class HKUserManager: NSObject {
             switch HKUserID(rawValue: model.productIdentifier) {
             case .week:
                 purMoneyWeek = price
-//                purCurrencySymbol = form.currencySymbol
                 self.week = HKUserData(premiumID: .week, price: purMoneyWeek, oldPrice: oldPrice, title: "Weekly", subTitle: "For the per week", tag: "", isLine: false)
             case .month:
                 purMoneyMonth = price
@@ -313,7 +312,7 @@ class HKUserManager: NSObject {
             if let res = response as? HTTPURLResponse {
                 if res.statusCode == 200, let data = data {
                     if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
-                        var t: String = ""
+                        var t: String?
                         let time = "\(Date().timeIntervalSince1970)"
                         if let model = HKPremiuModel.deserialize(from: json) {
                             var s: String = "1"
@@ -338,8 +337,8 @@ class HKUserManager: NSObject {
                                 default:
                                     break
                                 }
-                                if t.isEmpty == false {
-                                    HKLog.hk_subscribe_status(status: s, source: t, pay_time: time)
+                                if let type = t {
+                                    HKLog.hk_subscribe_status(status: s, source: type, pay_time: time)
                                 }
                                 UserDefaults.standard.set(model.product_id, forKey: HKKeys.product_id)
                                 UserDefaults.standard.set(model.expires_date_ms, forKey: HKKeys.expires_date_ms)
@@ -360,8 +359,8 @@ class HKUserManager: NSObject {
                                 default:
                                     break
                                 }
-                                if t.isEmpty == false {
-                                    HKLog.hk_subscribe_status(status: "2", source: t, pay_time: time)
+                                if let type = t {
+                                    HKLog.hk_subscribe_status(status: s, source: type, pay_time: time)
                                 }
                             }
                         }
@@ -407,11 +406,6 @@ extension HKUserManager: SKProductsRequestDelegate, SKPaymentTransactionObserver
             return
         }
         
-        let form = NumberFormatter.init()
-        form.numberStyle = .currencyAccounting
-        form.usesGroupingSeparator = true
-        self.regionCode = form.locale.regionCode ?? ""
-        self.currencyCode = form.currencyCode
         ProgressHUD.dismiss()
         DispatchQueue.main.async {
             self.reloadLists(arr: self.productsArray)

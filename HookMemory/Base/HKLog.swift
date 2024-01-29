@@ -35,9 +35,9 @@ extension HKLog {
         HKTBAManager.share.setHktbaParams(type: .event)
     }
  
-    class func hk_home_sh(loadsuccess: String, errorinfo: String) {
+    class func hk_home_sh(loadsuccess: String, errorinfo: String, show: String = "0") {
         HKLog.log("[LOG]: 电影首页展示 拉取内容时上报一次即可，不用每次展示都上报 home_sh loadsuccess: \(loadsuccess), errorinfo: \(errorinfo)")
-        HKLog.logEvent("home_sh", parameters: ["loadsuccess": loadsuccess, "errorinfo": errorinfo])
+        HKLog.logEvent("home_sh", parameters: ["loadsuccess": loadsuccess, "errorinfo": errorinfo, "show": show])
     }
     
     class func hk_home_cl(kid: String, c_id: String, c_name: String, ctype: String, secname: String, secid: String) {
@@ -45,9 +45,9 @@ extension HKLog {
         HKLog.logEvent("home_cl", parameters: ["kid": kid, "c_id": c_id, "c_name": c_name, "ctype": ctype, "secname": secname, "secid": secid])
     }
     
-    class func hk_explore_sh(loadsuccess: String, errorinfo: String) {
-        HKLog.log("[LOG]: tab_电影展示 tab_movie_sh loadsuccess: \(loadsuccess), errorinfo: \(errorinfo)")
-        HKLog.logEvent("explore_sh", parameters: ["loadsuccess": loadsuccess, "errorinfo": errorinfo])
+    class func hk_explore_sh(loadsuccess: String, errorinfo: String, show: String = "0") {
+        HKLog.log("[LOG]: tab_电影展示 tab_movie_sh loadsuccess: \(loadsuccess), errorinfo: \(errorinfo), show: \(show)")
+        HKLog.logEvent("explore_sh", parameters: ["loadsuccess": loadsuccess, "errorinfo": errorinfo, "show": show])
     }
     
     class func hk_explore_cl(kid: String) {
@@ -83,6 +83,11 @@ extension HKLog {
     class func hk_movie_play_len(movie_id: String, movie_name: String, eps_id: String, eps_name: String, movie_type: String, watch_len: String, source: String, if_success: String) {
         HKLog.log("[LOG]: 播放页停留时长 movie_play_len movie_id: \(movie_id), movie_name: \(movie_name), eps_id: \(eps_id), eps_name: \(eps_name), movie_type: \(movie_type), watch_len: \(watch_len), source: \(source), if_success: \(if_success)")
         HKLog.logEvent("movie_play_len", parameters: ["movie_id": movie_id, "movie_name": movie_name, "eps_id": eps_id, "eps_name": eps_name, "movie_type": movie_type, "watch_len": watch_len, "source": source, "if_success": if_success])
+    }
+    
+    class func hk_playback_status(movie_id: String, movie_name: String, eps_id: String, eps_name: String, movie_type: String, cache_len: String, source: String, if_success: String, errorinfo: String) {
+        HKLog.log("[LOG]: 播放页停留时长 playback_status movie_id: \(movie_id), movie_name: \(movie_name), eps_id: \(eps_id), eps_name: \(eps_name), movie_type: \(movie_type), watch_len: \(cache_len), source: \(source), if_success: \(if_success), errorinfo: \(errorinfo)")
+        HKLog.logEvent("playback_status", parameters: ["movie_id": movie_id, "movie_name": movie_name, "eps_id": eps_id, "eps_name": eps_name, "movie_type": movie_type, "cache_len": cache_len, "source": source, "if_success": if_success, "errorinfo": errorinfo])
     }
     
     class func hk_vip_sh(source: String) {

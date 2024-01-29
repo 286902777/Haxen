@@ -27,13 +27,23 @@ class MovieHomeViewController: MovieBaseViewController {
     }()
     
     private var isNeedRefresh: Bool = false
+    private var first: Bool = true
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if isNeedRefresh {
             refreshHistoryData()
         }
+        if self.first == false {
+            HKLog.hk_home_sh(loadsuccess: "", errorinfo: "", show: "1")
+        }
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.first = false
+    }
+    
     func refreshHistoryData() {
         let arr = DBManager.share.selectHistoryVideoDatas()
         if let m = self.dataArr.first, let name = m?.data.first?.name, name == "History" {
@@ -173,7 +183,7 @@ extension MovieHomeViewController: UITableViewDelegate, UITableViewDataSource {
             }, clickBlock: { movieModel in
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
-                    HKLog.hk_home_cl(kid: movieModel.isMovie ? "1" : "2", c_id: movieModel.id, c_name: movieModel.title, ctype: "1", secname: model.data.first?.name ?? "", secid: model.data.first?.id ?? "")
+                    HKLog.hk_home_cl(kid: "1", c_id: movieModel.id, c_name: movieModel.title, ctype: movieModel.isMovie ? "1" : "2", secname: model.data.first?.name ?? "", secid: model.data.first?.id ?? "")
                     DBManager.share.updateVideoData(movieModel)
                     HKPlayerManager.share.gotoPlayer(controller: self, id: movieModel.id, from: .home)
                 }

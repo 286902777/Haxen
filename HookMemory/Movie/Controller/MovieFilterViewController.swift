@@ -48,6 +48,19 @@ class MovieFilterViewController: MovieBaseViewController {
         return label
     }()
     
+    private var first: Bool = true
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if self.first == false {
+            HKLog.hk_explore_sh(loadsuccess: "", errorinfo: "", show: "1")
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.first = false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUI()

@@ -25,6 +25,7 @@ class MoviePlayViewController: UIViewController {
             self.controller.isMovie = epsId.count == 0
         }
     }
+    private var epsName: String = ""
     private var ssn_eps: String = ""
     private var remView: HKPlayerRemindView = HKPlayerRemindView.view()
     private var captions: HKSubtitles? {
@@ -76,6 +77,7 @@ class MoviePlayViewController: UIViewController {
         }
     }
     
+    private var getSourceTime : TimeInterval?
     private var statusH = kStatusBarHeight
     private var countPlayTime: Int = 30
     private var timer: Timer?
@@ -169,8 +171,6 @@ class MoviePlayViewController: UIViewController {
                 self.onOrientationChanged(isLand: false)
             }
         }
-        
-        self.setCoverImage()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -319,6 +319,7 @@ class MoviePlayViewController: UIViewController {
                 }
                 
                 if let url = URL(string: self.videoUrl) {
+                    self.getSourceTime = Date().timeIntervalSince1970
                     self.remView.isHidden = true
                     self.player.isReminder = false
                     asset = HKPlayerResource(name: self.videoModel.data.title, definitions: [HKPlayerResourceConfig(url: url, definition: "480p")], cover: nil, subtitles: self.captions)
@@ -456,21 +457,6 @@ class MoviePlayViewController: UIViewController {
                 UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
             }
         }
-
-    }
-    
-    func setCoverImage() {
-        if let video = DBManager.share.selectVideoData(id: self.videoId) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                guard let self = self else { return }
-                let imageV = UIImageView()
-                imageV.setImage(with: video.coverImageUrl) { image in
-                    if let img = image, img.size.width > img.size.height {
-                        self.player.fullScreenButtonPressed()
-                    }
-                }
-            }
-        }
     }
     
     func onOrientationChanged(isLand: Bool) {
@@ -497,6 +483,7 @@ class MoviePlayViewController: UIViewController {
                                     if let first = ssnMod.eps_list.first {
                                         first.isSelect = true
                                         self.epsId = first.id
+                                        self.epsName = first.title
                                         self.videoModel.ssn.epss = ssnMod.eps_list
                                         self.setResource()
                                         let _ = self.videoModel.ssn.ssn_list.map({$0.isSelect = false})
@@ -525,6 +512,7 @@ class MoviePlayViewController: UIViewController {
                 } else {
                     if let model = self.videoModel.ssn.epss.safe(index + 1) {
                         self.epsId = model.id
+                        self.epsName = model.title
                         self.setResource()
                         return
                     }
@@ -589,7 +577,7 @@ extension MoviePlayViewController: HKPlayerDelegate {
         print("playing: \(playing)")
     }
     
-    func player(player: HKPlayer, playerStateDidChange state: HKPlayerState) {
+    func player(player: HKPlayer, playerStateDidChange state: HKPlayerState, errorInfo: String?) {
         print("play-state: \(state)")
         switch state {
         case .ready:
@@ -601,6 +589,11 @@ extension MoviePlayViewController: HKPlayerDelegate {
             self.playNext()
         case .finished:
             self.cancelTimer()
+        case .error:
+            if let oldTime = self.getSourceTime {
+                let time = Int((Date().timeIntervalSince1970 - oldTime))
+                HKLog.hk_playback_status(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: self.epsName, movie_type: "\(self.from.rawValue)", cache_len: self.model.isMovie ? "1" : "2", source: "\(time)", if_success: "2", errorinfo: errorInfo ?? "")
+            }
         default:
             break
         }
@@ -776,6 +769,7 @@ extension MoviePlayViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section != 0, let model = self.videoModel.ssn.epss.safe(indexPath.row) {
             self.epsId = model.id
+            self.epsName = model.title
             if self.midSsnId.count > 0 {
                  self.ssnId = self.midSsnId
             }
@@ -861,6 +855,7 @@ extension MoviePlayViewController: UITableViewDelegate, UITableViewDataSource {
                                 videoModel.isMovie = false
                                 self.ssnId = mod.id
                                 self.epsId = ssnM.id
+                                self.epsName = ssnM.title
                                 self.videoId = model.id
                                 DBManager.share.updateVideoData(videoModel)
                                 completion(videoModel)

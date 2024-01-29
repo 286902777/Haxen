@@ -37,6 +37,7 @@ class MovieHistoryListViewController: MovieBaseViewController {
     }
     
     func setUI() {
+        HKLog.hk_home_cl(kid: "3", c_id: "", c_name: "", ctype: "", secname: "history", secid: "")
         cusBar.titleL.text = "Recently Played"
         cusBar.rightBtn.setImage(IMG("movie_edit"), for: .normal)
         view.addSubview(bottomView)
@@ -116,7 +117,7 @@ extension MovieHistoryListViewController: UICollectionViewDelegate, UICollection
                     vc.clickBlock = { index in
                         if index == 0 {
                             DBManager.share.updateVideoData(model)
-                            HKPlayerManager.share.gotoPlayer(controller: self, id: model.id, from: .home)
+                            HKPlayerManager.share.gotoPlayer(controller: self, id: model.id, from: .history)
                         } else {
                             let m = MovieVideoModel()
                             m.title = model.title
@@ -145,7 +146,7 @@ extension MovieHistoryListViewController: UICollectionViewDelegate, UICollection
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let model = self.dataArr.safe(indexPath.item) {
             DBManager.share.updateVideoData(model)
-            HKPlayerManager.share.gotoPlayer(controller: self, id: model.id, from: .list)
+            HKPlayerManager.share.gotoPlayer(controller: self, id: model.id, from: .history)
         }
     }
     

@@ -15,7 +15,7 @@ enum HKPlayerPanDirection: Int {
 }
 
 protocol HKPlayerDelegate: AnyObject {
-    func player(player: HKPlayer, playerStateDidChange state: HKPlayerState)
+    func player(player: HKPlayer, playerStateDidChange state: HKPlayerState, errorInfo: String?)
     func player(player: HKPlayer, loadedTimeDidChange loadedDuration: TimeInterval, totalDuration: TimeInterval)
     func player(player: HKPlayer, playTimeDidChange currentTime : TimeInterval, totalTime: TimeInterval)
     func player(player: HKPlayer, playerIsPlaying playing: Bool)
@@ -577,6 +577,7 @@ extension HKPlayer: HKPlayerLayerViewDelegate {
     
     func player(player: HKPlayerLayerView, playerStateDidChange state: HKPlayerState) {
         controlView.playerStateDidChange(state: state)
+        var info: String?
         switch state {
         case .ready:
             if !isPauseByUser {
@@ -608,13 +609,14 @@ extension HKPlayer: HKPlayerLayerViewDelegate {
 //            }
             
         case .error:
+            info = String(describing: player.player?.error)
             print("playerError: \(player.player?.error)")
             break
         default:
             break
         }
         panGes.isEnabled = state != .end
-        delegate?.player(player: self, playerStateDidChange: state)
+        delegate?.player(player: self, playerStateDidChange: state, errorInfo: info)
         playStateChanged?(state)
     }
     

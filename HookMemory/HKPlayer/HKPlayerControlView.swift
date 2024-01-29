@@ -400,7 +400,7 @@ class HKPlayerControlView: UIView {
         
         backBtn.snp.remakeConstraints { (make) in
             make.width.height.equalTo(44)
-            make.leading.equalToSuperview().offset(isFullscreen ? 0 : marge)
+            make.leading.equalToSuperview().offset(isFullscreen ? leading : marge)
             make.bottom.equalToSuperview()
         }
   
@@ -434,7 +434,7 @@ class HKPlayerControlView: UIView {
         currentTimeL.snp.remakeConstraints {  make in
             if isFullscreen {
                 make.bottom.equalTo(timeSlider.snp.top).offset(4)
-                make.left.equalToSuperview().offset(leading)
+                make.left.equalToSuperview().offset(leading * 2)
             } else {
                 make.centerY.equalTo(playBtn)
                 make.left.equalTo(playBtn.snp.right)
@@ -445,7 +445,7 @@ class HKPlayerControlView: UIView {
         totalTimeL.snp.remakeConstraints {  make in
             make.centerY.equalTo(self.currentTimeL)
             if isFullscreen {
-                make.right.equalToSuperview().offset(-leading)
+                make.right.equalToSuperview().offset(-leading * 2)
             } else {
                 make.right.equalTo(fullscreenBtn.snp.left).offset(-marge)
             }
@@ -454,8 +454,8 @@ class HKPlayerControlView: UIView {
         timeSlider.snp.remakeConstraints {  make in
             if isFullscreen {
                 make.bottom.equalTo(fullscreenBtn.snp.top)
-                make.leading.equalToSuperview().offset(leading)
-                make.trailing.equalToSuperview().offset(-leading)
+                make.leading.equalTo(currentTimeL.snp.leading)
+                make.trailing.equalTo(totalTimeL.snp.trailing)
             } else {
                 make.centerY.equalTo(playBtn)
                 make.leading.equalTo(currentTimeL.snp.trailing).offset(marge)
@@ -473,14 +473,14 @@ class HKPlayerControlView: UIView {
         nextBtn.snp.remakeConstraints { make in
             make.width.height.equalTo(40)
             make.bottom.equalToSuperview().offset(-16)
-            make.left.equalToSuperview().offset(leading - marge)
+            make.left.equalTo(timeSlider)
         }
         
         fullscreenBtn.snp.remakeConstraints {  make in
             make.width.height.equalTo(40)
             if isFullscreen {
                 make.bottom.equalToSuperview().offset(-16)
-                make.trailing.equalToSuperview().offset(-leading + marge)
+                make.trailing.equalToSuperview().offset(-leading)
             } else {
                 make.centerY.equalTo(playBtn)
                 make.right.equalToSuperview().offset(-marge)
@@ -668,16 +668,19 @@ class HKPlayerControlView: UIView {
     }
     
     private func setLockStatus(_ lock: Bool = false) {
-        self.backBtn.isEnabled = !lock
-        self.nextBtn.isEnabled = !lock
-        self.ccButton.isEnabled = !lock
-        self.epsButton.isEnabled = !lock
-        self.fullscreenBtn.isEnabled = !lock
-        self.playBtn.isEnabled = !lock
-        self.play1Btn.isEnabled = !lock
-        self.forwordBtn.isEnabled = !lock
-        self.backwordBtn.isEnabled = !lock
-        self.timeSlider.isEnabled = !lock
+//        self.backBtn.isEnabled = !lock
+//        self.nextBtn.isEnabled = !lock
+//        self.ccButton.isEnabled = !lock
+//        self.epsButton.isEnabled = !lock
+//        self.fullscreenBtn.isEnabled = !lock
+//        self.playBtn.isEnabled = !lock
+//        self.play1Btn.isEnabled = !lock
+//        self.forwordBtn.isEnabled = !lock
+//        self.backwordBtn.isEnabled = !lock
+//        self.timeSlider.isEnabled = !lock
+        self.topView.isHidden = lock
+        self.bottomView.isHidden = lock
+        self.centerView.isHidden = lock
     }
     /**
      Call when the tap gesture tapped
@@ -847,7 +850,7 @@ class HKPlayerControlView: UIView {
         backBtn.tag = HKButtonType.back.rawValue
         backBtn.setImage(UIImage(named: "play_back"), for: .normal)
         backBtn.addTarget(self, action: #selector(clickBtnAction(_:)), for: .touchUpInside)
-        
+
         ccButton.tag = HKButtonType.cc.rawValue
         ccButton.setImage(UIImage(named: "play_captions"), for: .normal)
         ccButton.setImage(UIImage(named: "play_unCaptions"), for: .disabled)
@@ -911,6 +914,7 @@ class HKPlayerControlView: UIView {
         mainView.addSubview(lockBtn)
         
         nextBtn.tag = HKButtonType.next.rawValue
+        nextBtn.contentHorizontalAlignment = .left
         nextBtn.setImage(UIImage(named: "play_next"), for: .normal)
         nextBtn.addTarget(self, action: #selector(clickBtnAction(_:)), for: .touchUpInside)
         
