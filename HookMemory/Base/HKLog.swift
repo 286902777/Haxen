@@ -86,7 +86,7 @@ extension HKLog {
     }
     
     class func hk_playback_status(movie_id: String, movie_name: String, eps_id: String, eps_name: String, movie_type: String, cache_len: String, source: String, if_success: String, errorinfo: String) {
-        HKLog.log("[LOG]: 播放页停留时长 playback_status movie_id: \(movie_id), movie_name: \(movie_name), eps_id: \(eps_id), eps_name: \(eps_name), movie_type: \(movie_type), watch_len: \(cache_len), source: \(source), if_success: \(if_success), errorinfo: \(errorinfo)")
+        HKLog.log("[LOG]: 播放状态 playback_status movie_id: \(movie_id), movie_name: \(movie_name), eps_id: \(eps_id), eps_name: \(eps_name), movie_type: \(movie_type), watch_len: \(cache_len), source: \(source), if_success: \(if_success), errorinfo: \(errorinfo)")
         HKLog.logEvent("playback_status", parameters: ["movie_id": movie_id, "movie_name": movie_name, "eps_id": eps_id, "eps_name": eps_name, "movie_type": movie_type, "cache_len": cache_len, "source": source, "if_success": if_success, "errorinfo": errorinfo])
     }
     

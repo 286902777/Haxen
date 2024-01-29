@@ -78,6 +78,7 @@ class MoviePlayViewController: UIViewController {
     }
     
     private var getSourceTime : TimeInterval?
+    private var videoReadyTime : TimeInterval?
     private var statusH = kStatusBarHeight
     private var countPlayTime: Int = 30
     private var timer: Timer?
@@ -103,21 +104,29 @@ class MoviePlayViewController: UIViewController {
         setUI()
         setupHKPlayerManager()
         setResource()
-//        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { _ in
-//            DispatchQueue.main.async { [weak self] in
-//                guard let self = self else { return }
-//                self.player.pause()
-//                self.player.playerLayer?.playerLayer?.player = nil
-//            }
-//        }
-//        
-//        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { _ in
-//            DispatchQueue.main.async { [weak self] in
-//                guard let self = self else { return }
-//                self.player.playerLayer?.playerLayer?.player = self.player.playerLayer?.player
-//                self.player.play()
-//            }
-//        }
+        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { _ in
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.player.pause()
+                self.player.playerLayer?.playerLayer?.player = nil
+                if let oldTime = self.getSourceTime, let ready = self.videoReadyTime {
+                    let time = Int(ready - oldTime)
+                    HKLog.hk_playback_status(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: self.epsName, movie_type: "\(self.from.rawValue)", cache_len: "\(time)", source: self.model.isMovie ? "1" : "2", if_success: "1", errorinfo: "")
+                }
+                
+                let name = self.videoModel.ssn.ssn_list.first(where: {$0.isSelect == true})?.title
+
+                HKLog.hk_movie_play_len(movie_id: self.model.id, movie_name: self.model.title, eps_id: self.epsId, eps_name: name ?? "", movie_type: self.model.isMovie ? "1" : "2", watch_len: "\(self.currentTime)", source: "\(from.rawValue)", if_success: self.currentTime > 0 ? "1" : "2")
+            }
+        }
+        
+        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { _ in
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.player.playerLayer?.playerLayer?.player = self.player.playerLayer?.player
+                self.player.play()
+            }
+        }
         
         NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
@@ -173,13 +182,6 @@ class MoviePlayViewController: UIViewController {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        let name = self.videoModel.ssn.ssn_list.first(where: {$0.isSelect == true})?.title
-
-        HKLog.hk_movie_play_len(movie_id: self.model.id, movie_name: self.model.title, eps_id: self.epsId, eps_name: name ?? "", movie_type: self.model.isMovie ? "1" : "2", watch_len: "\(self.currentTime)", source: "\(from.rawValue)", if_success: self.currentTime > 0 ? "1" : "2")
-    }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         ProgressHUD.dismiss()
@@ -191,6 +193,15 @@ class MoviePlayViewController: UIViewController {
             self.player.playerLayer?.prepareToDeinit()
             self.controller.isReadyToPlayed = false
         }
+        
+        if let oldTime = self.getSourceTime, let ready = self.videoReadyTime {
+            let time = Int(ready - oldTime)
+            HKLog.hk_playback_status(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: self.epsName, movie_type: "\(self.from.rawValue)", cache_len: "\(time)", source: self.model.isMovie ? "1" : "2", if_success: "1", errorinfo: "")
+        }
+        
+        let name = self.videoModel.ssn.ssn_list.first(where: {$0.isSelect == true})?.title
+
+        HKLog.hk_movie_play_len(movie_id: self.model.id, movie_name: self.model.title, eps_id: self.epsId, eps_name: name ?? "", movie_type: self.model.isMovie ? "1" : "2", watch_len: "\(self.currentTime)", source: "\(from.rawValue)", if_success: self.currentTime > 0 ? "1" : "2")
     }
     
     deinit {
@@ -330,6 +341,7 @@ class MoviePlayViewController: UIViewController {
                         self.player.setVideo(resource: asset!, sourceKey: self.videoId)
                     }
                 } else {
+                    HKLog.hk_playback_status(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: self.epsName, movie_type: "\(self.from.rawValue)", cache_len: "0", source: self.model.isMovie ? "1" : "2", if_success: "3", errorinfo: "")
                     self.tableView.isHidden = true
                     self.remView.isHidden = false
                     self.player.isReminder = true
@@ -581,7 +593,11 @@ extension MoviePlayViewController: HKPlayerDelegate {
         print("play-state: \(state)")
         switch state {
         case .ready:
-            break
+            self.videoReadyTime = Date().timeIntervalSince1970
+            if let oldTime = self.getSourceTime, let ready = self.videoReadyTime {
+                let time = Int(ready - oldTime)
+                HKLog.hk_playback_status(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: self.epsName, movie_type: "\(self.from.rawValue)", cache_len: "\(time)", source: self.model.isMovie ? "1" : "2", if_success: "1", errorinfo: "")
+            }
         case .waiting:
             self.setPlayerTimer()
         case .end:
@@ -592,7 +608,7 @@ extension MoviePlayViewController: HKPlayerDelegate {
         case .error:
             if let oldTime = self.getSourceTime {
                 let time = Int((Date().timeIntervalSince1970 - oldTime))
-                HKLog.hk_playback_status(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: self.epsName, movie_type: "\(self.from.rawValue)", cache_len: self.model.isMovie ? "1" : "2", source: "\(time)", if_success: "2", errorinfo: errorInfo ?? "")
+                HKLog.hk_playback_status(movie_id: self.videoId, movie_name: self.videoModel.data.title, eps_id: self.epsId, eps_name: self.epsName, movie_type: "\(self.from.rawValue)", cache_len: "\(time)", source: self.model.isMovie ? "1" : "2", if_success: "2", errorinfo: errorInfo ?? "")
             }
         default:
             break

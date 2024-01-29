@@ -137,22 +137,22 @@ class HKUserManager: NSObject {
     
     func reloadLists(arr: [SKProduct]) {
         self.dataArr.removeAll()
-        let form = NumberFormatter.init()
-        form.numberStyle = .currencyAccounting
+        let formatter = NumberFormatter.init()
+        formatter.numberStyle = .currencyAccounting
         if let f = arr.first {
-            form.locale = f.priceLocale
+            formatter.locale = f.priceLocale
         }
-        form.usesGroupingSeparator = true
+        formatter.usesGroupingSeparator = true
         for (_, model) in arr.enumerated() {
             var price: String = ""
             var oldPrice: String = ""
-            if let p = model.introductoryPrice?.price, let op = form.string(from: p) {
+            if let p = model.introductoryPrice?.price, let op = formatter.string(from: p) {
                 price = op
-                if let op = form.string(from: model.price) {
+                if let op = formatter.string(from: model.price) {
                     oldPrice = op
                 }
             } else {
-                if let p = form.string(from: model.price) {
+                if let p = formatter.string(from: model.price) {
                     price = p
                 }
             }
@@ -166,7 +166,7 @@ class HKUserManager: NSObject {
                 self.month = HKUserData(premiumID: .month, price: purMoneyMonth, oldPrice: oldPrice, title: "Monthly", subTitle: "For the per month", tag: "", isLine: false)
             case .year:
                 purMoneyYear = price
-                purMoneyYearCut = form.string(from: (model.price.doubleValue / 0.3) as NSNumber) ?? "$120"
+                purMoneyYearCut = formatter.string(from: (model.price.doubleValue / 0.3) as NSNumber) ?? "$120"
                 self.year = HKUserData(premiumID: .year, price: purMoneyYear, oldPrice: oldPrice, title: "Annually", subTitle: purMoneyYearCut, tag: "-70%", isLine: true)
             case .none:
                 break
