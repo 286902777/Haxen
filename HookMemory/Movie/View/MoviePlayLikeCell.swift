@@ -23,7 +23,7 @@ class MoviePlayLikeCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.collectH.constant = cellW * 138 / 104 + 44
+        self.collectH.constant = cellW * 3 / 2 + 44
         collectionView.register(UINib(nibName: String(describing: MovieCell.self), bundle: nil), forCellWithReuseIdentifier: cellIdentifier)
     }
 
@@ -62,6 +62,6 @@ extension MoviePlayLikeCell: UICollectionViewDelegate, UICollectionViewDataSourc
 
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: cellW, height: cellW * 138 / 104 + 44)
+        CGSize(width: cellW, height: cellW * 3 / 2 + 44)
     }
 }

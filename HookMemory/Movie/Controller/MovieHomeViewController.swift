@@ -193,7 +193,7 @@ extension MovieHomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let H = ceil((kScreenWidth - 40 - 23) / 3 * 138 / 104) + 76 + 42
+        let H = ceil((kScreenWidth - 40 - 23) / 3 * 3 / 2) + 76 + 42
         return H
     }
     

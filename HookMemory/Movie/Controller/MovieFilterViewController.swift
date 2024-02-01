@@ -263,7 +263,7 @@ extension MovieFilterViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: cellW, height: cellW * 140 / 109 + 44)
+        CGSize(width: cellW, height: cellW * 3 / 2 + 44)
     }
 }
 
