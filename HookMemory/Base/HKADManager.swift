@@ -236,7 +236,7 @@ extension HKADManager {
 //        }
         
 //        self.type = type
-        
+            
         if let item = self.dataArr.first(where: {$0.type == type}), let opentime = UserDefaults.standard.value(forKey: HKKeys.appOpneCount) as? Int {
             if let model = item.item.safe(index) {
                 if model.open_time ?? 0 < opentime {
@@ -766,10 +766,10 @@ extension HKADManager: MAAdViewAdDelegate {
                     cache.id = model.id
                     cache.level = model.level
                     cache.source = model.source
-                    cache.type = type
+                    cache.type = mod.type
                     cache.ad = mod.ad
                     cache.id_type = model.type
-                    self.addCacheWithType(type: type, model: cache)
+                    self.addCacheWithType(type: mod.type, model: cache)
                 }
             }
         }

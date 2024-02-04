@@ -478,6 +478,11 @@ class MoviePlayViewController: UIViewController {
             self.player.setUpdateUI(isLand)
             self.tableView.isHidden = isLand
         }
+        if isLand {
+            HKADManager.share.hk_loadFullAd(type: .other, placement: .play)
+        } else {
+            HKADManager.share.hk_loadFullAd(type: .play, placement: .play)
+        }
     }
     
     // tv播放下一集
