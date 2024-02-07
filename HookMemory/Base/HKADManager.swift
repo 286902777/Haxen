@@ -416,19 +416,19 @@ extension HKADManager {
             }
         } else if item.source == .max {
             if let m = self.dataArr.first(where: {$0.type == type}) {
-                let cache = HKADCache()
-                cache.id = item.id
-                cache.level = item.level
-                cache.type = type
-                cache.source = item.source
-                cache.ad = m.ad
-                cache.id_type = item.type
-                cache.ad = MAInterstitialAd(adUnitIdentifier: item.id)
-                (cache.ad as? MAInterstitialAd)?.delegate = self
-                (cache.ad as? MAInterstitialAd)?.revenueDelegate = self
-                (cache.ad as? MAInterstitialAd)?.load()
+//                let cache = HKADCache()
+//                cache.id = item.id
+//                cache.level = item.level
+//                cache.type = type
+//                cache.source = item.source
+//                cache.ad = m.ad
+//                cache.id_type = item.type
+                m.ad = MAInterstitialAd(adUnitIdentifier: item.id)
+                (m.ad as? MAInterstitialAd)?.delegate = self
+                (m.ad as? MAInterstitialAd)?.revenueDelegate = self
+                (m.ad as? MAInterstitialAd)?.load()
                 /// 加入缓存
-                self.addCacheWithType(type: type, model: cache)
+//                self.addCacheWithType(type: type, model: cache)
             }
         }
     }

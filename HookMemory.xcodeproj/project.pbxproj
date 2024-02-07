@@ -1462,7 +1462,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.5;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.testbird.HookMemory;
 				PRODUCT_NAME = Haxen;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1501,7 +1501,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.5;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.testbird.HookMemory;
 				PRODUCT_NAME = Haxen;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
