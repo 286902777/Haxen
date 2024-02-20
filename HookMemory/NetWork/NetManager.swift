@@ -61,12 +61,15 @@ class NetManager {
     static let defualt: NetManager = NetManager()
 
     var contentType: String = "application/x-www-form-urlencoded"
-    
+
+//    /// 接口地址
+//    let RequestUrlHost: String = "https://movie.powerfulclean.net/v1/downloader/routing/"
+//    
+//    let RequestVideoHost: String = "https://movie.powerfulclean.net/v1/media/"
     /// 接口地址
     let RequestUrlHost: String = "https://prod.haxenapp.com/v1/downloader/routing/"
     
     let RequestVideoHost: String = "https://prod.haxenapp.com/v1/media/"
-    
     /// 参数编码方式
     let HKParameterEncoder : ParameterEncoder = URLEncodedFormParameterEncoder.default
 }

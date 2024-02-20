@@ -260,7 +260,6 @@ class HKConfig{
                     } else {
                         complete(true)
                     }
-                    
                 } else {
                     complete(false)
                 }

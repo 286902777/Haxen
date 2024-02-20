@@ -3,16 +3,22 @@
     "hk_sameInterval": 10,
     "hk_differentInterval": 10,
     "hk_openInterval": 10,
-    "hk_play_point_time": 120,
+    "hk_play_point_time": 60,
     "hk_open": [
         {
-            "id": "1ff4d0a101522ccc",
-            "level": 3,
-            "type": "interstitial",
-            "source": "Max"
+            "id": "ca-app-pub-3940256099942544/4411468910",
+            "level": 1,
+            "type": "inTerstitial",
+            "source": "admob"
         }
     ],
     "hk_play": [
+        {
+            "id": "ca-app-pub-3940256099942544/4411468910",
+            "level": 1,
+            "type": "inTerstitial",
+            "source": "admob"
+        },
         {
             "id": "79f626a6b7224656",
             "level": 5,
@@ -22,16 +28,16 @@
     ],
     "hk_landscape": [
         {
-            "id": "79f626a6b7224656",
-            "level": 5,
-            "type": "reWarded",
-            "source": "max"
-        },
-        {
             "id": "ca-app-pub-3940256099942544/4411468910",
             "level": 1,
             "type": "inTerstitial",
             "source": "admob"
+        },
+        {
+            "id": "1ff4d0a101522ccc",
+            "level": 3,
+            "type": "interstitial",
+            "source": "Max"
         }
     ]
 }

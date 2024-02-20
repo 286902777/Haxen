@@ -315,6 +315,7 @@ extension HKADManager {
         if let arr = self.getCacheWithType(type: type), arr.count > 0 {
             self.type = type
             if let c = arr.first {
+                print("________\(c.id)")
                 if c.source == .admob {
                     if let ad = c.ad as? GADInterstitialAd {
                         ad.fullScreenContentDelegate = self
@@ -430,6 +431,7 @@ extension HKADManager {
                 /// 加入缓存
 //                self.addCacheWithType(type: type, model: cache)
             }
+//            self.hk_loadFullAd(type: type, index: index + 1, placement: placement)
         }
     }
 }
@@ -495,6 +497,7 @@ extension HKADManager {
                 (m.ad as? MARewardedAd)?.revenueDelegate = self
                 (m.ad as? MARewardedAd)?.load()
             }
+//            self.hk_loadFullAd(type: type, index: index + 1, placement: placement)
         }
     }
 }
@@ -560,7 +563,7 @@ extension HKADManager {
                 (m.ad as? MARewardedInterstitialAd)?.revenueDelegate = self
                 (m.ad as? MARewardedInterstitialAd)?.load()
             }
-            self.hk_loadFullAd(type: type, index: index + 1, placement: placement)
+//            self.hk_loadFullAd(type: type, index: index + 1, placement: placement)
         }
         
     }
@@ -631,10 +634,16 @@ extension HKADManager {
                 }
             }
         } else {
-            self.hk_loadFullAd(type: type, index: index + 1, placement: placement)
+            if let m = self.dataArr.first(where: {$0.type == type}) {
+                m.ad = MAAppOpenAd(adUnitIdentifier: item.id)
+                (m.ad as? MAAppOpenAd)?.delegate = self
+                (m.ad as? MAAppOpenAd)?.revenueDelegate = self
+                (m.ad as? MAAppOpenAd)?.load()
+                /// 加入缓存
+            }
+//            self.hk_loadFullAd(type: type, index: index + 1, placement: placement)
         }
     }
-    
 }
 
 extension HKADManager {
@@ -910,8 +919,8 @@ extension HKADManager {
     /// 加入缓存
     func addCacheWithType(type: HKADType, model: HKADCache) {
         if let m = self.cacheArr.first(where: {$0.type == type}) {
+            m.cache.removeAll()
             m.cache.append(model)
-            m.cache = m.cache.sorted(by: {$0.level > $1.level})
         } else {
             let m = adCacheModel()
             m.cache.append(model)

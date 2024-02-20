@@ -41,7 +41,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if !first {
             HKUserManager.share.refreshReceipt(from: .update)
             DispatchQueue.main.asyncAfter(deadline: .now()) {
-                if HKConfig.currentVC()?.isKind(of: MoviePlayViewController.self) == false {
+                if HKConfig.currentVC()?.isKind(of: MovieBaseViewController.self) == true {
                     HKADManager.share.hk_loadFullAd(type: .open, placement: .open)
                     HKConfig.showInterAD(type: .open, placement: .open) { _ in
                         

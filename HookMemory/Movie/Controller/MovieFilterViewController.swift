@@ -99,6 +99,7 @@ class MovieFilterViewController: MovieBaseViewController {
             self.page = 1
             self.dataArr.removeAll()
             self.initData()
+            self.collectionView.mj_footer?.isHidden = false
         }
 
         collectionView.mj_header = header
@@ -160,7 +161,7 @@ class MovieFilterViewController: MovieBaseViewController {
             guard let self = self else { return }
             switch index {
             case .type:
-                self.type = id
+                self.type = Int(id) ?? 1 > 2 ? "1" : id
             case .genre:
                 self.genre = id
             case .pub:
@@ -186,15 +187,14 @@ class MovieFilterViewController: MovieBaseViewController {
         self.selectL.text = arr.joined(separator: " · ")
     }
     private func filterData() {
+        self.collectionView.mj_footer?.isHidden = false
         self.page = 1
         self.dataArr.removeAll()
         self.loadMoreData()
     }
     
     private func loadMoreData() {
-        ProgressHUD.dismiss()
-        collectionView.mj_header?.endRefreshing()
-        collectionView.mj_footer?.endRefreshing()
+        ProgressHUD.showLoading()
         MovieAPI.share.movieFilterInfo(cntyno: self.cntyno, genre: self.genre, pubdate: self.pubdate, type: self.type, page: self.page) { [weak self] success, model in
             guard let self = self else { return }
             ProgressHUD.dismiss()
@@ -211,7 +211,7 @@ class MovieFilterViewController: MovieBaseViewController {
                 }
             }
             self.collectionView.mj_footer?.endRefreshing()
-            if model.minfo.count < MovieAPI.share.pageSize {
+            if model.minfo.count == 0 {
                 self.collectionView.mj_footer?.endRefreshingWithNoMoreData()
                 self.collectionView.mj_footer?.isHidden = true
             }

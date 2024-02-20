@@ -34,7 +34,7 @@ class MovieAPI {
                                 "device": "android",
                                 "os_ver": "11.1.1",
                                 "app_ver": "1.0.0",
-                                "resolution": "200*150",
+                                "resolution": "800*600",
                                 "deviceNo": "D5C27BB2-3272-4CA9-869F-771A5DA1DABB",
                                 "token": "1"]
 

@@ -21,7 +21,7 @@ class MovieHomeViewController: MovieBaseViewController {
         if #available(iOS 15.0, *) {
             table.sectionHeaderTopPadding = 0
         }
-        table.contentInset = UIEdgeInsets(top: 22, left: 0, bottom: 0, right: 0)
+        table.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         table.contentInsetAdjustmentBehavior = .never
         return table
     }()
@@ -78,7 +78,7 @@ class MovieHomeViewController: MovieBaseViewController {
         view.addSubview(search)
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(search.snp.bottom)
+            make.top.equalTo(search.snp.bottom).offset(22)
             make.left.right.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
@@ -116,7 +116,7 @@ class MovieHomeViewController: MovieBaseViewController {
     }
     
     func initData() {
-         self.isNeedRefresh = false
+        self.isNeedRefresh = false
         if HKConfig.share.isNet == false {
             self.tableView.mj_header?.endRefreshing()
             self.showEmpty(.noNet, self.tableView)
@@ -132,13 +132,13 @@ class MovieHomeViewController: MovieBaseViewController {
             if !success {
                 self.showEmpty(.noNet, self.tableView)
             } else {
+                self.isNeedRefresh = true
                 self.dismissEmpty(self.tableView)
                 if let listArr = list, listArr.count > 0 {
                     self.dataArr = listArr
                     self.getDBData()
                 }
             }
-            self.isNeedRefresh = true
             self.tableView.mj_header?.endRefreshing()
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -164,7 +164,7 @@ extension MovieHomeViewController: UITableViewDelegate, UITableViewDataSource {
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
                     HKLog.hk_home_cl(kid: "4", c_id: "", c_name: "", ctype: "", secname: model.data.first?.name ?? "", secid: model.data.first?.id ?? "")
-
+                    
                     if let mod = model.data.first {
                         if mod.name == "History", mod.id.isEmpty {
                             let vc = MovieHistoryListViewController()

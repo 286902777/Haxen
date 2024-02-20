@@ -120,13 +120,13 @@ class MoviePlayViewController: UIViewController {
             }
         }
         
-        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { _ in
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.player.playerLayer?.playerLayer?.player = self.player.playerLayer?.player
-                self.player.play()
-            }
-        }
+//        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { _ in
+//            DispatchQueue.main.async { [weak self] in
+//                guard let self = self else { return }
+//                self.player.playerLayer?.playerLayer?.player = self.player.playerLayer?.player
+//                self.player.play()
+//            }
+//        }
         
         NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
@@ -174,7 +174,7 @@ class MoviePlayViewController: UIViewController {
         if device.orientation == .landscapeLeft || device.orientation == .landscapeRight{
             ScreenisFull = true
             self.onOrientationChanged(isLand: true)
-        } else if device.orientation == .portrait || device.orientation == .portraitUpsideDown {
+        } else {
             if self.playLock == false {
                 ScreenisFull = false
                 self.onOrientationChanged(isLand: false)
@@ -275,7 +275,8 @@ class MoviePlayViewController: UIViewController {
         self.player.playerLayer?.prepareToDeinit()
         self.controller.isReadyToPlayed = false
         var asset: HKPlayerResource?
-        
+        HKADManager.share.hk_loadFullAd(type: .other, placement: .play)
+        HKADManager.share.hk_loadFullAd(type: .play, placement: .play)
         HKConfig.showInterAD(type: self.player.isFullScreen ? .other : .play, placement: .play) { [weak self] success in
             if success {
                 self?.isPlayAd = true
@@ -450,6 +451,7 @@ class MoviePlayViewController: UIViewController {
             }
         }
         if isFull == false {
+            HKADManager.share.hk_loadFullAd(type: .play, placement: .play)
             if let view = self.epsView {
                 view.dismissView()
             }
@@ -468,6 +470,8 @@ class MoviePlayViewController: UIViewController {
             } else {
                 UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
             }
+        } else {
+            HKADManager.share.hk_loadFullAd(type: .other, placement: .play)
         }
     }
     
@@ -477,11 +481,6 @@ class MoviePlayViewController: UIViewController {
             self.playerTransed(isFull: isLand)
             self.player.setUpdateUI(isLand)
             self.tableView.isHidden = isLand
-        }
-        if isLand {
-            HKADManager.share.hk_loadFullAd(type: .other, placement: .play)
-        } else {
-            HKADManager.share.hk_loadFullAd(type: .play, placement: .play)
         }
     }
     

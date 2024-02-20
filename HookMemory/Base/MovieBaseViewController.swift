@@ -128,19 +128,19 @@ class MovieBaseViewController: UIViewController {
     }
 }
 
-//extension MovieBaseViewController {
-//    // 是否支持自动转屏
-//    override var shouldAutorotate: Bool {
-//        return false
-//    }
-//
-//    // 支持哪些屏幕方向
-//    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-//        return .portrait
-//    }
-//
-//    // 默认的屏幕方向
-//    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-//        return .portrait
-//    }
-//}
+extension MovieBaseViewController {
+    // 是否支持自动转屏
+    override var shouldAutorotate: Bool {
+        return false
+    }
+
+    // 支持哪些屏幕方向
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+
+    // 默认的屏幕方向
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
+    }
+}
