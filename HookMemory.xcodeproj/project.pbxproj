@@ -218,7 +218,7 @@
 		A77F8CD82AF4F5CE0031FA77 /* DayDB+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DayDB+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		A77F8CD92AF4F5CE0031FA77 /* DayDB+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DayDB+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		A77F8CDE2AF4F82F0031FA77 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
-		A79066282AF32CE4006A3982 /* Haxen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Haxen.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A79066282AF32CE4006A3982 /* HookMemory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HookMemory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A790662B2AF32CE4006A3982 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A790662D2AF32CE4006A3982 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A790662F2AF32CE4006A3982 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -448,7 +448,7 @@
 		A79066292AF32CE4006A3982 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A79066282AF32CE4006A3982 /* Haxen.app */,
+				A79066282AF32CE4006A3982 /* HookMemory.app */,
 				A79066412AF32CE6006A3982 /* HookMemoryTests.xctest */,
 				A790664B2AF32CE6006A3982 /* HookMemoryUITests.xctest */,
 			);
@@ -471,7 +471,6 @@
 				A79664A52B30437500EFC1EE /* GMobileAd */,
 				A79066312AF32CE4006A3982 /* Main.storyboard */,
 				A79066372AF32CE6006A3982 /* Assets.xcassets */,
-				A790663C2AF32CE6006A3982 /* Info.plist */,
 			);
 			path = HookMemory;
 			sourceTree = "<group>";
@@ -728,6 +727,7 @@
 				A79E1AC12B19B4FF00088004 /* hk_ad_release.json */,
 				A7A0AE9B2AFE27F000646494 /* FjallaOne-Regular.ttf */,
 				A7A0AE9C2AFE27F000646494 /* Hind-SemiBold.ttf */,
+				A790663C2AF32CE6006A3982 /* Info.plist */,
 				A7D3CAA12B17180E006AA727 /* GoogleService-Info.plist */,
 				A77E07762B01E91F005A813C /* loading.json */,
 				A79DE76B2B15B4020029A612 /* playLoading.json */,
@@ -837,7 +837,7 @@
 			);
 			name = HookMemory;
 			productName = HookMemory;
-			productReference = A79066282AF32CE4006A3982 /* Haxen.app */;
+			productReference = A79066282AF32CE4006A3982 /* HookMemory.app */;
 			productType = "com.apple.product-type.application";
 		};
 		A79066402AF32CE6006A3982 /* HookMemoryTests */ = {
@@ -1446,7 +1446,7 @@
 				DEVELOPMENT_TEAM = LQ97XNUM66;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = HookMemory/Info.plist;
+				INFOPLIST_FILE = "$(PRODUCT_NAME)/Source/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Haxen;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Enable 'Haxen' to access your camera, so that you can add the photos and videos you take directly to your diary.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "\"Haxen\" would like to access your microphone\nOnce the microphone is enabled, you can record sound";
@@ -1465,7 +1465,7 @@
 				);
 				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.testbird.HookMemory;
-				PRODUCT_NAME = Haxen;
+				PRODUCT_NAME = HookMemory;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1486,7 +1486,7 @@
 				DEVELOPMENT_TEAM = LQ97XNUM66;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = HookMemory/Info.plist;
+				INFOPLIST_FILE = "$(PRODUCT_NAME)/Source/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Haxen;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Enable 'Haxen' to access your camera, so that you can add the photos and videos you take directly to your diary.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "\"Haxen\" would like to access your microphone\nOnce the microphone is enabled, you can record sound";
@@ -1505,7 +1505,7 @@
 				);
 				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.testbird.HookMemory;
-				PRODUCT_NAME = Haxen;
+				PRODUCT_NAME = HookMemory;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

@@ -108,15 +108,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func initGADMobileAds() {
+        HKRemoteManager.share.initConfig()
+        HKADManager.share.initSet()
+        HKTBAManager.share.initSet()
         if let count = UserDefaults.standard.value(forKey: HKKeys.appOpneCount) as? Int {
             UserDefaults.standard.set(count + 1, forKey: HKKeys.appOpneCount)
         } else {
             UserDefaults.standard.set(1, forKey: HKKeys.appOpneCount)
         }
-        HKRemoteManager.share.initConfig()
-        HKADManager.share.initSet()
-        HKTBAManager.share.initSet()
-
         GADMobileAds.sharedInstance().start { status in
             // Optional: Log each adapter's initialization latency.
             let adapterStatuses = status.adapterStatusesByClassName
@@ -131,6 +130,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         GADMobileAds.sharedInstance().applicationMuted = true
+        
+        let sdk = ALSdk.shared()!
+        sdk.mediationProvider = ALMediationProviderMAX
+        sdk.settings.isMuted = true
+        sdk.initializeSdk(completionHandler: { configuration in
+            if !HKADManager.share.isInit {
+                HKADManager.share.adInit()
+            }
+        })
     }
     
     func tbaInstall() {

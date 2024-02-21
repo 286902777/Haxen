@@ -32,12 +32,6 @@
             "level": 1,
             "type": "inTerstitial",
             "source": "admob"
-        },
-        {
-            "id": "1ff4d0a101522ccc",
-            "level": 3,
-            "type": "interstitial",
-            "source": "Max"
         }
     ]
 }
